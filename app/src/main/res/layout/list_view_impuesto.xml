@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_view_codigo_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_codigo_porcentaje_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_base_imponible_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_tarifa_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_valor_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+
+        android:layout_weight="1" />
+
+</LinearLayout>

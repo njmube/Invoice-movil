@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Impuesto">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linear_layout_impuestos"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:weightSum="6">
+
+        <TextView
+            android:id="@+id/text_view_impuesto"
+            style="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_tipo_impuesto"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinner_tipos_impuestos"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:prompt="@string/etiqueta_seleccione_impuesto"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:spinnerMode="dialog"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_view_tarifas_impuestos"
+            style="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_tarifa_impuesto"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinner_tarifas_impuestos"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:prompt="@string/etiqueta_seleccione_tarifa_impuesto"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:spinnerMode="dialog"
+            android:layout_weight="3" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view_impuestos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="2dp"
+        android:layout_weight="1"></ListView>
+</LinearLayout>

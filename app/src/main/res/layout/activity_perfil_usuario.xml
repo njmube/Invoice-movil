@@ -1,0 +1,188 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".pantallas.PerfilUsuario">
+
+
+    <ScrollView
+        android:id="@+id/scrool_view_perfil_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linear_layout_edicion_perfil_usuario">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_nombres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_nombre"
+                    style="@style/Texto"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_apellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_apellido"
+                    style="@style/Texto"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_correo_principal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_correo_principal"
+                    style="@style/Correo"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_correo_adicional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_correo_adicional"
+                    style="@style/Correo"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_telefono_principal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_telefono_principal"
+                    style="@style/NumeroTelefono"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_telefono_adicional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_telefono_adicional"
+                    style="@style/NumeroTelefono"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_actualizar_perfil_usuario"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/boton_actualizar_perfil"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimary" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_contrasenia_actual_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_contrasenia_actual"
+                    style="@style/Contrasenia"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_contrasenia_nueva_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_contrasenia_nueva"
+                    style="@style/Contrasenia"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

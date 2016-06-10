@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_inicio"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/item_facturacion_electronica"
+            android:icon="@drawable/ic_storage_black_24dp"
+            android:title="Facturación Electrónica" />
+        <item
+            android:id="@+id/item_repositorio"
+            android:icon="@drawable/ic_storage_black_24dp"
+            android:title="Repositorio" />
+        <item
+            android:id="@+id/item_opcion1"
+            android:icon="@drawable/ic_info"
+            android:title="Opción 1" />
+        <item
+            android:id="@+id/item_opcion2"
+            android:icon="@drawable/ic_info"
+            android:title="Opción 2" />
+        <item
+            android:id="@+id/item_salir"
+            android:icon="@drawable/ic_settings_power"
+            android:title="Salir" />
+    </group>
+</menu>

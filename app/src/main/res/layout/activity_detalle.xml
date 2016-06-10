@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Detalle">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_contenedor_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout_producto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center|center_vertical"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_text_view_busqueda_producto"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:completionThreshold="1"
+                    android:drawableRight="@drawable/ic_action_search"
+                    android:hint="@string/sugerencia_busqueda_producto"
+                    android:imeOptions="flagNoFullscreen"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout_producto_seleccionado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_producto_seleccionado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout_botones_acciones_producto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical|bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_nuevo_producto"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/boton_nuevo_producto"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_editar_producto"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/boton_actualizar_producto"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout_detalle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center|center_vertical|center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titulo_cantidad"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:layout_gravity="center_horizontal" />
+
+                <NumberPicker
+                    android:id="@+id/number_picker_cantidad"
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_cantidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Large"
+                    android:text="1" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/edit_text_precio_unitario"
+                        style="@style/NumeroDecimal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/sugerencia_precio_unitario_producto"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                        android:imeOptions="actionUnspecified" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/edit_text_descuento"
+                        style="@style/NumeroDecimal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/sugerencia_descuento"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                        android:imeOptions="actionUnspecified" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/text_view_precio_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_precio_total"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_precio_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+
+                <Button
+                    android:id="@+id/button_agregar_detalle"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/boton_agregar_detalle"
+                    android:textStyle="bold"
+
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

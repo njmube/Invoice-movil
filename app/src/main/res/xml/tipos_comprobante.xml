@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map linked="true">
+    <entry key="FACTURA">01</entry>
+    <entry key="NOTA_CREDITO">04</entry>
+    <entry key="NOTA_DEBITO">05</entry>
+    <entry key="GUIA_REMISION">06</entry>
+    <entry key="COMPROBANTE_RETENCION">07</entry>
+</map>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/dialog_body">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/edit_text_base_imponible_ice"
+                style="@style/NumeroDecimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/sugerencia_base_imponible_ice"
+                android:maxLength="300"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="center|center_vertical"
+                android:paddingBottom="@dimen/padding_between"
+                android:paddingTop="@dimen/normal_padding"
+                android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                android:imeOptions="actionUnspecified" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/edit_text_porcentaje_ice"
+                style="@style/NumeroDecimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/sugerencia_porcentaje_ice"
+                android:paddingBottom="@dimen/padding_between"
+                android:paddingTop="@dimen/normal_padding"
+                android:maxLength="300"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="center|center_vertical"
+                android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                android:imeOptions="actionUnspecified" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_view_etiqueta_valor_ice"
+            style="@style/Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/etiqueta_valor_ice"
+            android:paddingTop="@dimen/padding_between"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_view_valor_ice"
+            style="@style/Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingTop="@dimen/padding_between"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_view_titulo_impuestos"
+            style="@style/Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/titulo_impuesto"
+            android:paddingTop="@dimen/padding_between"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinner_tarifas_impuestos_ice"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:paddingTop="@dimen/padding_between"
+            android:spinnerMode="dialog"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/normal_padding"
+            android:gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/button_aceptar"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/etiqueta_siguiente_componente"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_cancelar"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/etiqueta_cancelar_componente"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

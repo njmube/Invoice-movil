@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Establecimiento">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/text_view_titulo_establecimiento"
+                style="@style/Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/titulo_establecimientos" />
+
+            <Spinner
+                android:id="@+id/spinner_establecimientos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dialog" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/edit_text_codigo_establecimiento"
+                    style="@style/Numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_codigo_establecimiento"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_punto_emision"
+                    style="@style/Numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_punto_emision"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_direccion_establecimiento"
+                    style="@style/Texto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_direccion_establecimiento"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pantallas.DetallesFactura"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_nuevo_detalle"
+        style="?android:textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/boton_agregar_detalle"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_detalles_factura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_detalles_factura"
+            android:textStyle="bold"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/text_view_detalles_vacio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_detalle_vacio"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:visibility="invisible" />
+
+        <ExpandableListView
+            android:id="@+id/expandable_list_view_detalles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="2dp"
+            android:layout_gravity="center_horizontal"></ExpandableListView>
+    </LinearLayout>
+</LinearLayout>

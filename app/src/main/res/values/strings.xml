@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">Factura Móvil</string>
+
+    <!--Strings relacionados de login -->
+    <string name="boton_iniciar_sesion_persona">Persona</string>
+    <string name="boton_iniciar_sesion_empresa">Empresa</string>
+
+    <string name="sugerencia_nombre_usuario">Nombre de Usuario</string>
+    <string name="sugerencia_clave">Contraseña</string>
+    <string name="boton_iniciar_sesion">Iniciar sesión</string>
+    <string name="boton_iniciar_sesion_corto">Iniciar</string>
+    <string name="error_nombre_usuario_invalido">El correo ingresado es inválido.</string>
+    <string name="error_clave_invalida">Debe ingresar su clave.</string>
+    <string name="error_clave_incorrecta">La clave es incorrecta.</string>
+    <string name="error_campo_requerido">Este campo es requerido.</string>
+
+    <!--Strings relacionados al navigation drawer-->
+    <string name="titulo_navigation_drawer">Factura Móvil</string>
+    <string name="titulo_edicion_perfil">Perfil</string>
+
+    <!--Strings relacionados a opciones de facturación-->
+    <string name="titulo_factura_electronica">Factura</string>
+
+    <!--Strings relacionados a la información tributaria-->
+    <string name="titulo_informacion_tributaria">Información Tributaria</string>
+    <string name="titulo_establecimiento_seleccionado">Establecimiento actual</string>
+    <string name="titulo_mensaje_error_establecimiento_noseleccionado">Debe seleccionar el establecimiento.</string>
+
+    <!--Strings relacionados a la información del establecimiento-->
+    <string name="titulo_establecimientos">Establecimientos</string>
+    <string name="boton_establecimiento">Establecimiento</string>
+    <string name="sugerencia_codigo_establecimiento">Código de establecimiento</string>
+    <string name="sugerencia_punto_emision">Punto de emisión</string>
+    <string name="sugerencia_direccion_establecimiento">Dirección de establecimiento</string>
+
+    <!--Strings relacionados a la edición del perfil del usuario-->
+    <string name="sugerencia_nombre">Nombres</string>
+    <string name="sugerencia_apellido">Apellidos</string>
+    <string name="sugerencia_correo_principal">Correo electrónico principal</string>
+    <string name="sugerencia_correo_adicional">Correo electrónico adicional</string>
+    <string name="sugerencia_telefono_principal">Teléfono principal</string>
+    <string name="sugerencia_telefono_adicional">Teléfono adicional</string>
+    <string name="boton_actualizar_perfil">Actualizar información</string>
+
+    <!--Strings para el cambio de contraseña-->
+    <string name="boton_cambiar_contrasenia">Cambiar contraseña</string>
+    <string name="sugerencia_contrasenia_actual">Contraseña actual</string>
+    <string name="sugerencia_contrasenia_nueva">Contraseña nueva</string>
+
+    <!-- Strings relacionados a la edición de la empresa-->
+    <string name="sugerencia_razon_social">Razón social</string>
+    <string name="sugerencia_nombre_comercial">Nombre comercial</string>
+    <string name="sugerencia_direccion_empresa">Dirección matríz</string>
+    <string name="etiqueta_obligado_llevar_contabilidad">Obligado a llevar contabilidad</string>
+    <string name="sugerencia_numero_resolucion">Número de resolución</string>
+    <string name="boton_actualizar_informacion_empresa">Actualizar información</string>
+
+    <!--Strings para botón siguiente-->
+    <string name="etiqueta_boton_siguiente">Continuar</string>
+
+    <!--Strings para botón aceptar-->
+    <string name="etiqueta_siguiente_componente">Continuar</string>
+
+    <!--Strings para botón cancelar-->
+    <string name="etiqueta_cancelar_componente">Cancelar</string>
+
+    <!--Strings para valor no definido-->
+    <string name="etiqueta_valor_nodefinido">No definido</string>
+
+    <!--Strings para valor no seleccionado-->
+    <string name="etiqueta_valor_nodeseleccionado">No seleccionado</string>
+
+    <!--Strings relacionados a la información factura-->
+    <string name="titulo_informacion_factura">Información Factura</string>
+
+    <!--Strings para el manejo de cliente/receptor del comprobante-->
+    <string name="sugerencia_busqueda_cliente">Búsqueda por identificación/razón social</string>
+    <string name="boton_cliente">Cliente</string>
+    <string name="titulo_cliente">Búsqueda de cliente</string>
+    <string name="sugerencia_identificacion_cliente">Identificación</string>
+    <string name="sugerencia_razon_social_cliente">Nombres y apellidos/Razón social</string>
+    <string name="sugerencia_direccion_cliente">Dirección</string>
+    <string name="sugerencia_correo_cliente">Correo electrónico</string>
+    <string name="sugerencia_telefono_cliente">Teléfono</string>
+    <string name="boton_actualizar_cliente">Actualizar</string>
+    <string name="boton_nuevo_cliente">Nuevo</string>
+    <string name="boton_guardar_cliente">Guardar</string>
+    <string name="titulo_nuevo_cliente">Nuevo cliente</string>
+    <string name="titulo_actualizar_cliente">Actualizar cliente</string>
+
+    <!--Strings para el manejo del producto-->
+    <string name="boton_producto">Producto</string>
+    <string name="sugerencia_busqueda_producto">Búsqueda por codigoPrincipal/descripción</string>
+    <string name="boton_actualizar_producto">Actualizar</string>
+    <string name="boton_nuevo_producto">Nuevo</string>
+    <string name="titulo_producto">Búsqueda de producto</string>
+    <string name="titulo_actualizar_producto">Actualizar producto</string>
+    <string name="sugerencia_codigo_principal_producto">Código principal</string>
+    <string name="sugerencia_codigo_auxiliar_producto">Código auxiliar</string>
+    <string name="sugerencia_descripcion_producto">Descripción</string>
+    <string name="sugerencia_precio_unitario_producto">Precio unitario</string>
+    <string name="boton_guardar_producto">Guardar</string>
+    <string name="titulo_nuevo_producto">Nuevo producto</string>
+    <!--Strings para el manejo del detalle-->
+    <string name="titulo_detalle">Detalle factura</string>
+    <string name="titulo_codigo_principal">Código principal</string>
+    <string name="titulo_descripcion">Descripción</string>
+    <string name="titulo_cantidad">Cantidad</string>
+    <string name="titulo_precio_unitario">Precio unitario</string>
+    <string name="sugerencia_descuento">Descuento</string>
+    <string name="etiqueta_precio_total">Precio total</string>
+    <string name="boton_agregar_detalle">Agregar detalle</string>
+    <string name="etiqueta_detalle_vacio">No existen detalles.</string>
+    <string name="etiqueta_detalles_factura">Detalles de la factura</string>
+    <string name="titulo_impuesto">Impuestos</string>
+    <string name="etiqueta_tipo_impuesto">Tipos de impuestos:</string>
+    <string name="etiqueta_tarifa_impuesto">Tarifas de impuestos:</string>
+    <string name="etiqueta_seleccione_impuesto">Seleccione el tipo de impuesto:</string>
+    <string name="etiqueta_seleccione_tarifa_impuesto">Seleccione la tarifa del impuesto:</string>
+
+    <!--ICE-->
+    <string name="sugerencia_base_imponible_ice">Base imponible</string>
+    <string name="sugerencia_porcentaje_ice">Porcentaje</string>
+    <string name="etiqueta_valor_ice">Valor</string>
+
+    <!--Impuestos-->
+    <string name="etiqueta_cabecera_impuestos_codigo">Código</string>
+    <string name="etiqueta_cabecera_impuestos_codigo_porcentaje">Código porcentaje</string>
+    <string name="etiqueta_cabecera_impuestos_base_imponible">Base imponible</string>
+    <string name="etiqueta_cabecera_impuestos_tarifa">Tarifa</string>
+    <string name="etiqueta_cabecera_impuestos_valor">Valor</string>
+
+
+    <string-array name="impuestos">
+        <item>RENTA</item>
+        <item>IVA</item>
+        <item>ICE</item>
+        <item>IRBPNR</item>
+        <item>ISD</item>
+    </string-array>
+
+</resources>
+

@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".pantallas.PerfilEmpresa">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_razon_social"
+                    style="@style/Texto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_razon_social"
+                    android:maxLength="300"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_nombre_comercial"
+                    style="@style/Texto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_nombre_comercial"
+                    android:maxLength="300"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_direccion_empresa"
+                    style="@style/Texto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_direccion_empresa"
+                    android:maxLength="300"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_correo_principal_empresa"
+                    style="@style/Correo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_correo_principal"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_telefono_principal_empresa"
+                    style="@style/NumeroTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_telefono_principal"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+
+                style="@style/Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etiqueta_obligado_llevar_contabilidad" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_obligado_llevar_contabilidad"
+                    style="@style/Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Switch
+                    android:id="@+id/switch_obligado_llevar_contabilidad"
+                    style="@style/Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_numero_resolucion"
+                    style="@style/Numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_numero_resolucion"
+                    android:maxLength="13"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/button_actualizar_informacion_empresa"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/boton_actualizar_informacion_empresa"
+                android:textStyle="bold" />
+
+            <!--Separador-->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimary" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_contrasenia_actual_empresa"
+                    style="@style/Contrasenia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_contrasenia_actual"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_text_contrasenia_nueva_empresa"
+                    style="@style/Contrasenia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sugerencia_contrasenia_nueva"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeOptions="actionUnspecified" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

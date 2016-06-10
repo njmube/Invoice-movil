@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ec.bigdata.facturaelectronicamovil">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <application
+        android:name=".utilidades.ClaseGlobalUsuario"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".login.Inicio"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login.LoginEmpresaActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName=".login.Inicio" />
+        <activity
+            android:name=".login.LoginUsuarioActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName=".login.Inicio" />
+        <activity
+            android:name=".menu.NavigationDrawer"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/titulo_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.PerfilUsuario"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/titulo_edicion_perfil"
+            android:parentActivityName=".menu.NavigationDrawer" />
+        <activity
+            android:name=".pantallas.OpcionesFacturacion"
+            android:parentActivityName=".menu.NavigationDrawer" />
+        <activity
+            android:name=".pantallas.PerfilEmpresa"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/titulo_edicion_perfil"
+            android:parentActivityName=".menu.NavigationDrawer" />
+        <activity
+            android:name=".pantallas.InicioFacturacionElectronica"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/titulo_factura_electronica"
+            android:parentActivityName=".pantallas.OpcionesFacturacion" />
+        <activity
+            android:name=".pantallas.InformacionEmisor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.Establecimiento"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.InformacionFactura"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.Cliente"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.NuevoCliente"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.ActualizacionCliente"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.Producto"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.NuevoProducto"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.ActualizacionProducto"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.Detalle"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.DetallesFactura"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantallas.Impuesto"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

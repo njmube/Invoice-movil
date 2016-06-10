@@ -1,0 +1,73 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="dropDownListViewStyle">@style/estiloMenu</item>
+
+    </style>
+
+    <style name="Contrasenia">
+        <item name="android:inputType">textPassword</item>
+    </style>
+
+    <style name="Correo">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+    <style name="Texto">
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <style name="NumeroTelefono">
+        <item name="android:inputType">phone</item>
+    </style>
+
+    <style name="Numero">
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="NumeroDecimal">
+        <item name="android:inputType">numberSigned</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="AppTheme">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
+    <style name="NavigationViewTheme" parent="AppTheme">
+        <item name="android:textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>
+    </style>
+
+    <style name="AparienciaTextoBody1" parent="AppTheme">
+
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+    </style>
+
+    <style name="Medium" parent="AppTheme">
+
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--style name="estiloSpinner" parent="android:Widget.Spinner.DropDown">
+        <item name="android:divider">@color/colorPrimary</item>
+        <item name="android:dividerHeight">2dp</item>
+    </style-->
+    <style name="estiloMenu" parent="android:Widget.ListView.DropDown">
+        <item name="android:listSelector">@drawable/menu_selector</item>
+    </style>
+</resources>

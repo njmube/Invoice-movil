@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.InformacionFactura">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center|center_vertical"
+        android:background="@drawable/esquinas_redondeadas"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="false">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_informacion_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center|center_vertical">
+
+            <Button
+                android:id="@+id/button_cliente"
+                style="?android:textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/boton_cliente"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_cliente_seleccionado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:text="@string/etiqueta_valor_nodeseleccionado" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_informacion_producto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center|center_vertical">
+
+            <Button
+                android:id="@+id/button_producto"
+                style="?android:textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/boton_producto"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_producto_seleccionado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:text="@string/etiqueta_valor_nodeseleccionado" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

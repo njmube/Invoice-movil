@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Producto">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center|center_vertical"
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_text_view_busqueda_producto"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:width="100dp"
+            android:completionThreshold="1"
+            android:drawableRight="@drawable/ic_action_search"
+            android:hint="@string/sugerencia_busqueda_producto"
+            android:imeOptions="flagNoFullscreen"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_producto_seleccionado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+        android:layout_marginTop="140dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_producto_seleccionado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_botones_acciones_producto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|bottom">
+
+        <Button
+            android:id="@+id/button_nuevo_producto"
+            style="?android:textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/boton_nuevo_producto"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/button_editar_producto"
+            style="?android:textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/boton_actualizar_producto"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+    </LinearLayout>
+</RelativeLayout>
