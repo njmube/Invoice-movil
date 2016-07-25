@@ -20,6 +20,7 @@
 
     <!--Strings relacionados a opciones de facturación-->
     <string name="titulo_factura_electronica">Factura</string>
+    <string name="titulo_repositorio">Repositorio</string>
 
     <!--Strings relacionados a la información tributaria-->
     <string name="titulo_informacion_tributaria">Información Tributaria</string>
@@ -55,25 +56,36 @@
     <string name="sugerencia_numero_resolucion">Número de resolución</string>
     <string name="boton_actualizar_informacion_empresa">Actualizar información</string>
 
-    <!--Strings para botón siguiente-->
+    <!--String para botón siguiente-->
     <string name="etiqueta_boton_siguiente">Continuar</string>
 
-    <!--Strings para botón aceptar-->
+    <!--String para botón aceptar-->
     <string name="etiqueta_siguiente_componente">Continuar</string>
 
-    <!--Strings para botón cancelar-->
+    <!--String para botón aceptar-->
+    <string name="etiqueta_cancelar_aceptar">Aceptar</string>
+
+    <!--String para botón cancelar-->
     <string name="etiqueta_cancelar_componente">Cancelar</string>
 
-    <!--Strings para valor no definido-->
+    <!--String para valor no definido-->
     <string name="etiqueta_valor_nodefinido">No definido</string>
 
-    <!--Strings para valor no seleccionado-->
-    <string name="etiqueta_valor_nodeseleccionado">No seleccionado</string>
+    <!--String para valor no seleccionado-->
+    <string name="etiqueta_valor_noseleccionado">No seleccionado</string>
 
-    <!--Strings relacionados a la información factura-->
+    <!--String para valor no verificado-->
+    <string name="etiqueta_valor_noverificado">No verificado:</string>
+
+    <string name="etiqueta_boton_aplicar">Aplicar</string>
+
+    <!--String para fecha vacia-->
+    <string name="etiqueta_fecha_vacia">dd/MM/yyyy</string>
+
+    <!--String relacionados a la información factura-->
     <string name="titulo_informacion_factura">Información Factura</string>
 
-    <!--Strings para el manejo de cliente/receptor del comprobante-->
+    <!--String para el manejo de cliente/receptor del comprobante-->
     <string name="sugerencia_busqueda_cliente">Búsqueda por identificación/razón social</string>
     <string name="boton_cliente">Cliente</string>
     <string name="titulo_cliente">Búsqueda de cliente</string>
@@ -88,7 +100,7 @@
     <string name="titulo_nuevo_cliente">Nuevo cliente</string>
     <string name="titulo_actualizar_cliente">Actualizar cliente</string>
 
-    <!--Strings para el manejo del producto-->
+    <!--String para el manejo del producto-->
     <string name="boton_producto">Producto</string>
     <string name="sugerencia_busqueda_producto">Búsqueda por codigoPrincipal/descripción</string>
     <string name="boton_actualizar_producto">Actualizar</string>
@@ -101,7 +113,7 @@
     <string name="sugerencia_precio_unitario_producto">Precio unitario</string>
     <string name="boton_guardar_producto">Guardar</string>
     <string name="titulo_nuevo_producto">Nuevo producto</string>
-    <!--Strings para el manejo del detalle-->
+    <!--String para el manejo del detalle-->
     <string name="titulo_detalle">Detalle factura</string>
     <string name="titulo_codigo_principal">Código principal</string>
     <string name="titulo_descripcion">Descripción</string>
@@ -129,8 +141,9 @@
     <string name="etiqueta_cabecera_impuestos_base_imponible">Base imponible</string>
     <string name="etiqueta_cabecera_impuestos_tarifa">Tarifa</string>
     <string name="etiqueta_cabecera_impuestos_valor">Valor</string>
+    <string name="boton_agregar_impuesto">Agregar impuesto</string>
 
-
+    <!--Principales impuestos-->
     <string-array name="impuestos">
         <item>RENTA</item>
         <item>IVA</item>
@@ -139,5 +152,113 @@
         <item>ISD</item>
     </string-array>
 
+    <!--Detalles adicionales/Información adicional-->
+    <string name="etiqueta_nombre_detalle_adicional">Nombre</string>
+    <string name="etiqueta_valor_detalle_adicional">Valor</string>
+    <string name="titulo_detalle_adicional">Detalles adicionales</string>
+    <string name="boton_agregar_detalle_adicional">Agregar detalle adicional</string>
+    <string name="titulo_informacion_adicional">Información Adicional</string>
+    <string name="boton_agregar_informacion_adicional">Agregar información adicional</string>
+
+    <!--Descripción de contenido de imagen-->
+
+    <string name="descripcion_imagen_pdf_ride">Imagen para PDF RIDE</string>
+
+    <!--String para la facturación electrónica-->
+
+    <string name="titulo_resumen_factura">Resumen</string>
+
+    <string name="titulo_firma_autorizacion_sri">Firma y Autorización</string>
+
+    <string name="valor_cero">0.00</string>
+
+    <string name="ambiente">1</string>
+
+    <string name="tipo_emision">1</string>
+
+    <string name="moneda">DOLAR</string>
+
+    <string name="etiqueta_subtototal_12">Subtotal 12%:</string>
+
+    <string name="etiqueta_subtototal_14">Subtotal 14%:</string>
+
+    <string name="etiqueta_subtototal_0">Subtotal 0%:</string>
+
+    <string name="etiqueta_subtototal_no_objeto_iva">Subtotal no objeto de IVA:</string>
+
+    <string name="etiqueta_subtototal_exento_iva">Subtotal exento de IVA:</string>
+
+    <string name="etiqueta_subtototal_sin_impuestos">Subtotal sin impuestos:</string>
+
+    <string name="etiqueta_total_descuento">Total descuento:</string>
+
+    <string name="etiqueta_ice">ICE:</string>
+
+    <string name="etiqueta_iva_12">IVA 12%:</string>
+
+    <string name="etiqueta_iva_14">IVA 14%:</string>
+
+    <string name="etiqueta_irbpnr">IRBPNR:</string>
+
+    <string name="etiqueta_propina">Propina 10%:</string>
+
+    <string name="etiqueta_valor_total">Valor total:</string>
+
+    <string name="etiqueta_ver_pdf_ride">Ver documento PDF-RIDE</string>
+
+    <string name="etiqueta_boton_continuar_firma_autorizacion_sri">Continuar Firma y Autorización SRI</string>
+
+    <string name="etiqueta_boton_firmar_autorizar_sri">Firma y Autorización SRI</string>
+
+    <string name="titulo_proceso_firma_autorizacion_sri">Proceso de comprobantes electronicos</string>
+
+    <string name="mensaje_html_proceso_firma_autorizacion_sri">
+         <![CDATA[
+        <p>El proceso de firma y autorización de comprobantes electrónicos comprende:</p>
+     <p>1. Creación de archivo XML.</p>
+        <p>2. Validación XSD.</p>
+        <p>3. Firma electrónica.</p>
+        <p> 4. Autorización del SRI.</p>
+        <p>5. Notificación.</p>
+        ]]>
+    </string>
+
+    <!--Strings para dialogs-->
+
+    <string name="titulo_continuar_firma_autorizacion_sri">Confirmación</string>
+
+    <string name="mensaje_continuar_firma_autorizacion_sri">¿Desea continuar con la FIRMA Y AUTORIZACIÓN EN EL SRI del comprobante electrónico?</string>
+
+    <string name="titulo_cancelar_inicio_factura">Confirmación</string>
+
+    <string name="mensaje_continuar_cancelar_inicio_factura">¿Desea continuar con la CANCELACIÓN DEL INGRESO DE LA FACTURA?</string>
+
+    <string name="titulo_mensaje_resultado_firma_autorizacion_sri">Resultado FIRMA y AUTORIZACIÓN EN EL SRI</string>
+
+    <!--Strings para repositorio-->
+    <string name="titulo_repositorio_comprobantes_emitidos_autorizados">Comprobantes Emitidos Autorizados</string>
+    <string name="titulo_repositorio_comprobantes_emitidos_noautorizados">Comprobantes Emitidos No Autorizados</string>
+    <string name="etiqueta_deslizar">Deslice para actualizar</string>
+    <string name="etiqueta_boton_fitro_busqueda">Filtrar</string>
+    <string name="etiqueta_busqueda_por_secuencial">Secuencial</string>
+    <string name="etiqueta_busqueda_por_receptor">RUC/Cédula/Pasaporte/Razón social</string>
+    <string name="etiqueta_busqueda_por_tipo_comprobante">Seleccione</string>
+    <string name="etiqueta_busqueda_por_periodo_fechas">Periodo de fechas</string>
+    <string name="etiqueta_fecha_inicio">Fecha inicial</string>
+    <string name="etiqueta_fecha_final">Fecha final</string>
+    <string name="titulo_filtro_rango_fechas">Rango de fechas</string>
+    <string name="titulo_filtro_busqueda_comprobantes">Filtro de búsqueda</string>
+
+    <!--Array string para periodo de fechas-->
+    <string-array name="periodo_fechas">
+        <item>Todos</item>
+        <item>Hoy</item>
+        <item>Últimos 7 días</item>
+        <item>Último mes</item>
+        <item>Últimos 6 meses</item>
+        <item>Periodo personalizado</item>
+    </string-array>
+
 </resources>
+
 

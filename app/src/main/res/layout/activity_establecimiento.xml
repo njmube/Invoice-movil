@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Establecimiento">
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.Establecimiento">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/text_view_titulo_establecimiento"
-                style="@style/Medium"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -85,9 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_direccion_establecimiento"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:singleLine="true"
+                    android:maxLength="300"
+                    android:singleLine="false"
                     android:imeActionLabel="@string/etiqueta_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>

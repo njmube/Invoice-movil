@@ -8,5 +8,6 @@
     <dimen name="edit_text_padding">16dp</dimen>
     <dimen name="normal_padding">8dp</dimen>
     <dimen name="button_padding">24dp</dimen>
+    <dimen name="circulo_padding">50dp</dimen>
 
 </resources>

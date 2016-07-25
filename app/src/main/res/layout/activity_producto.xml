@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Producto">
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.Producto">
 
     <include
-        layout="@layout/toolbar_compuesta"
+        layout="@layout/toolbar_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/button_nuevo_producto"
-            style="?android:textAppearanceMedium"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/boton_nuevo_producto"
@@ -66,7 +66,7 @@
 
         <Button
             android:id="@+id/button_editar_producto"
-            style="?android:textAppearanceMedium"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/boton_actualizar_producto"

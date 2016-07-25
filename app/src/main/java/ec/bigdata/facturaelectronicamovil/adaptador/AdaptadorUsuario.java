@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 
 import ec.bigdata.facturaelectronicamovil.modelo.Perfil;
 import ec.bigdata.facturaelectronicamovil.modelo.UsuarioAcceso;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 
 
 /**
@@ -30,7 +30,7 @@ public class AdaptadorUsuario implements JsonDeserializer<UsuarioAcceso> {
 
         JsonObject json_object_usuario = (JsonObject) json;
 
-        UsuarioAcceso usuarioAcceso = new UsuarioAcceso(json_object_usuario.get("idUsuario").getAsInt(), json_object_usuario.get("identificacionUsuario").getAsString(), json_object_usuario.get("nombreUsuarioAcceso").getAsString(), json_object_usuario.get("claveUsuarioAcceso").getAsString(), json_object_usuario.get("nombreUsuario").getAsString(), json_object_usuario.get("apellidoUsuario").getAsString(), json_object_usuario.get("telefonoPrincipalUsuario").getAsString(), json_object_usuario.get("telefonoAdicionalUsuario") != null ? json_object_usuario.get("telefonoAdicionalUsuario").getAsString() : "", json_object_usuario.get("correoPrincipalUsuario").getAsString(), json_object_usuario.get("correoAdicionalUsuario") != null ? json_object_usuario.get("correoAdicionalUsuario").getAsString() : "", Utilidades.obtenerFechaFormatoMySQL(json_object_usuario.get("fechaRegistroUsuario").getAsString()), json_object_usuario.get("estadoUsuario").getAsString());
+        UsuarioAcceso usuarioAcceso = new UsuarioAcceso(json_object_usuario.get("idUsuario").getAsInt(), json_object_usuario.get("identificacionUsuario").getAsString(), json_object_usuario.get("nombreUsuarioAcceso").getAsString(), json_object_usuario.get("claveUsuarioAcceso").getAsString(), json_object_usuario.get("nombreUsuario").getAsString(), json_object_usuario.get("apellidoUsuario").getAsString(), json_object_usuario.get("telefonoPrincipalUsuario").getAsString(), json_object_usuario.get("telefonoAdicionalUsuario") != null ? json_object_usuario.get("telefonoAdicionalUsuario").getAsString() : "", json_object_usuario.get("correoPrincipalUsuario").getAsString(), json_object_usuario.get("correoAdicionalUsuario") != null ? json_object_usuario.get("correoAdicionalUsuario").getAsString() : "", Utilidades.obtenerFechaFormatoyyyyMMddHHmmss(json_object_usuario.get("fechaRegistroUsuario").getAsString()), json_object_usuario.get("estadoUsuario").getAsString());
 
         JsonObject json_object_perfil = (JsonObject) json_object_usuario.get("perfil");
         Perfil perfil = new Perfil(json_object_perfil.get("id_perfil").getAsInt(),

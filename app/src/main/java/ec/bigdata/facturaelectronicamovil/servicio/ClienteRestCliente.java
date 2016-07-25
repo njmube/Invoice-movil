@@ -1,10 +1,13 @@
 package ec.bigdata.facturaelectronicamovil.servicio;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ec.bigdata.facturaelectronicamovil.modelo.Cliente;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -24,7 +27,7 @@ public class ClienteRestCliente {
 
     public static ServicioCliente getServicioCliente() {
         if (servicioCliente == null) {
-
+            Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
             final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(10, TimeUnit.SECONDS)
                     .connectTimeout(30, TimeUnit.SECONDS)
@@ -32,7 +35,7 @@ public class ClienteRestCliente {
             Retrofit client = new Retrofit.Builder()
                     .baseUrl(Utilidades.obtenerURLWebService())
                     .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
 
                     .build();
             servicioCliente = client.create(ClienteRestCliente.ServicioCliente.class);

@@ -1,8 +1,14 @@
 package ec.bigdata.facturaelectronicamovil.test;
 
-import ec.bigdata.facturaelectronicamovil.interfaces.ServicioEmpresa;
-import ec.bigdata.facturaelectronicamovil.modelo.ClienteEmpresa;
-import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestEmpresa;
+import android.util.Log;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
+
+import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestArchivo;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,19 +19,31 @@ import retrofit2.Response;
 public class Test {
     public static void main(String args[]) throws Exception {
 
-        ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
+        ClienteRestArchivo.ServicioArchivo servicioArchivo = ClienteRestArchivo.getServicioArchivo();
 
-        Call<ClienteEmpresa> responseBodyCall = servicioEmpresa.validarEmpresa("bigdata", "bigdata");
+        Call<ResponseBody> responseBodyCall = servicioArchivo.obtenerArchivoPorBytes(10);
 
-        responseBodyCall.enqueue(new Callback<ClienteEmpresa>() {
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ClienteEmpresa> call, Response<ClienteEmpresa> response) {
-                System.out.print(response.body().getClaveUsuarioClienteEmpresa());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                    JsonParser parser = new JsonParser();
+                    JsonObject o = null;
+                    String s = null;
+                    try {
+                        s = new String(response.body().bytes());
+                        Log.i("RESPUESTA", s);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
 
             @Override
-            public void onFailure(Call<ClienteEmpresa> call, Throwable t) {
-                System.out.println(t);
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("ERROR", t.getMessage());
             }
         });
     }

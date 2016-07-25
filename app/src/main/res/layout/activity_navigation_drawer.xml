@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/status_bar_height">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_navigation_drawer"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="?attr/colorPrimary"
@@ -51,6 +51,6 @@
         android:fitsSystemWindows="@bool/fitsSystemWindows"
         app:headerLayout="@layout/navigation_drawer_header"
         app:theme="@style/NavigationViewTheme"
-        app:menu="@menu/navigation_drawer_menu" />
+        app:menu="@menu/menu_dinamico_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

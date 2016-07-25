@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,11 +19,13 @@ import java.util.concurrent.TimeUnit;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.AdaptadorUsuario;
-import ec.bigdata.facturaelectronicamovil.interfaces.ServicioUsuarioAcceso;
+import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
+import ec.bigdata.facturaelectronicamovil.interfaz.ServicioUsuarioAcceso;
 import ec.bigdata.facturaelectronicamovil.menu.NavigationDrawer;
 import ec.bigdata.facturaelectronicamovil.modelo.UsuarioAcceso;
-import ec.bigdata.facturaelectronicamovil.utilidades.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
+import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,8 +41,6 @@ public class LoginUsuarioActivity extends AppCompatActivity {
     private EditText editTextNombreUsuario;
 
     private EditText editTextClave;
-
-    private ProgressBar progressBar;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -74,7 +72,7 @@ public class LoginUsuarioActivity extends AppCompatActivity {
                 validarUsuario();
             }
         });
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar_login_persona);
+
 
     }
 
@@ -107,9 +105,7 @@ public class LoginUsuarioActivity extends AppCompatActivity {
 
             ServicioUsuarioAcceso servicioUsuarioAcceso = retrofit.create(ServicioUsuarioAcceso.class);
             Call<UsuarioAcceso> call = servicioUsuarioAcceso.validarUsuarioAcceso(nombre_usuario, password);
-            progressDialog = ProgressDialog.show(LoginUsuarioActivity.this,
-                    "Conectando",
-                    "Espere por favor...");
+            progressDialog = DialogProgreso.mostrarDialogProgreso(LoginUsuarioActivity.this);
             call.enqueue(new Callback<UsuarioAcceso>() {
                 @Override
                 public void onResponse(Call<UsuarioAcceso> call, Response<UsuarioAcceso> response) {
@@ -144,12 +140,12 @@ public class LoginUsuarioActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(LoginUsuarioActivity.this, "Su cuenta ha sido desactivada..", Toast.LENGTH_SHORT).show();
+                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Su cuenta ha sido desactivada.");
                             editTextNombreUsuario.requestFocus();
-
                         }
                     } else {
-                        Toast.makeText(LoginUsuarioActivity.this, "El usuario no existe.", Toast.LENGTH_SHORT).show();
+                        Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "El usuario no existe.");
+
                         editTextNombreUsuario.requestFocus();
 
                     }
@@ -163,19 +159,20 @@ public class LoginUsuarioActivity extends AppCompatActivity {
 
 
         } else if (nombre_usuario == null && password == null) {
-            Toast.makeText(LoginUsuarioActivity.this, "Por favor ingrese su nombre de usuario y clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombre_usuario.equals("") && password.equals("")) {
-            Toast.makeText(LoginUsuarioActivity.this, "Por favor ingrese su nombre de usuario y clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombre_usuario.equals("")) {
-            Toast.makeText(LoginUsuarioActivity.this, "Por favor ingrese su nombre de usuario para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (password.equals("")) {
-            Toast.makeText(LoginUsuarioActivity.this, "Por favor ingrese su clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
+
             focusView = editTextClave;
             cancel = true;
         }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.InformacionFactura">
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.DetallesFactura">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -30,7 +30,7 @@
 
             <Button
                 android:id="@+id/button_cliente"
-                style="?android:textAppearanceMedium"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/boton_cliente"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                android:text="@string/etiqueta_valor_nodeseleccionado" />
+                android:text="@string/etiqueta_valor_noseleccionado" />
         </LinearLayout>
 
         <Space
@@ -57,7 +57,7 @@
 
             <Button
                 android:id="@+id/button_producto"
-                style="?android:textAppearanceMedium"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/boton_producto"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                android:text="@string/etiqueta_valor_nodeseleccionado" />
+                android:text="@string/etiqueta_valor_noseleccionado" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

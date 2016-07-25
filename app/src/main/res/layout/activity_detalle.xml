@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.Detalle">
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.Detalle">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -73,7 +73,7 @@
 
                 <Button
                     android:id="@+id/button_nuevo_producto"
-                    style="?android:textAppearanceMedium"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -82,7 +82,7 @@
 
                 <Button
                     android:id="@+id/button_editar_producto"
-                    style="?android:textAppearanceMedium"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -172,7 +172,7 @@
 
                 <Button
                     android:id="@+id/button_agregar_detalle"
-                    style="?android:textAppearanceMedium"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/boton_agregar_detalle"

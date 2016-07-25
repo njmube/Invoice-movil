@@ -1,6 +1,6 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+    android:id="@+id/toolbar_compuesta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
@@ -12,7 +12,6 @@
     app:contentInsetStart="0dp"
 
     >
-
     <TextView
         android:id="@+id/text_view_titulo_toolbar"
         android:layout_width="wrap_content"
@@ -22,7 +21,6 @@
         android:layout_gravity="center"
 
         />
-
     <Button
         android:id="@+id/button_continuar"
         android:layout_width="wrap_content"
@@ -35,6 +33,4 @@
         style="@style/Widget.AppCompat.Button.Borderless"
 
         />
-
-
 </android.support.v7.widget.Toolbar>

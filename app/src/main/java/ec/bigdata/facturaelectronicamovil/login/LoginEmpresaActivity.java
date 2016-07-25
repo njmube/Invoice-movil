@@ -9,20 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.interfaces.ServicioEmpresa;
+import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
+import ec.bigdata.facturaelectronicamovil.interfaz.ServicioEmpresa;
 import ec.bigdata.facturaelectronicamovil.menu.NavigationDrawer;
 import ec.bigdata.facturaelectronicamovil.modelo.ClienteEmpresa;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestEmpresa;
-import ec.bigdata.facturaelectronicamovil.utilidades.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidades.ResourceUtils;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
+import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
+import ec.bigdata.facturaelectronicamovil.utilidad.ResourceUtils;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,8 +34,6 @@ public class LoginEmpresaActivity extends AppCompatActivity {
     private EditText editTextNombreUsuario;
 
     private EditText editTextClave;
-
-    private ProgressBar progressBar;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -67,7 +65,7 @@ public class LoginEmpresaActivity extends AppCompatActivity {
                 validarUsuario();
             }
         });
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar_login_empresa);
+
 
     }
 
@@ -90,9 +88,7 @@ public class LoginEmpresaActivity extends AppCompatActivity {
 
             ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
 
-            progressDialog = ProgressDialog.show(LoginEmpresaActivity.this,
-                    "Conectando",
-                    "Espere por favor...");
+            progressDialog = DialogProgreso.mostrarDialogProgreso(LoginEmpresaActivity.this);
 
             Call<ClienteEmpresa> clienteEmpresaCall = servicioEmpresa.validarEmpresa(nombreUsuario, password);
 
@@ -104,7 +100,17 @@ public class LoginEmpresaActivity extends AppCompatActivity {
                         ClienteEmpresa clienteEmpresa = response.body();
                         if (clienteEmpresa.getEstadoClienteEmpresa().equals(Boolean.TRUE)) {
 
+                            //Ambiente de la aplicación
+                            claseGlobalUsuario.setAmbiente(getResources().getString(R.string.ambiente));
+                            //Tipo de emisión
+                            claseGlobalUsuario.setTipoEmision(getResources().getString(R.string.tipo_emision));
+                            //Tipos de comprobante
+                            claseGlobalUsuario.setTiposComprobantes(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.tipos_comprobante)));
+                            //Impuestos
                             claseGlobalUsuario.setImpuestos(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.impuestos)));
+
+                            claseGlobalUsuario.setMoneda(getResources().getString(R.string.moneda));
+                            //Información de la empresa
                             claseGlobalUsuario.setIdEmpresa(clienteEmpresa.getIdClienteEmpresa());
                             claseGlobalUsuario.setNombreUsuario(clienteEmpresa.getNombreUsuarioClienteEmpresa());
                             claseGlobalUsuario.setClaveUsuario(clienteEmpresa.getClaveUsuarioClienteEmpresa());
@@ -127,8 +133,8 @@ public class LoginEmpresaActivity extends AppCompatActivity {
                             startActivity(intent_navigation_drawer);
                             finish();
                         } else {
+                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Su cuenta ha sido desactivada.");
 
-                            Toast.makeText(LoginEmpresaActivity.this, "Su cuenta ha sido desactivada..", Toast.LENGTH_SHORT).show();
                             editTextNombreUsuario.requestFocus();
                         }
 
@@ -144,19 +150,23 @@ public class LoginEmpresaActivity extends AppCompatActivity {
 
 
         } else if (nombreUsuario == null && password == null) {
-            Toast.makeText(LoginEmpresaActivity.this, "Por favor ingrese su nombre de usuario y clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
+
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombreUsuario.equals("") && password.equals("")) {
-            Toast.makeText(LoginEmpresaActivity.this, "Por favor ingrese su nombre de usuario y clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
+
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombreUsuario.equals("")) {
-            Toast.makeText(LoginEmpresaActivity.this, "Por favor ingrese su nombre de usuario para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
+
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (password.equals("")) {
-            Toast.makeText(LoginEmpresaActivity.this, "Por favor ingrese su clave para continuar.", Toast.LENGTH_SHORT).show();
+            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
+
             focusView = editTextClave;
             cancel = true;
         }

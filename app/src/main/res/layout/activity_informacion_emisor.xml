@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pantallas.InformacionEmisor">
+    tools:context=".pantalla.InformacionEmisor">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -91,13 +91,13 @@
 
                 <TextView
                     android:id="@+id/text_view_obligado_llevar_contabilidad_emisor"
-                    style="@style/Medium"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <Switch
                     android:id="@+id/switch_obligado_llevar_contabilidad_emisor"
-                    style="@style/Medium"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal" />

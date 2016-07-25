@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ec.bigdata.facturaelectronicamovil.modelo.Producto;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

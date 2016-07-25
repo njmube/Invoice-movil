@@ -34,6 +34,7 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return detalles.get(groupPosition).getImpuestos().get(childPosition);
+
     }
 
     @Override
@@ -44,24 +45,32 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
         View v = convertView;
+       /* if (childPosition == 0) {
+            v = inflater.inflate(R.layout.header_hijos_expandable_list_view_detalles, null);
+        } else {*/
 
         if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService
-                    (Context.LAYOUT_INFLATER_SERVICE);
+
             v = inflater.inflate(R.layout.list_view_item_detalle, parent, false);
         }
 
-        TextView itemCodigoPorcentaje = (TextView) v.findViewById(R.id.text_view_codigo_porcentaje);
-        TextView itemTarifa = (TextView) v.findViewById(R.id.text_view_tarifa);
-        TextView itemValor = (TextView) v.findViewById(R.id.text_view_valor);
+        TextView itemCodigo = (TextView) v.findViewById(R.id.text_view_item_codigo_impuesto);
+        TextView itemCodigoPorcentaje = (TextView) v.findViewById(R.id.text_view_codigo_item_porcentaje_impuesto);
+        TextView itemBaseImponible = (TextView) v.findViewById(R.id.text_view_item_base_imponible_impuesto);
+        TextView itemTarifa = (TextView) v.findViewById(R.id.text_view_item_tarifa_impuesto);
+        TextView itemValor = (TextView) v.findViewById(R.id.text_view_item_valor_impuesto);
 
         ImpuestoComprobanteElectronico det = detalles.get(groupPosition).getImpuestos().get(childPosition);
 
+        itemCodigo.setText(det.getCodigo());
         itemCodigoPorcentaje.setText(det.getCodigoPorcentaje());
+        itemBaseImponible.setText(det.getBaseImponible());
         itemTarifa.setText(det.getTarifa());
         itemValor.setText(det.getValor());
+        //  }
 //TODO Poner cabecera en hijos
         return v;
 
@@ -136,53 +145,5 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-/*
-    public ExpandableDetalleAdapter(Context context, List<Detalle> objects) {
-        super(context, 0, objects);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-
-        //Obteniendo una instancia del inflater
-        LayoutInflater inflater = (LayoutInflater)getContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //Salvando la referencia del View de la fila
-        View listItemView = convertView;
-
-        //Comprobando si el View no existe
-        if (null == convertView) {
-            //Si no existe, entonces inflarlo
-            listItemView = inflater.inflate(
-                    R.layout.list_view_group_detalle,
-                    parent,
-                    false);
-        }
-
-        //Obteniendo instancias de los text views
-        TextView codigoPrincipal = (TextView)listItemView.findViewById(R.id.text_view_codigo_producto);
-
-        TextView descripcion = (TextView)listItemView.findViewById(R.id.text_view_descripcion);
-
-        TextView cantidad = (TextView)listItemView.findViewById(R.id.text_view_cantidad);
-
-        TextView precioUnitario = (TextView)listItemView.findViewById(R.id.text_view_precio_unitario);
-
-        //Obteniendo instancia del Detalle en la posición actual
-        Detalle item = (Detalle)getItem(position);
-
-        codigoPrincipal.setText(item.getCodigoPrincipal());
-
-        descripcion.setText(item.getDescripcion());
-
-        cantidad.setText(item.getCantidad());
-
-        precioUnitario.setText(item.getPrecioUnitario());
-
-        //Devolver al ListView la fila creada
-        return listItemView;
-
-    }*/
 }
 

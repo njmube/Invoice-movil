@@ -6,33 +6,47 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/text_view_codigo_porcentaje"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_item_codigo_impuesto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
-        android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/text_view_tarifa"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_codigo_item_porcentaje_impuesto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/text_view_valor"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_item_base_imponible_impuesto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_item_tarifa_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_view_item_valor_impuesto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:layout_weight="1" />
 </LinearLayout>

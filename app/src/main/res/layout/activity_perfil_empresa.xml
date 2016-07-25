@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".pantallas.PerfilEmpresa">
+    tools:context=".pantalla.PerfilEmpresa">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -107,7 +107,7 @@
 
             <TextView
 
-                style="@style/Medium"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/etiqueta_obligado_llevar_contabilidad" />
@@ -121,13 +121,13 @@
 
                 <TextView
                     android:id="@+id/text_view_obligado_llevar_contabilidad"
-                    style="@style/Medium"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <Switch
                     android:id="@+id/switch_obligado_llevar_contabilidad"
-                    style="@style/Medium"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal" />
@@ -155,7 +155,7 @@
 
             <Button
                 android:id="@+id/button_actualizar_informacion_empresa"
-                style="?android:textAppearanceMedium"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantallas.NuevoProducto">
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.NuevoProducto">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -92,7 +92,7 @@
 
             <Button
                 android:id="@+id/button_nuevo_producto"
-                style="?android:textAppearanceMedium"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

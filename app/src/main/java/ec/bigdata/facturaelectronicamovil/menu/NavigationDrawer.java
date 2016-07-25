@@ -12,17 +12,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import java.util.ArrayList;
+import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.login.Inicio;
-import ec.bigdata.facturaelectronicamovil.pantallas.OpcionesFacturacion;
-import ec.bigdata.facturaelectronicamovil.pantallas.PerfilEmpresa;
-import ec.bigdata.facturaelectronicamovil.pantallas.PerfilUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidades.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.modelo.Recurso;
+import ec.bigdata.facturaelectronicamovil.pantalla.OpcionesFacturacion;
+import ec.bigdata.facturaelectronicamovil.pantalla.OpcionesRepositorio;
+import ec.bigdata.facturaelectronicamovil.pantalla.PerfilEmpresa;
+import ec.bigdata.facturaelectronicamovil.pantalla.PerfilUsuario;
+import ec.bigdata.facturaelectronicamovil.pantalla.Test;
+import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestPantallas;
+import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NavigationDrawer extends AppCompatActivity {
@@ -32,11 +39,9 @@ public class NavigationDrawer extends AppCompatActivity {
     ActionBar actionBar;
     TextView textView;
     ClaseGlobalUsuario claseGlobalUsuario;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private Menu menu;
+    private List<MenuItem> menuItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +50,9 @@ public class NavigationDrawer extends AppCompatActivity {
 
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
 
-        String nombreUsuarioSesion = "";
-        if (claseGlobalUsuario.getTipoUsuario().equals("1")) {
-            nombreUsuarioSesion = claseGlobalUsuario.getNombreComercial();
-        } else {
-            nombreUsuarioSesion = claseGlobalUsuario.getNombreUsuario();
-        }
-        Toast.makeText(NavigationDrawer.this, "Bienvenido: " + nombreUsuarioSesion, Toast.LENGTH_SHORT).show();
+        menuItems = new ArrayList<>();
+
+        View view = findViewById(android.R.id.content);
         navigationView = (NavigationView) findViewById(R.id.navigation_view_menu);
 
         View header = navigationView.getHeaderView(0);
@@ -60,7 +61,7 @@ public class NavigationDrawer extends AppCompatActivity {
 
         textView.setText(claseGlobalUsuario.getNombreUsuario());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
 
         actionBar = getSupportActionBar();
@@ -79,42 +80,37 @@ public class NavigationDrawer extends AppCompatActivity {
          * The getMenu method returns menu resource used by navigationView.
          * Later,we will add items to this menu.
          */
+        menu = navigationView.getMenu();
 
-       /*final Menu drawerMenu = navigationView.getMenu();
-
-        ClienteRestRecursos.ServicioRecursos servicioRecursos = ClienteRestRecursos.getServicioRecursos();
-        Call<List<Recurso>> call_usuario_acceso = servicioRecursos.obtenerPantallasPorPerfil(claseGlobalUsuario.getIdPerfil());
-        call_usuario_acceso.enqueue(new Callback<List<Recurso>>() {
+        ClienteRestPantallas.ServicioPantallas servicioRecursos = ClienteRestPantallas.getServicioPantallas();
+        final Call<List<Recurso>> listCall = servicioRecursos.obtenerPantallasPorPerfil(claseGlobalUsuario.getIdPerfil());
+        listCall.enqueue(new Callback<List<Recurso>>() {
             @Override
             public void onResponse(Call<List<Recurso>> call, Response<List<Recurso>> response) {
                 if (response.isSuccessful()) {
-                    final List<Recurso> pantallas_por_perfil = response.body();
-                    if (pantallas_por_perfil != null && !pantallas_por_perfil.isEmpty()) {
-                        *//**
-         * runOnUiThread is used to update UI i.e Add Items to NavigationView Menu from this non-UI thread(AysncTask).
-         *//*
+                    final List<Recurso> pantallasPorPerfil = response.body();
+                    if (pantallasPorPerfil != null && !pantallasPorPerfil.isEmpty()) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                *//**
-         * params[0] refers to the first parameter passed to this method i.e a menu.
-         * Add items to this menu by iterating the arrayList.
-         *//*
-                                //Menu drawerMenu = params[0];
-                                for (int temp = 0; temp < pantallas_por_perfil.size(); temp++) {
-                                    drawerMenu.add(0, 1, Menu.NONE, R.string.app_name).setIcon(R.drawable.ic_home_black_24dp);
-                                    drawerMenu.add(pantallas_por_perfil.get(temp).getNombreRecurso());
+                                for (int temp = 0; temp < pantallasPorPerfil.size(); temp++) {
+                                    //drawerMenu.add(0, 1, Menu.NONE, R.string.app_name).setIcon(R.drawable.ic_home_black_24dp);
+                                    menu.add(0, pantallasPorPerfil.get(temp).getIdRecurso(), Menu.NONE, pantallasPorPerfil.get(temp).getNombreRecurso()).setIcon(getResources().getIdentifier(pantallasPorPerfil.get(temp).getIcono(), "drawable", getPackageName()));
+                                    menuItems.add(menu.getItem(temp));
                                 }
                             }
                         });
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<List<Recurso>> call, Throwable t) {
 
+                listCall.cancel();
             }
-        });*/
+        });
+
 
     }
 
@@ -127,24 +123,23 @@ public class NavigationDrawer extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.item_perfil:
                 drawerLayout.closeDrawer(GravityCompat.START);
-                Intent intent = null;
                 if (claseGlobalUsuario.getTipoUsuario().equals(Utilidades.USUARIO_PERSONA)) {
                     intent = new Intent(this.getApplicationContext(), PerfilUsuario.class);
-
                 } else {
                     intent = new Intent(this.getApplicationContext(), PerfilEmpresa.class);
                 }
                 startActivity(intent);
                 return true;
             case R.id.item_otra_opcion_salir:
-                Intent intent_salir = new Intent(this, Inicio.class);
-                startActivity(intent_salir);
+                intent = new Intent(this, Inicio.class);
+                startActivity(intent);
                 finish();
                 return true;
         }
@@ -156,41 +151,54 @@ public class NavigationDrawer extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent intent = null;
                         textView = (TextView) findViewById(R.id.text_view_titulo);
-                        switch (menuItem.getItemId()) {
-                            case R.id.item_inicio:
+                        int position = menuItems.indexOf(menuItem) + 1;
+                        switch (position) {
+                            case 1:
                                 menuItem.setChecked(true);
                                 textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
+
                                 return true;
-                            case R.id.item_repositorio:
+                            case 2:
                                 menuItem.setChecked(true);
                                 textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                return true;
-                            case R.id.item_facturacion_electronica:
-                                menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent intent = new Intent(getApplicationContext(), OpcionesFacturacion.class);
+                                intent = new Intent(getApplicationContext(), OpcionesFacturacion.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case R.id.item_opcion1:
+                            case 3:
                                 menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent intent1 = new Intent(getApplicationContext(), PerfilUsuario.class);
-                                startActivity(intent1);
+                                intent = new Intent(getApplicationContext(), OpcionesRepositorio.class);
+                                startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case R.id.item_opcion2:
+                            case 4:
+                                menuItem.setChecked(true);
+                                textView.setText(menuItem.getTitle());
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                intent = new Intent(getApplicationContext(), PerfilUsuario.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                return true;
+                            case 5:
+                                menuItem.setChecked(true);
+                                textView.setText(menuItem.getTitle());
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                intent = new Intent(getApplicationContext(), Test.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                return true;
+                            case 6:
                                 menuItem.setChecked(true);
                                 textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
+                            case R.id.item_no_definida:
                             case R.id.item_salir:
-
                                 finish();
                                 return true;
 
@@ -200,15 +208,4 @@ public class NavigationDrawer extends AppCompatActivity {
                 });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
 }

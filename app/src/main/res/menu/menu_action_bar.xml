@@ -8,5 +8,4 @@
         android:id="@+id/item_otra_opcion_salir"
         android:title="Salir" />
 
-
 </menu>

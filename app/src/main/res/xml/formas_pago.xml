@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map linked="true">
+    <entry key="01">SIN UTILIZACION DEL SISTEMA FINANCIERO</entry>
+    <entry key="02">CHEQUE PROPIO</entry>
+    <entry key="03">CHEQUE CERTIFICADO</entry>
+    <entry key="04">CHEQUE DE GERENCIA</entry>
+    <entry key="05">CHEQUE DEL EXTERIOR</entry>
+    <entry key="06">DÉBITO DE CUENTA</entry>
+    <entry key="07">TRANSFERENCIA PROPIO BANCO</entry>
+    <entry key="08">TRANSFERENCIA OTRO BANCO NACIONAL</entry>
+    <entry key="09">TRANSFERENCIA BANCO EXTERIOR</entry>
+    <entry key="10">TARJETA DE CRÉDITO NACIONAL</entry>
+    <entry key="11">TARJETA DE CRÉDITO INTERNACIONAL</entry>
+    <entry key="12">GIRO</entry>
+    <entry key="13">DEPOSITO EN CUENTA (CORRIENTE/AHORROS)</entry>
+    <entry key="14">ENDOSO DE INVERSIÓN</entry>
+    <entry key="15">COMPENSACIÓN DE DEUDAS</entry>
+    <entry key="16">TARJETA DE DÉBITO</entry>
+    <entry key="17">DINERO ELECTRÓNICO</entry>
+    <entry key="18">TARJETA PREPAGO</entry>
+
+
+</map>

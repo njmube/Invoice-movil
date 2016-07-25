@@ -2,8 +2,8 @@ package ec.bigdata.facturaelectronicamovil.servicio;
 
 import java.util.concurrent.TimeUnit;
 
-import ec.bigdata.facturaelectronicamovil.interfaces.ServicioUsuarioAcceso;
-import ec.bigdata.facturaelectronicamovil.utilidades.Utilidades;
+import ec.bigdata.facturaelectronicamovil.interfaz.ServicioUsuarioAcceso;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,6 +32,4 @@ public class ClienteRestUsuarioAcceso {
         }
         return servicioUsuarioAcceso;
     }
-
-
 }
