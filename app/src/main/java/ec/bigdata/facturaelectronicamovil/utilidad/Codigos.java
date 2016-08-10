@@ -17,9 +17,16 @@ public class Codigos {
 
     public static final int CODIGO_ESTABLECIMIENTO_ACTUAL = 9;
 
-    public static final int CODIGO_CLIENTE_SELECCIONADO_ACTUALIZADO = 10;
+    /**
+     * CLIENTES
+     */
+    public static final int CODIGO_CLIENTE_SELECCIONADO = 100;
 
-    public static final int CODIGO_CLIENTE_SELECCIONADO = 11;
+    public static final int CODIGO_ADM_CLIENTES_SELECCIONADO = 101;
+
+    public static final int CODIGO_CLIENTE_ACTUALIZADO = 102;
+
+    public static final int CODIGO_CORREOS_ADICIONALES_CLIENTE = 103;
 
     public static final int CODIGO_PRODUCTO_SELECCIONADO = 12;
 

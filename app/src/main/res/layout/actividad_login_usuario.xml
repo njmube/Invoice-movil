@@ -10,6 +10,12 @@
     tools:context=".login.LoginUsuarioActivity"
     android:gravity="center">
 
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo" />
+
     <ScrollView
         android:id="@+id/scroll_view_acceso_persona"
         android:layout_width="match_parent"
@@ -20,13 +26,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/linear_layout_acceso_persona"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/image_view_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logo" />
+            android:gravity="center"
+            android:padding="10dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -72,6 +73,18 @@
                 android:text="@string/boton_iniciar_sesion"
                 android:textStyle="bold"
                 android:imeActionLabel="@string/boton_iniciar_sesion_corto"
+
+                />
+
+            <Button
+                android:id="@+id/button_recuperar_contrasenia_usuario_normal"
+                style="?android:textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/boton_recuperar_clave"
+                android:textStyle="bold"
+                android:imeActionLabel="@string/boton_recuperar_clave"
 
                 />
 

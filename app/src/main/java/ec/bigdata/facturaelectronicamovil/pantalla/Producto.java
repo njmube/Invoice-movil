@@ -16,10 +16,10 @@ import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterProducto;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,7 +121,7 @@ public class Producto extends AppCompatActivity {
                     finish();
                 } else {
 
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Debe seleccionar un producto.");
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Debe seleccionar un producto.");
                 }
             }
         });

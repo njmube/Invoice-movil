@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Factura Móvil</string>
-
+    <string name="nombre_app">Factura Móvil</string>
+    <string name="numero_proyecto">721380486862</string>
+    <string name="bienvenido">FacturaMovil</string>
     <!--Strings relacionados de login -->
     <string name="boton_iniciar_sesion_persona">Persona</string>
     <string name="boton_iniciar_sesion_empresa">Empresa</string>
@@ -8,6 +9,7 @@
     <string name="sugerencia_nombre_usuario">Nombre de Usuario</string>
     <string name="sugerencia_clave">Contraseña</string>
     <string name="boton_iniciar_sesion">Iniciar sesión</string>
+    <string name="boton_recuperar_clave">Recuperar contraseña</string>
     <string name="boton_iniciar_sesion_corto">Iniciar</string>
     <string name="error_nombre_usuario_invalido">El correo ingresado es inválido.</string>
     <string name="error_clave_invalida">Debe ingresar su clave.</string>
@@ -65,6 +67,9 @@
     <!--String para botón aceptar-->
     <string name="etiqueta_cancelar_aceptar">Aceptar</string>
 
+    <!--String para botón aceptar-->
+    <string name="etiqueta_agregar">Agregar</string>
+
     <!--String para botón cancelar-->
     <string name="etiqueta_cancelar_componente">Cancelar</string>
 
@@ -82,24 +87,38 @@
     <!--String para fecha vacia-->
     <string name="etiqueta_fecha_vacia">dd/MM/yyyy</string>
 
+    <!--String para detalles vacíos-->
+    <string name="etiqueta_detalle_vacio">No existen detalles.</string>
+
+    <!--String para registros vacíos-->
+    <string name="etiqueta_no_existen_registros">No existen registros.</string>
+
+
     <!--String relacionados a la información factura-->
     <string name="titulo_informacion_factura">Información Factura</string>
 
     <!--String para el manejo de cliente/receptor del comprobante-->
     <string name="sugerencia_busqueda_cliente">Búsqueda por identificación/razón social</string>
     <string name="boton_cliente">Cliente</string>
+    <string name="titulo_administracion_clientes">Administración de clientes</string>
     <string name="titulo_cliente">Búsqueda de cliente</string>
     <string name="sugerencia_identificacion_cliente">Identificación</string>
-    <string name="sugerencia_razon_social_cliente">Nombres y apellidos/Razón social</string>
+    <string name="sugerencia_nombres">Nombres</string>
+    <string name="sugerencia_apellidos">Apellidos</string>
+    <string name="sugerencia_razon_social_cliente">Razón social</string>
     <string name="sugerencia_direccion_cliente">Dirección</string>
     <string name="sugerencia_correo_cliente">Correo electrónico</string>
     <string name="sugerencia_telefono_cliente">Teléfono</string>
     <string name="boton_actualizar_cliente">Actualizar</string>
+    <string name="boton_correos_adicionales">Correos adicionales</string>
     <string name="boton_nuevo_cliente">Nuevo</string>
     <string name="boton_guardar_cliente">Guardar</string>
     <string name="titulo_nuevo_cliente">Nuevo cliente</string>
     <string name="titulo_actualizar_cliente">Actualizar cliente</string>
+    <string name="titulo_correos_adicionales_cliente">Correos adicionales</string>
+    <string name="titulo_cliente_seleccionado">Cliente:</string>
 
+    <string name="etiqueta_estado_cliente">Estado</string>
     <!--String para el manejo del producto-->
     <string name="boton_producto">Producto</string>
     <string name="sugerencia_busqueda_producto">Búsqueda por codigoPrincipal/descripción</string>
@@ -122,7 +141,6 @@
     <string name="sugerencia_descuento">Descuento</string>
     <string name="etiqueta_precio_total">Precio total</string>
     <string name="boton_agregar_detalle">Agregar detalle</string>
-    <string name="etiqueta_detalle_vacio">No existen detalles.</string>
     <string name="etiqueta_detalles_factura">Detalles de la factura</string>
     <string name="titulo_impuesto">Impuestos</string>
     <string name="etiqueta_tipo_impuesto">Tipos de impuestos:</string>
@@ -225,7 +243,7 @@
 
     <!--Strings para dialogs-->
 
-    <string name="titulo_continuar_firma_autorizacion_sri">Confirmación</string>
+    <string name="titulo_confirmacion">Confirmación</string>
 
     <string name="mensaje_continuar_firma_autorizacion_sri">¿Desea continuar con la FIRMA Y AUTORIZACIÓN EN EL SRI del comprobante electrónico?</string>
 
@@ -235,19 +253,25 @@
 
     <string name="titulo_mensaje_resultado_firma_autorizacion_sri">Resultado FIRMA y AUTORIZACIÓN EN EL SRI</string>
 
+    <string name="mensaje_confirmacion_eliminado_correos_adicionales">¿Está seguro de eliminar los correos adicionales?</string>
+
+    <string name="titulo_telefonos_cliente">Teléfonos del cliente(Al seleccionar el número se realizará el marcado)</string>
+
     <!--Strings para repositorio-->
     <string name="titulo_repositorio_comprobantes_emitidos_autorizados">Comprobantes Emitidos Autorizados</string>
     <string name="titulo_repositorio_comprobantes_emitidos_noautorizados">Comprobantes Emitidos No Autorizados</string>
-    <string name="etiqueta_deslizar">Deslice para actualizar</string>
     <string name="etiqueta_boton_fitro_busqueda">Filtrar</string>
     <string name="etiqueta_busqueda_por_secuencial">Secuencial</string>
     <string name="etiqueta_busqueda_por_receptor">RUC/Cédula/Pasaporte/Razón social</string>
-    <string name="etiqueta_busqueda_por_tipo_comprobante">Seleccione</string>
+    <string name="etiqueta_busqueda_por_tipo_comprobante">Tipo de comprobante</string>
     <string name="etiqueta_busqueda_por_periodo_fechas">Periodo de fechas</string>
     <string name="etiqueta_fecha_inicio">Fecha inicial</string>
     <string name="etiqueta_fecha_final">Fecha final</string>
     <string name="titulo_filtro_rango_fechas">Rango de fechas</string>
     <string name="titulo_filtro_busqueda_comprobantes">Filtro de búsqueda</string>
+
+    <!--String para swiperefreshlayout-->
+    <string name="etiqueta_deslizar">Deslice para refrescar</string>
 
     <!--Array string para periodo de fechas-->
     <string-array name="periodo_fechas">
@@ -258,6 +282,17 @@
         <item>Últimos 6 meses</item>
         <item>Periodo personalizado</item>
     </string-array>
+
+    <!--Strings para dialog envío de correo-->
+
+    <string name="sugerencia_correo_electronico_envio">De:</string>
+
+    <string name="sugerencia_correo_electronico_recepcion">Para:</string>
+
+    <string name="sugerencia_asunto_correo_electronico">Asunto:</string>
+
+    <string name="sugerencia_contenido_correo_electronico">Contenido:</string>
+
 
 </resources>
 

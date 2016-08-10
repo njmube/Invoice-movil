@@ -18,10 +18,11 @@ import java.util.List;
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterCliente;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestCliente;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
+import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,6 @@ public class Cliente extends AppCompatActivity {
     private ArrayAdapterCliente arrayAdapterCliente;
 
     private AutoCompleteTextView autoCompleteTextViewClientes;
-
 
     private Button buttonNuevoCliente;
 
@@ -74,16 +74,17 @@ public class Cliente extends AppCompatActivity {
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         servicioCliente = ClienteRestCliente.getServicioCliente();
         progressDialog = DialogProgreso.mostrarDialogProgreso(Cliente.this);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             if (bundle.containsKey(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO))) {
                 clienteSeleccionado = (ec.bigdata.facturaelectronicamovil.modelo.Cliente) bundle.getSerializable(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO));
-                textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + "-" + clienteSeleccionado.getNombreCliente());
+                textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + " " + Utilidades.obtenerNombreCliente(clienteSeleccionado));
             }
         }
 
-        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> call_cliente = servicioCliente.obtenerClientesPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa());
-        call_cliente.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>>() {
+        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> listCall = servicioCliente.obtenerClientesPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), 1, 2);
+        listCall.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>>() {
             @Override
             public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> call, Response<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> response) {
                 if (response.isSuccessful()) {
@@ -109,7 +110,7 @@ public class Cliente extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clienteSeleccionado = (ec.bigdata.facturaelectronicamovil.modelo.Cliente) parent.getItemAtPosition(position);
                 if (clienteSeleccionado != null) {
-                    textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + "-" + clienteSeleccionado.getNombreCliente());
+                    textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + " " + Utilidades.obtenerNombreCliente(clienteSeleccionado));
                 }
                 try {
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -127,10 +128,10 @@ public class Cliente extends AppCompatActivity {
                 if (clienteSeleccionado != null) {
                     Intent intent = new Intent(getApplicationContext(), ActualizacionCliente.class);
                     intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO), clienteSeleccionado);
-                    startActivity(intent);
+                    startActivityForResult(intent, Codigos.CODIGO_CLIENTE_ACTUALIZADO);
                     overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 } else {
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Debe seleccionar un cliente.");
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Debe seleccionar un cliente.");
                 }
             }
         });
@@ -181,13 +182,13 @@ public class Cliente extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Codigos.CODIGO_CLIENTE_SELECCIONADO) {
+        if (requestCode == Codigos.CODIGO_CLIENTE_ACTUALIZADO) {
             if (resultCode == RESULT_OK) {
-                if (data.hasExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO_ACTUALIZADO))) {
+                if (data.hasExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO))) {
 
-                    clienteSeleccionado = (ec.bigdata.facturaelectronicamovil.modelo.Cliente) data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO_ACTUALIZADO));
+                    clienteSeleccionado = (ec.bigdata.facturaelectronicamovil.modelo.Cliente) data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO));
                     if (clienteSeleccionado != null) {
-                        textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + "-" + clienteSeleccionado.getNombreCliente());
+                        textViewClienteSeleccionado.setText(clienteSeleccionado.getIdentificacionCliente() + " " + Utilidades.obtenerNombreCliente(clienteSeleccionado));
                     }
                 }
             } else if (resultCode == RESULT_CANCELED) {

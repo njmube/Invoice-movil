@@ -11,7 +11,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/linear_layout_filtro_busqueda"
+        android:id="@+id/linear_layout_filtro_busqueda_no_autorizados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -19,7 +19,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button_filtrar_busqueda"
+            android:id="@+id/button_filtrar_busqueda_no_autorizados"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linear_layout_swipe_refresh_layout"
+        android:id="@+id/linear_layout_swipe_refresh_layout_no_autorizados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="115dp"
@@ -45,12 +45,12 @@
             android:textStyle="bold" />
 
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swipe_refresh_layout_comprobantes_emitidos_noautorizados"
+            android:id="@+id/swipe_refresh_layout_comprobantes_emitidos_no_autorizados"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_comprobantes_emitidos_noautorizados"
+                android:id="@+id/recycler_view_comprobantes_emitidos_no_autorizados"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="3dp"

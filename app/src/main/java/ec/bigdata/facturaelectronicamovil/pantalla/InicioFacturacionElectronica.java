@@ -25,11 +25,11 @@ import ec.bigdata.facturaelectronicamovil.dialogs.DialogConfirmacion;
 import ec.bigdata.facturaelectronicamovil.facturacion.UtilidadesFacturaElectronica;
 import ec.bigdata.facturaelectronicamovil.modelo.MenuEstructuraFacturaElectronica;
 import ec.bigdata.facturaelectronicamovil.modelo.Secuencial;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 
-public class InicioFacturacionElectronica extends AppCompatActivity implements DialogConfirmacion.ConfirmacionDialogListener {
+public class InicioFacturacionElectronica extends AppCompatActivity implements DialogConfirmacion.DialogConfirmacionComunicacion {
 
     private ListView listViewComponentesFacturaElectronica;
 
@@ -117,7 +117,7 @@ public class InicioFacturacionElectronica extends AppCompatActivity implements D
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 } else {
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, getResources().getString(R.string.etiqueta_valor_noverificado).concat(verificacion));
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, getResources().getString(R.string.etiqueta_valor_noverificado).concat(verificacion));
                 }
             }
         });
@@ -228,7 +228,7 @@ public class InicioFacturacionElectronica extends AppCompatActivity implements D
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        getMenuInflater().inflate(R.menu.menu_borrar, menu);
         return true;
     }
 
@@ -239,7 +239,7 @@ public class InicioFacturacionElectronica extends AppCompatActivity implements D
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.item_borrar_factura_electronica:
+            case R.id.item_borrar:
 
 
         }
@@ -259,7 +259,7 @@ public class InicioFacturacionElectronica extends AppCompatActivity implements D
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             DialogFragment dialogFragment = DialogConfirmacion.newInstance(
                     getResources().getString(R.string.titulo_cancelar_inicio_factura),
-                    getResources().getString(R.string.mensaje_continuar_cancelar_inicio_factura));
+                    getResources().getString(R.string.mensaje_continuar_cancelar_inicio_factura), Boolean.FALSE);
             dialogFragment.show(fragmentManager, "DialogConfirmacion");
         } else {
             this.finish();

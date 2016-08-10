@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:padding="20dp">
 
-    <View
-        android:id="@+id/view_circulo"
+    <ImageView
+        android:id="@+id/image_view_identificador_comprobante"
         android:layout_width="@dimen/circulo_padding"
         android:layout_height="@dimen/circulo_padding"
         android:background="@drawable/circulo" />
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="56dp"
-        android:text="@string/app_name"
+        android:text="@string/nombre_app"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
@@ -29,13 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/text_view_numero_comprobante"
         android:layout_below="@+id/text_view_numero_comprobante"
-        android:text="@string/app_name" />
+        android:text="@string/nombre_app" />
 
     <TextView
         android:id="@+id/text_view_fecha_autorizacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/nombre_app"
         android:layout_below="@+id/text_view_numero_comprobante"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>

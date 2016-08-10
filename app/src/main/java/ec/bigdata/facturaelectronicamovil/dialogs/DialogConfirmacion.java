@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 
 /**
  * Created by DavidLeonardo on 24/6/2016.
@@ -15,27 +16,29 @@ public class DialogConfirmacion extends DialogFragment {
 
     private String tituloDialog;
     private String mensajeDialog;
+    private boolean esContenidoHtml;
+
+    // Interfaz de comunicación
+    private DialogConfirmacionComunicacion dialogConfirmacionComunicacion;
 
     public DialogConfirmacion() {
 
     }
 
-    // Interfaz de comunicación
-    ConfirmacionDialogListener confirmacionDialogListener;
-
-    public interface ConfirmacionDialogListener {
+    public interface DialogConfirmacionComunicacion {
         void presionarBotonSI();
 
         void presionarBotonCancelar();
     }
 
-    public static DialogConfirmacion newInstance(String titulo, String mensaje) {
+    public static DialogConfirmacion newInstance(String titulo, String mensaje, boolean esContenidoHtml) {
 
         DialogConfirmacion dialogConfirmacion = new DialogConfirmacion();
 
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putString("mensaje", mensaje);
+        args.putBoolean("esHtml", esContenidoHtml);
         dialogConfirmacion.setArguments(args);
         return dialogConfirmacion;
     }
@@ -45,7 +48,8 @@ public class DialogConfirmacion extends DialogFragment {
         super.onCreate(savedInstanceState);
         tituloDialog = getArguments().getString("titulo");
         mensajeDialog = getArguments().getString("mensaje");
-        confirmacionDialogListener = (ConfirmacionDialogListener) getActivity();
+        esContenidoHtml = getArguments().getBoolean("esHtml");
+        dialogConfirmacionComunicacion = (DialogConfirmacionComunicacion) getActivity();
     }
 
     @NonNull
@@ -61,21 +65,20 @@ public class DialogConfirmacion extends DialogFragment {
      */
     public AlertDialog crearDialogConfirmacion() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle(tituloDialog)
-                .setMessage(mensajeDialog)
-                .setPositiveButton("Si",
+                .setMessage(esContenidoHtml == true ? Html.fromHtml(mensajeDialog) : mensajeDialog)
+                .setPositiveButton("Sí",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                confirmacionDialogListener.presionarBotonSI();
+                                dialogConfirmacionComunicacion.presionarBotonSI();
                             }
                         })
                 .setNegativeButton("Cancelar",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                confirmacionDialogListener.presionarBotonCancelar();
+                                dialogConfirmacionComunicacion.presionarBotonCancelar();
                             }
                         });
 

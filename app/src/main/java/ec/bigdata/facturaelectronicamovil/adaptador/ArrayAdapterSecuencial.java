@@ -41,7 +41,7 @@ public class ArrayAdapterSecuencial extends ArrayAdapter {
                     false);
         }
 
-        //Obteniendo instancias de los text views
+        //Obteniendo instancias de los TextView
         TextView titulo = (TextView) listItemView.findViewById(R.id.text_view_info_establecimiento);
 
 

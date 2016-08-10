@@ -11,42 +11,44 @@ import ec.bigdata.facturaelectronicamovil.login.Inicio;
 /**
  * Created by DavidLeonardo on 21/7/2016.
  */
-public class ManejoSesionUsuario {
+public class PreferenciasUsuario {
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
 
     // Context
-    Context context;
+    private Context context;
 
     //Nombre de la preferencia compartida
     private static final String SHARED_PREFERENCES_NAME = "PreferenciasApp";
 
     //Llaves
-    private static final String LLAVE_EXISTE_SESION_USUARIO = "SesionUsurarioActiva";
+    private static final String LLAVE_EXISTE_SESION_USUARIO = "SesionUsuarioActiva";
 
     public static final String LLAVE_NOMBRE_USUARIO = "nombreUsuario";
 
-    public static final String LLAVE_CLAVE = "claveUsuario";
+    public static final String LLAVE_CONTRASENIA = "claveUsuario";
 
-    public ManejoSesionUsuario(Context context) {
+    public static final String LLAVE_CODIGO_REGISTRO_GCM = "codigoRegistroGoogleCloudMessaging";
+
+    public PreferenciasUsuario(Context context) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         this.editor = this.sharedPreferences.edit();
     }
 
     //Crea la sesión del usuario
-    public void createUserLoginSession(String nombreUsuario, String claveUsuario) {
+    public boolean createSesionUsuario(String nombreUsuario, String claveUsuario) {
         //Se pone el estado de la sesión a true
         editor.putBoolean(LLAVE_EXISTE_SESION_USUARIO, true);
 
         //Almacena el nombre y la clave del usuario
         editor.putString(LLAVE_NOMBRE_USUARIO, nombreUsuario);
-        editor.putString(LLAVE_CLAVE, claveUsuario);
+        editor.putString(LLAVE_CONTRASENIA, claveUsuario);
 
         //Guarda los cambios
-        editor.commit();
+        return editor.commit();
     }
 
     /**
@@ -74,13 +76,24 @@ public class ManejoSesionUsuario {
         return false;
     }
 
-    // Check for login
+    public String obtenerCodigoRegistroGoogleCloudMessaging() {
+        return sharedPreferences.getString(LLAVE_CODIGO_REGISTRO_GCM, "");
+    }
+
+    public boolean guardarCodigoRegistroGoogleCloudMessaging(String codigoRegistro) {
+        editor.putString(LLAVE_CODIGO_REGISTRO_GCM, codigoRegistro);
+        return editor.commit();
+    }
+
+    /**
+     * Verifica si existe sesion activa
+     */
     public boolean estaActivaSesionUsuario() {
         return sharedPreferences.getBoolean(LLAVE_EXISTE_SESION_USUARIO, false);
     }
 
     /**
-     * Get stored session data
+     * Obtiene los detalles del usuario
      */
     public HashMap<String, String> obtenerDetallesSesionUsuario() {
 
@@ -91,9 +104,30 @@ public class ManejoSesionUsuario {
         stringHashMapUsuario.put(LLAVE_NOMBRE_USUARIO, sharedPreferences.getString(LLAVE_NOMBRE_USUARIO, null));
 
 
-        stringHashMapUsuario.put(LLAVE_CLAVE, sharedPreferences.getString(LLAVE_CLAVE, null));
+        stringHashMapUsuario.put(LLAVE_CONTRASENIA, sharedPreferences.getString(LLAVE_CONTRASENIA, null));
 
 
         return stringHashMapUsuario;
     }
+
+    public void cerrarSesion() {
+        //TODO Revisar borrado toda la información guardada en las preferencias del usuario
+
+        //editor.clear();
+        //editor.commit();
+
+        //Redirecciona al inicio
+        Intent i = new Intent(context, Inicio.class);
+
+        //Cierra todas las actividades
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // Agrega una nueva bandera para empezar una nueva activida
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        // Empieza la nueva actividad
+        context.startActivity(i);
+
+    }
+
 }

@@ -17,14 +17,14 @@ public class DialogConfirmacionUnBoton extends DialogFragment {
     private String tituloDialog;
     private String mensajeDialog;
 
+    // Interfaz de comunicación
+    private DialogConfirmacionUnBotonComunicacion dialogConfirmacionUnBotonComunicacion;
+
     public DialogConfirmacionUnBoton() {
 
     }
 
-    // Interfaz de comunicación
-    ConfirmacionDialogUnBotonListener confirmacionDialogListener;
-
-    public interface ConfirmacionDialogUnBotonListener {
+    public interface DialogConfirmacionUnBotonComunicacion {
         void presionarBotonContinuar();
     }
 
@@ -44,7 +44,7 @@ public class DialogConfirmacionUnBoton extends DialogFragment {
         super.onCreate(savedInstanceState);
         tituloDialog = getArguments().getString("titulo");
         mensajeDialog = getArguments().getString("mensaje");
-        confirmacionDialogListener = (ConfirmacionDialogUnBotonListener) getActivity();
+        dialogConfirmacionUnBotonComunicacion = (DialogConfirmacionUnBotonComunicacion) getActivity();
     }
 
     @NonNull
@@ -67,7 +67,7 @@ public class DialogConfirmacionUnBoton extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                confirmacionDialogListener.presionarBotonContinuar();
+                                dialogConfirmacionUnBotonComunicacion.presionarBotonContinuar();
                             }
                         }).setCancelable(false);
 

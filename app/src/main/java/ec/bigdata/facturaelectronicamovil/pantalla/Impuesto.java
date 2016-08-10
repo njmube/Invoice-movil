@@ -40,9 +40,7 @@ import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class Impuesto extends AppCompatActivity implements DialogImpuestosICE.InterfaceDialogImpuestosICE {
-
-    private Toolbar toolbar;
+public class Impuesto extends AppCompatActivity implements DialogImpuestosICE.DialogImpuestosICEComunicacion {
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -88,23 +86,20 @@ public class Impuesto extends AppCompatActivity implements DialogImpuestosICE.In
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impuesto);
-        //Se gira la pantalla
+        //Se gira la pantalla modo horizontal-LANDSCAPE
         switch (getResources().getConfiguration().orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
 
         }
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
-        //Get a support ActionBar corresponding to this toolbar_compuesta
 
-        //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Get access to the custom title view
+
         TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
         tituloToolbar.setText(getResources().getString(R.string.titulo_impuesto));
 
@@ -127,7 +122,7 @@ public class Impuesto extends AppCompatActivity implements DialogImpuestosICE.In
         buttonAgregarImpuesto = (Button) findViewById(R.id.button_agregar_impuesto);
 
         //Cabecera
-        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.header_list_view_impuestos, listViewImpuestos, false);
+        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.cabecera_list_view_impuestos, listViewImpuestos, false);
 
         listViewImpuestos.addHeaderView(headerView, null, false);
 

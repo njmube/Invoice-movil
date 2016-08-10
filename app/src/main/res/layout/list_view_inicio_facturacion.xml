@@ -8,7 +8,7 @@
         android:id="@+id/text_view_titulo_componente_factura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/nombre_app"
         android:paddingTop="10dp"
         android:textAppearance="@android:style/TextAppearance.Holo.Large" />
 
@@ -19,7 +19,7 @@
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/nombre_app"
         android:src="@drawable/ic_check_circle" />
 
 </RelativeLayout>

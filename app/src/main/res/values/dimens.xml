@@ -5,9 +5,12 @@
     <!-- Medidas para diálogos-->
     <dimen name="dialog_body">24dp</dimen>
     <dimen name="padding_between">20dp</dimen>
-    <dimen name="edit_text_padding">16dp</dimen>
     <dimen name="normal_padding">8dp</dimen>
     <dimen name="button_padding">24dp</dimen>
-    <dimen name="circulo_padding">50dp</dimen>
-
+    <!--Círculo-->
+    <dimen name="circulo_padding">40dp</dimen>
+    <!--Caja de busqueda-->
+    <dimen name="search_box_padding">16dp</dimen>
+    <!--Botón flotante-->
+    <dimen name="boton_flotante">16dp</dimen>
 </resources>

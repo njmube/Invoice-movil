@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestComprobanteElectronico;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -94,30 +93,6 @@ public class Inicio extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        ClienteRestComprobanteElectronico.ServicioComprobanteElectronico servicioArchivo = ClienteRestComprobanteElectronico.getServicioComprobanteElectronico();
-      /*  Call<ResponseBody> responseBodyCall=servicioArchivo.archivo(description,body);
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    try {
-                        Toast.makeText(getApplicationContext(),""+response.body().string(),Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-
-                        Log.i("", response.body().toString());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("",t.getMessage());
-            }
-        });*/
 
     }
 

@@ -43,7 +43,7 @@ public class OpcionesRepositorio extends AppCompatActivity {
                 Intent intent = null;
                 switch (position) {
                     case 0:
-                        intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidos.class);
+                        intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidosAutorizados.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);
                         break;

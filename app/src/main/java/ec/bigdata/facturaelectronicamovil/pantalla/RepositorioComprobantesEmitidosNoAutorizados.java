@@ -7,16 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.adaptador.ArrayListEstados;
 import ec.bigdata.facturaelectronicamovil.adaptador.RecyclerViewAdapterRepositorioComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.modelo.ComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestRepositorioComprobanteElectronico;
@@ -62,13 +63,13 @@ public class RepositorioComprobantesEmitidosNoAutorizados extends AppCompatActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repositorio_comprobantes_emitidos_no_autorizados);
-        buttonFiltroBusqueda = (Button) findViewById(R.id.button_filtrar_busqueda);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_comprobantes_emitidos_noautorizados);
-        recyclerViewComprobantesEmitidosNoAutorizados = (RecyclerView) findViewById(R.id.recycler_view_comprobantes_emitidos_noautorizados);
+        buttonFiltroBusqueda = (Button) findViewById(R.id.button_filtrar_busqueda_no_autorizados);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_comprobantes_emitidos_no_autorizados);
+        recyclerViewComprobantesEmitidosNoAutorizados = (RecyclerView) findViewById(R.id.recycler_view_comprobantes_emitidos_no_autorizados);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tituloToolbar.setText(getResources().getString(R.string.titulo_repositorio_comprobantes_emitidos_noautorizados));
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
@@ -82,14 +83,16 @@ public class RepositorioComprobantesEmitidosNoAutorizados extends AppCompatActiv
             @Override
             public void onRefresh() {
 
-                Map<String, String> estados = new HashMap<String, String>();
-                estados.put("ESTADO", "1");
+
+                ArrayList<String> estados = new ArrayList<>();
+                estados.add("2");
+                ArrayListEstados arrayListEstados = new ArrayListEstados(estados);
                 VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS = VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS + VALOR_MAXIMO + 1;
                 Call<List<ComprobanteElectronico>> call = null;
                 if (existeFiltroBusqueda) {
-                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), estados, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
+                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), null, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
                 } else {
-                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), estados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
+                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), arrayListEstados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
                 }
                 call.enqueue(new Callback<List<ComprobanteElectronico>>() {
                     @Override
@@ -122,14 +125,16 @@ public class RepositorioComprobantesEmitidosNoAutorizados extends AppCompatActiv
     }
 
     private void reinicarValoresMaximos() {
-        VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS = 1;
+        VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS = 0;
         VALOR_MAXIMO = 2;
     }
 
     private void cargarComprobanteEmitidosAutorizados() {
-        Map<String, String> estados = new HashMap<String, String>();
-        estados.put("ESTADO", "1");
-        Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), estados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
+
+        ArrayList<String> estados = new ArrayList<>();
+        estados.add("2");
+        ArrayListEstados arrayListEstados = new ArrayListEstados(estados);
+        Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), arrayListEstados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_NO_AUTORIZADOS, VALOR_MAXIMO);
         call.enqueue(new Callback<List<ComprobanteElectronico>>() {
             @Override
             public void onResponse(Call<List<ComprobanteElectronico>> call, Response<List<ComprobanteElectronico>> response) {
@@ -147,5 +152,22 @@ public class RepositorioComprobantesEmitidosNoAutorizados extends AppCompatActiv
                 call.cancel();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 }

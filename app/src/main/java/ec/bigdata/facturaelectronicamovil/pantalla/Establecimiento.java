@@ -23,6 +23,7 @@ import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterSecuencial;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
 import ec.bigdata.facturaelectronicamovil.modelo.Secuencial;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestSecuencial;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
@@ -164,16 +165,18 @@ public class Establecimiento extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     JsonParser parser = new JsonParser();
-                    JsonObject o = null;
-                    String s = null;
+                    String contenido = null;
                     try {
-                        s = new String(response.body().bytes());
-                        o = parser.parse(s).getAsJsonObject();
-                        if (o.get("status").getAsBoolean() == true) {
+                        contenido = new String(response.body().bytes());
+                        JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                        if (jsonObject.get("estado").getAsBoolean() == true) {
+                            //TODO actualizar objeto
                             Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
                             intent.putExtra(String.valueOf(Codigos.CODIGO_ESTABLECIMIENTO_ACTUAL), establecimientoSecuencialSeleccionado);
                             setResult(RESULT_OK, intent);
                             finish();
+                        } else {
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, jsonObject.get("mensajeError").getAsString());
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -183,7 +186,7 @@ public class Establecimiento extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                call.cancel();
             }
         });
     }

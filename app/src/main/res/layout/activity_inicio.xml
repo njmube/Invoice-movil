@@ -3,17 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-
+    android:orientation="vertical"
     tools:context=".login.Inicio"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="20dp">
 
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:nestedScrollingEnabled="false">
     <Button
         android:id="@+id/button_validar_usuario_persona"
         style="?android:textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_account_box_black_48dp"
+        android:drawableTop="@drawable/ic_account_box_black_48dp"
         android:background="@color/colorBordeToastInfo"
         android:text="@string/boton_iniciar_sesion_persona"
         android:onClick="irInicioSesionPersona"
@@ -21,7 +33,7 @@
         android:layout_weight="1" />
 
     <Space
-        android:layout_width="10dp"
+        android:layout_width="20dp"
         android:layout_height="0dp">
 
     </Space>
@@ -36,8 +48,9 @@
         android:text="@string/boton_iniciar_sesion_empresa"
         android:onClick="irInicioSesionEmpresa"
         android:textStyle="bold"
-        android:drawableRight="@drawable/ic_work_black_48dp"
-        android:layout_weight="1" />
-
+        android:drawableTop="@drawable/ic_work_black_48dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
 </LinearLayout>

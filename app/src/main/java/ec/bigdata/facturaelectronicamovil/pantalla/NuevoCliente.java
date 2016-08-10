@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestCliente;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import ec.bigdata.utilidades.Validaciones;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -159,7 +159,7 @@ public class NuevoCliente extends AppCompatActivity {
                                         o = parser.parse(s).getAsJsonObject();
                                         if (o.get("status").getAsBoolean() == true) {
 
-                                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "Cliente guardado.");
+                                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Cliente guardado.");
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -180,12 +180,12 @@ public class NuevoCliente extends AppCompatActivity {
                             }
                         });
                     } else {
-                        Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores);
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
                     }
 
                 } else {
 
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores);
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
                 }
             }
         });
@@ -265,7 +265,7 @@ public class NuevoCliente extends AppCompatActivity {
             if (result.equals(Boolean.FALSE)) {
                 if (!errores.equals("")) {
 
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores);
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
                 }
             }
         }

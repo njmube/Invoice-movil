@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,9 +21,9 @@ import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterInformacionAdicional;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 
 public class InformacionAdicional extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -82,7 +83,7 @@ public class InformacionAdicional extends AppCompatActivity implements Validator
         listViewDetallesAdicionales = (ListView) findViewById(R.id.list_view_informacion_adicional);
 
         //Cabecera
-        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.header_list_view_informacion_adicional, listViewDetallesAdicionales, false);
+        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.cabecera_list_view_informacion_adicional, listViewDetallesAdicionales, false);
 
         listViewDetallesAdicionales.addHeaderView(headerView, null, false);
 
@@ -129,7 +130,7 @@ public class InformacionAdicional extends AppCompatActivity implements Validator
             informacionAdicionalList.add(informacionAdicional);
             arrayAdapterInformacionAdicional.notifyDataSetChanged();
         } else {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "El máximo es de 15 detalles en información adicional por comprobante.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El máximo es de 15 detalles en información adicional por comprobante.");
         }
     }
 
@@ -144,8 +145,25 @@ public class InformacionAdicional extends AppCompatActivity implements Validator
                 ((EditText) view).setError(message);
             } else {
 
-                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, message);
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 }

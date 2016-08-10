@@ -19,6 +19,7 @@ public class ArrayAdapterImpuestoComprobante<T> extends ArrayAdapter<ImpuestoCom
 
     public ArrayAdapterImpuestoComprobante(Context context, List<ImpuestoComprobanteElectronico> objects) {
         super(context, 0, objects);
+
     }
 
     @Override
@@ -35,12 +36,12 @@ public class ArrayAdapterImpuestoComprobante<T> extends ArrayAdapter<ImpuestoCom
         if (null == convertView) {
             //Si no existe, entonces inflarlo
             listItemView = inflater.inflate(
-                    R.layout.list_view_impuesto,
+                    R.layout.estilo_list_view_impuesto,
                     parent,
                     false);
         }
 
-        //Obteniendo instancias de los text views
+        //Obteniendo instancias de los TextView
         TextView codigo = (TextView) listItemView.findViewById(R.id.text_view_codigo_impuesto);
 
         TextView codigoPorcentaje = (TextView) listItemView.findViewById(R.id.text_view_codigo_porcentaje_impuesto);

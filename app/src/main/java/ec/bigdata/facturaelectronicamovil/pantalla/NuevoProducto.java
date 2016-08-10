@@ -24,9 +24,9 @@ import java.util.concurrent.ExecutionException;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.modelo.Producto;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -151,7 +151,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
                             if (o.get("status").getAsBoolean() == true) {
 
 
-                                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "Producto guardado.");
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Producto guardado.");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -162,7 +162,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Error al guardar el producto.");
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Error al guardar el producto.");
                 }
             });
         }
@@ -178,7 +178,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
             } else {
-                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, message);
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
             }
         }
     }
@@ -228,7 +228,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
             super.onPostExecute(result);
             if (result.equals(Boolean.FALSE)) {
                 if (!errores.equals("")) {
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores);
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
                 }
             }
         }

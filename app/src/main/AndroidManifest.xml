@@ -6,23 +6,62 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <permission
+        android:name="ec.bigdata.facturaelectronicamovil.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="ec.bigdata.facturaelectronicamovil.permission.C2D_MESSAGE" />
 
     <application
         android:name=".utilidad.ClaseGlobalUsuario"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/nombre_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".login.Inicio"
-            android:label="@string/app_name">
+            android:label="@string/nombre_app">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- GCM Receiver -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="ec.bigdata.facturaelectronicamovil" />
+            </intent-filter>
+        </receiver>
+
+        <!-- GCM Receiver Service -->
+        <service
+            android:name=".gcm.GCMPushReceiverService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <!-- GCM Registration Intent Service -->
+        <service
+            android:name=".gcm.GCMRegistrationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".login.LoginEmpresaActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -119,12 +158,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
-            android:name=".contentprovider.ContentProviderPDF"
+            android:name=".contentprovider.ContentProviderArchivo"
             android:authorities="ec.bigdata.facturaelectronicamovil.contentprovider"
             android:exported="true" />
 
         <activity
-            android:name=".pantalla.RepositorioComprobantesEmitidos"
+            android:name=".pantalla.RepositorioComprobantesEmitidosAutorizados"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -139,11 +178,23 @@
             android:name=".pantalla.FiltroRangoFechas"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pantalla.Test" />
+        <activity
+            android:name=".pantalla.Test"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pantalla.RepositorioComprobantesEmitidosNoAutorizados"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".recyclerview.AdministracionClientesActividad"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantalla.CorreosAdicionalesCliente"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".pantalla.Pago"></activity>
     </application>
 
 </manifest>

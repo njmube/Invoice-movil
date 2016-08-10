@@ -17,15 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.login.Inicio;
 import ec.bigdata.facturaelectronicamovil.modelo.Recurso;
 import ec.bigdata.facturaelectronicamovil.pantalla.OpcionesFacturacion;
 import ec.bigdata.facturaelectronicamovil.pantalla.OpcionesRepositorio;
 import ec.bigdata.facturaelectronicamovil.pantalla.PerfilEmpresa;
 import ec.bigdata.facturaelectronicamovil.pantalla.PerfilUsuario;
 import ec.bigdata.facturaelectronicamovil.pantalla.Test;
+import ec.bigdata.facturaelectronicamovil.recyclerview.AdministracionClientesActividad;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestPantallas;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
+import ec.bigdata.facturaelectronicamovil.utilidad.PreferenciasUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,14 +34,16 @@ import retrofit2.Response;
 
 
 public class NavigationDrawer extends AppCompatActivity {
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
-    Toolbar toolbar;
-    ActionBar actionBar;
-    TextView textView;
-    ClaseGlobalUsuario claseGlobalUsuario;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
+    private TextView textViewUsuarioActual;
+    private TextView textViewTitulo;
+    private ClaseGlobalUsuario claseGlobalUsuario;
     private Menu menu;
     private List<MenuItem> menuItems;
+    private PreferenciasUsuario preferenciasUsuario;
 
 
     @Override
@@ -49,6 +52,7 @@ public class NavigationDrawer extends AppCompatActivity {
         setContentView(R.layout.activity_navigation_drawer);
 
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
+        preferenciasUsuario = new PreferenciasUsuario(getApplicationContext());
 
         menuItems = new ArrayList<>();
 
@@ -57,9 +61,9 @@ public class NavigationDrawer extends AppCompatActivity {
 
         View header = navigationView.getHeaderView(0);
 
-        textView = (TextView) header.findViewById(R.id.text_view_usuario_actual);
+        textViewUsuarioActual = (TextView) header.findViewById(R.id.text_view_usuario_actual);
 
-        textView.setText(claseGlobalUsuario.getNombreUsuario());
+        textViewUsuarioActual.setText(claseGlobalUsuario.getNombreUsuario());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
@@ -94,7 +98,6 @@ public class NavigationDrawer extends AppCompatActivity {
                             @Override
                             public void run() {
                                 for (int temp = 0; temp < pantallasPorPerfil.size(); temp++) {
-                                    //drawerMenu.add(0, 1, Menu.NONE, R.string.app_name).setIcon(R.drawable.ic_home_black_24dp);
                                     menu.add(0, pantallasPorPerfil.get(temp).getIdRecurso(), Menu.NONE, pantallasPorPerfil.get(temp).getNombreRecurso()).setIcon(getResources().getIdentifier(pantallasPorPerfil.get(temp).getIcono(), "drawable", getPackageName()));
                                     menuItems.add(menu.getItem(temp));
                                 }
@@ -107,7 +110,7 @@ public class NavigationDrawer extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Recurso>> call, Throwable t) {
 
-                listCall.cancel();
+                call.cancel();
             }
         });
 
@@ -124,6 +127,7 @@ public class NavigationDrawer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = null;
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -138,9 +142,7 @@ public class NavigationDrawer extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.item_otra_opcion_salir:
-                intent = new Intent(this, Inicio.class);
-                startActivity(intent);
-                finish();
+                preferenciasUsuario.cerrarSesion();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -152,18 +154,17 @@ public class NavigationDrawer extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent intent = null;
-                        textView = (TextView) findViewById(R.id.text_view_titulo);
+                        textViewTitulo = (TextView) findViewById(R.id.text_view_titulo);
                         int position = menuItems.indexOf(menuItem) + 1;
                         switch (position) {
                             case 1:
                                 menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
+                                // textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
-
                                 return true;
                             case 2:
                                 menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
+                                //textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 intent = new Intent(getApplicationContext(), OpcionesFacturacion.class);
                                 startActivity(intent);
@@ -178,28 +179,28 @@ public class NavigationDrawer extends AppCompatActivity {
                                 return true;
                             case 4:
                                 menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                intent = new Intent(getApplicationContext(), PerfilUsuario.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                                return true;
-                            case 5:
-                                menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
+                                //textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 intent = new Intent(getApplicationContext(), Test.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
+                            case 5:
+                                menuItem.setChecked(true);
+                                // textViewTitulo.setText(menuItem.getTitle());
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                intent = new Intent(getApplicationContext(), AdministracionClientesActividad.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                return true;
                             case 6:
                                 menuItem.setChecked(true);
-                                textView.setText(menuItem.getTitle());
+                                //textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.item_no_definida:
                             case R.id.item_salir:
-                                finish();
+                                preferenciasUsuario.cerrarSesion();
                                 return true;
 
                         }

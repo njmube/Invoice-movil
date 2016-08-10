@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.CorreosAdicionalesCliente">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/text_view_cliente_asociado_correos_adicionales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        autofit:minTextSize="10sp"
+        android:maxLines="2"
+        android:textStyle="bold"
+        android:text="@string/nombre_app"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_text_correo_adicional_cliente"
+            style="@style/Correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sugerencia_correo_cliente"
+            android:imeActionLabel="@string/etiqueta_siguiente_componente"
+            android:imeOptions="actionUnspecified"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_agregar_correo_adicional"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_agregar"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/list_view_correos_adicionales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1dp"
+        android:padding="@dimen/normal_padding"></ListView>
+
+
+</LinearLayout>

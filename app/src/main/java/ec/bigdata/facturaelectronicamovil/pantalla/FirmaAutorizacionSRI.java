@@ -42,7 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FirmaAutorizacionSRI extends AppCompatActivity implements
-        DialogConfirmacion.ConfirmacionDialogListener, DialogConfirmacionUnBoton.ConfirmacionDialogUnBotonListener {
+        DialogConfirmacion.DialogConfirmacionComunicacion, DialogConfirmacionUnBoton.DialogConfirmacionUnBotonComunicacion {
 
     private ComprobanteElectronico comprobanteElectronico;
 
@@ -73,7 +73,7 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
         //Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
 
         tituloToolbar.setText(getResources().getString(R.string.titulo_firma_autorizacion_sri));
 
@@ -98,8 +98,8 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
             public void onClick(View v) {
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 dialogFragmentConfirmacionFirmaAutorizacionSRI = DialogConfirmacion.newInstance(
-                        getResources().getString(R.string.titulo_continuar_firma_autorizacion_sri),
-                        getResources().getString(R.string.mensaje_continuar_firma_autorizacion_sri));
+                        getResources().getString(R.string.titulo_confirmacion),
+                        getResources().getString(R.string.mensaje_continuar_firma_autorizacion_sri), Boolean.FALSE);
                 dialogFragmentConfirmacionFirmaAutorizacionSRI.show(fragmentManager, "DialogConfirmacion");
             }
         });
@@ -187,7 +187,7 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                call.cancel();
                 progressDialog.dismiss();
 
 

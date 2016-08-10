@@ -12,36 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/text_view_impuesto"
-            style="@style/TextMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etiqueta_tipo_impuesto" />
+    <TextView
+        android:id="@+id/text_view_impuesto"
+        style="@style/TextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_tipo_impuesto" />
 
-        <Spinner
-            android:id="@+id/spinner_tipos_impuestos"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:prompt="@string/etiqueta_seleccione_impuesto"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:spinnerMode="dialog" />
+    <Spinner
+        android:id="@+id/spinner_tipos_impuestos"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:prompt="@string/etiqueta_seleccione_impuesto"
+        android:spinnerMode="dialog" />
 
-        <TextView
-            android:id="@+id/text_view_tarifas_impuestos"
-            style="@style/TextMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etiqueta_tarifa_impuesto" />
+    <TextView
+        android:id="@+id/text_view_tarifas_impuestos"
+        style="@style/TextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_tarifa_impuesto" />
 
-        <Spinner
-            android:id="@+id/spinner_tarifas_impuestos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:prompt="@string/etiqueta_seleccione_tarifa_impuesto"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:spinnerMode="dialog" />
+    <Spinner
+        android:id="@+id/spinner_tarifas_impuestos"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/etiqueta_seleccione_tarifa_impuesto"
+        android:spinnerMode="dialog" />
 
     <Button
         android:id="@+id/button_agregar_impuesto"
@@ -57,6 +57,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:divider="@color/colorPrimary"
-        android:dividerHeight="2dp"></ListView>
+        android:dividerHeight="1dp"></ListView>
 
 </LinearLayout>

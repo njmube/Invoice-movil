@@ -1,4 +1,4 @@
-package ec.bigdata.facturaelectronicamovil.utilidad;
+package ec.bigdata.facturaelectronicamovil.personalizacion;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -12,7 +12,7 @@ import ec.bigdata.facturaelectronicamovil.R;
 /**
  * Created by DavidLeonardo on 21/6/2016.
  */
-public class Personalizacion {
+public class MensajePersonalizado {
 
     public static final int TOAST_INFORMACION = 1;
     public static final int TOAST_ADVERTENCIA = 2;

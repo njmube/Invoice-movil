@@ -55,7 +55,7 @@ public class FiltroBusquedaRepositorio extends AppCompatActivity {
         buttonAplicarFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidos.class);
+                Intent intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidosAutorizados.class);
                 intent.putExtra(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_SECUENCIAL), secuencialSeleccionado);
                 intent.putExtra(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_RECEPTOR), identificacionReceptorSeleccionado);
                 intent.putExtra(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_TIPO_COMPROBANTE), tipoComprobanteSeleccionado);
@@ -78,7 +78,7 @@ public class FiltroBusquedaRepositorio extends AppCompatActivity {
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         tituloToolbar.setText(getResources().getString(R.string.titulo_filtro_busqueda_comprobantes));
         textViewMensajePeriodoFechasSeleccionado = (TextView) findViewById(R.id.text_view_periodo_fechas_seleccionado);
         spinnerPeriodoFechas = (Spinner) findViewById(R.id.spinner_periodo_fechas);
@@ -90,7 +90,7 @@ public class FiltroBusquedaRepositorio extends AppCompatActivity {
         String tiposComprobanteArrayString[] = new String[6];
         spinnerTiposComprobante = (Spinner) findViewById(R.id.spinner_tipos_comprobante);
         LinkedHashMap<String, String> tiposComprobante = claseGlobalUsuario.getTiposComprobantes();
-        int i = 0;
+        int i = 1;
         tiposComprobanteArrayString[0] = "Todos";
         for (Map.Entry<String, String> entry : tiposComprobante.entrySet()) {
             tiposComprobanteArrayString[i] = entry.getKey();
@@ -209,7 +209,7 @@ public class FiltroBusquedaRepositorio extends AppCompatActivity {
                 if (data != null) {
                     fechaInicio = (Date) (data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_FECHA_INICIO)));
                     fechaFin = (Date) (data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_FECHA_FINAL)));
-                    textViewMensajePeriodoFechasSeleccionado.setText("Periodo personalizado:" + ec.bigdata.utilidades.Utilidades.obtenerFechaFormatoddMMyyyy(fechaInicio) + "-:" + ec.bigdata.utilidades.Utilidades.obtenerFechaFormatoddMMyyyy(fechaFin));
+                    textViewMensajePeriodoFechasSeleccionado.setText("Periodo personalizado:" + ec.bigdata.utilidades.Utilidades.obtenerFechaFormatoddMMyyyy(fechaInicio) + "-" + ec.bigdata.utilidades.Utilidades.obtenerFechaFormatoddMMyyyy(fechaFin));
                 }
             }
         }
@@ -229,7 +229,7 @@ public class FiltroBusquedaRepositorio extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidos.class);
+        Intent intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidosAutorizados.class);
         setResult(RESULT_CANCELED, intent);
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);

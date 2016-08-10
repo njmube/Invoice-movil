@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 /**
  * Created by DavidLeonardo on 22/6/2016.
  */
-public class ContentProviderPDF extends ContentProvider {
+public class ContentProviderArchivo extends ContentProvider {
     @Override
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File privateFile = new File(getContext().getFilesDir(), uri.getPath());

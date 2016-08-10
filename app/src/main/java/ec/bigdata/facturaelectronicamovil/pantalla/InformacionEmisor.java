@@ -20,10 +20,9 @@ import java.io.IOException;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
-import ec.bigdata.facturaelectronicamovil.interfaz.ServicioEmpresa;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestEmpresa;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,7 +58,7 @@ public class InformacionEmisor extends AppCompatActivity {
 
     private String llevaContabilidad;
 
-    private ServicioEmpresa clienteRestEmpresa;
+    private ClienteRestEmpresa.ServicioEmpresa clienteRestEmpresa;
 
     private boolean validadoInformacionTributaria;
 
@@ -221,7 +220,7 @@ public class InformacionEmisor extends AppCompatActivity {
             });
 
         } else {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores_edicion_info_tributaria);
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores_edicion_info_tributaria);
 
         }
     }

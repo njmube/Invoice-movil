@@ -7,7 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -16,10 +18,10 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestCliente;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import ec.bigdata.utilidades.Validaciones;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,7 +32,11 @@ public class ActualizacionCliente extends AppCompatActivity {
 
     private EditText editTextIdentificacionCliente;
 
-    private EditText editTextRazonSocialNombresApellidosCliente;
+    private EditText editTextNombreslCliente;
+
+    private EditText editTextApellidosCliente;
+
+    private EditText editTextRazonSocialCliente;
 
     private EditText editTextDireccionCliente;
 
@@ -38,9 +44,13 @@ public class ActualizacionCliente extends AppCompatActivity {
 
     private EditText editTextTelefonoCliente;
 
+    private Switch switchEstadoCliente;
+
     private Toolbar toolbar;
 
     private Button buttonActualizarCliente;
+
+    private Button buttonCorreosAdicionales;
 
     private Button buttonContinuar;
 
@@ -54,16 +64,30 @@ public class ActualizacionCliente extends AppCompatActivity {
 
     private ec.bigdata.facturaelectronicamovil.modelo.Cliente clienteSeleccionado;
 
+    private boolean clienteActualizado;
+
+    private String identificacionCliente;
+    private String nombre;
+    private String apellido;
+    private String razonSocial;
+    private String direccion;
+    private String correo;
+    private String telefono;
+    private boolean estadoCliente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizacion_cliente);
 
         editTextIdentificacionCliente = (EditText) findViewById(R.id.edit_text_identificacion_edicion_cliente);
-        editTextRazonSocialNombresApellidosCliente = (EditText) findViewById(R.id.edit_text_nombres_razon_social_edicion_cliente);
+        editTextNombreslCliente = (EditText) findViewById(R.id.edit_text_nombres_edicion_cliente);
+        editTextApellidosCliente = (EditText) findViewById(R.id.edit_text_apellidos_edicion_cliente);
+        editTextRazonSocialCliente = (EditText) findViewById(R.id.edit_text_razon_social_edicion_cliente);
         editTextDireccionCliente = (EditText) findViewById(R.id.edit_text_direccion_edicion_cliente);
         editTextCorreoCliente = (EditText) findViewById(R.id.edit_text_correo_edicion_cliente);
         editTextTelefonoCliente = (EditText) findViewById(R.id.edit_text_telefono_edicion_cliente);
+        switchEstadoCliente = (Switch) findViewById(R.id.switch_estado_cliente);
         buttonActualizarCliente = (Button) findViewById(R.id.button_actualizar_cliente);
         toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
@@ -81,12 +105,28 @@ public class ActualizacionCliente extends AppCompatActivity {
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         servicioCliente = ClienteRestCliente.getServicioCliente();
         //Se recupera el cliente enviado
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             clienteSeleccionado = (ec.bigdata.facturaelectronicamovil.modelo.Cliente) bundle.getSerializable(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO));
             editTextIdentificacionCliente.setText(clienteSeleccionado.getIdentificacionCliente());
-            editTextRazonSocialNombresApellidosCliente.setText(clienteSeleccionado.getNombreCliente());
+
+            switchEstadoCliente.setChecked(clienteSeleccionado.isEstadoCliente());
+            if (clienteSeleccionado.isEstadoCliente()) {
+                switchEstadoCliente.setTextOn("ACTIVO");
+            } else {
+                switchEstadoCliente.setTextOff("ACTIVO");
+            }
+            estadoCliente = clienteSeleccionado.isEstadoCliente();
+            if (clienteSeleccionado.getTipoCliente()) {//Cliente true, Proveedor false
+                editTextNombreslCliente.setText(clienteSeleccionado.getNombreCliente());
+                editTextApellidosCliente.setText(clienteSeleccionado.getApellidoCliente());
+                editTextNombreslCliente.setVisibility(View.VISIBLE);
+                editTextApellidosCliente.setVisibility(View.VISIBLE);
+            } else {
+                editTextRazonSocialCliente.setText(clienteSeleccionado.getRazonSocialCliente());
+                editTextRazonSocialCliente.setVisibility(View.VISIBLE);
+            }
+
             editTextDireccionCliente.setText(clienteSeleccionado.getDireccionCliente());
             editTextCorreoCliente.setText(clienteSeleccionado.getCorreoElectronicoCliente());
             editTextTelefonoCliente.setText(clienteSeleccionado.getTelefonoCliente());
@@ -101,10 +141,37 @@ public class ActualizacionCliente extends AppCompatActivity {
         buttonContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Cliente.class);
-                intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO_ACTUALIZADO), clienteSeleccionado);
-                setResult(RESULT_OK, intent);
+                Intent intent = new Intent(getApplicationContext(), getCallingActivity().getClass());
+                intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_ACTUALIZADO), clienteSeleccionado);
+                if (clienteActualizado) {
+                    setResult(RESULT_OK, intent);
+                } else {
+                    setResult(RESULT_CANCELED, intent);
+                }
                 finish();
+            }
+        });
+
+        switchEstadoCliente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    estadoCliente = Boolean.TRUE;
+                    switchEstadoCliente.setTextOn("ACTIVO");
+                } else {
+                    estadoCliente = Boolean.FALSE;
+                    switchEstadoCliente.setTextOn("INACTIVO");
+                }
+            }
+        });
+        buttonCorreosAdicionales = (Button) findViewById(R.id.button_correos_adicionales_cliente);
+        buttonCorreosAdicionales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CorreosAdicionalesCliente.class);
+                intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO), clienteSeleccionado);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
     }
@@ -120,9 +187,7 @@ public class ActualizacionCliente extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             ec.bigdata.facturaelectronicamovil.modelo.Cliente cliente = response.body();
                             if (cliente != null) {
-
-                                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "La identificación está siendo usada por otro cliente");
-
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "La identificación está siendo usada por otro cliente.");
 
                             } else {
                                 validadoIdentificacionCliente = true;
@@ -132,7 +197,7 @@ public class ActualizacionCliente extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ec.bigdata.facturaelectronicamovil.modelo.Cliente> call, Throwable t) {
-
+                        call.cancel();
                     }
                 });
             } else {
@@ -157,7 +222,7 @@ public class ActualizacionCliente extends AppCompatActivity {
                             ec.bigdata.facturaelectronicamovil.modelo.Cliente cliente = response.body();
                             if (cliente != null) {
 
-                                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "El correo electrónico está siendo usada por otro cliente");
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "El correo electrónico está siendo usada por otro cliente.");
 
                             } else {
                                 validadoCorreoCliente = true;
@@ -167,7 +232,7 @@ public class ActualizacionCliente extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ec.bigdata.facturaelectronicamovil.modelo.Cliente> call, Throwable t) {
-
+                        call.cancel();
                     }
                 });
             } else {
@@ -179,20 +244,38 @@ public class ActualizacionCliente extends AppCompatActivity {
     }
 
     private void actualizarCliente() {
-        String identificacion_cliente = "";
-        String nombres = "";
-        String direccion = "";
-        String correo = "";
-        String telefono = "";
+        identificacionCliente = "";
+        nombre = "";
+        apellido = "";
+        razonSocial = "";
+        direccion = "";
+        correo = "";
+        telefono = "";
         if (validarIdentificacion() && validarCorreoPrincipal()) {
 
-            identificacion_cliente = editTextIdentificacionCliente.getText().toString();
+            identificacionCliente = editTextIdentificacionCliente.getText().toString();
             correo = editTextCorreoCliente.getText().toString();
 
-            if (!editTextRazonSocialNombresApellidosCliente.getText().toString().trim().equals("")) {
-                nombres = editTextRazonSocialNombresApellidosCliente.getText().toString();
+            if (clienteSeleccionado.getTipoCliente()) {
+                if (!editTextNombreslCliente.getText().toString().trim().equals("")) {
+                    nombre = editTextNombreslCliente.getText().toString();
+                } else {
+                    nombre = clienteSeleccionado.getNombreCliente();
+                }
+
+                if (!editTextApellidosCliente.getText().toString().trim().equals("")) {
+                    apellido = editTextApellidosCliente.getText().toString();
+                } else {
+                    apellido = clienteSeleccionado.getApellidoCliente();
+                }
+
             } else {
-                nombres = clienteSeleccionado.getNombreCliente();
+
+                if (!editTextRazonSocialCliente.getText().toString().trim().equals("")) {
+                    razonSocial = editTextRazonSocialCliente.getText().toString();
+                } else {
+                    razonSocial = clienteSeleccionado.getRazonSocialCliente();
+                }
             }
             if (!editTextDireccionCliente.getText().toString().trim().equals("")) {
                 direccion = editTextDireccionCliente.getText().toString();
@@ -206,21 +289,30 @@ public class ActualizacionCliente extends AppCompatActivity {
                 telefono = clienteSeleccionado.getTelefonoCliente() != null && !clienteSeleccionado.getTelefonoCliente().trim().equals("") ? clienteSeleccionado.getTelefonoCliente() : "";
             }
             Call<ResponseBody> responseBodyCall =
-                    servicioCliente.actualizarCliente(clienteSeleccionado.getIdentificacionCliente(),
-                            identificacion_cliente, claseGlobalUsuario.getIdEmpresa(), nombres, direccion, telefono, correo);
+                    servicioCliente.actualizarCliente(clienteSeleccionado);
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        JsonParser parser = new JsonParser();
-                        JsonObject o = null;
-                        String s = null;
+                        String contenido = null;
                         try {
-                            s = new String(response.body().bytes());
-                            o = parser.parse(s).getAsJsonObject();
-                            if (o.get("status").getAsBoolean() == true) {
-                                //TODO Refrescar objeto cliente actualizado.
-                                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "Cliente actualizado.");
+                            contenido = new String(response.body().bytes());
+                            JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                            if (jsonObject.get("estado").getAsBoolean() == true) {
+                                clienteActualizado = true;
+                                clienteSeleccionado.setIdentificacionCliente(identificacionCliente);
+                                clienteSeleccionado.setCorreoElectronicoCliente(correo);
+                                clienteSeleccionado.setDireccionCliente(direccion);
+                                clienteSeleccionado.setTelefonoCliente(telefono);
+                                clienteSeleccionado.setEstadoCliente(estadoCliente);
+                                if (clienteSeleccionado.getTipoCliente()) {
+                                    clienteSeleccionado.setNombreCliente(nombre);
+                                    clienteSeleccionado.setApellidoCliente(apellido);
+                                } else {
+                                    clienteSeleccionado.setRazonSocialCliente(razonSocial);
+                                }
+
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Cliente actualizado.");
 
                             }
                         } catch (IOException e) {
@@ -231,8 +323,8 @@ public class ActualizacionCliente extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Error al actualizar el cliente.");
+                    call.cancel();
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Error al actualizar el cliente.");
 
 
                 }

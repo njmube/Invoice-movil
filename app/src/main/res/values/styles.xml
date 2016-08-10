@@ -1,13 +1,20 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Base.AppTheme">
+
+    </style>
+    <!-- Tema base-->
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Tema personalizado-->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="dropDownListViewStyle">@style/estiloMenu</item>
+        <!--Action mode sobre la toolbar-->
+        <item name="windowActionModeOverlay">true</item>
+        <!--Color de fondo action mode-->
+        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
 
     </style>
 
@@ -63,10 +70,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!--style name="estiloSpinner" parent="android:Widget.Spinner.DropDown">
-        <item name="android:divider">@color/colorPrimary</item>
-        <item name="android:dividerHeight">2dp</item>
-    </style-->
     <style name="estiloMenu" parent="android:Widget.ListView.DropDown">
         <item name="android:listSelector">@drawable/seleccion_menu</item>
     </style>

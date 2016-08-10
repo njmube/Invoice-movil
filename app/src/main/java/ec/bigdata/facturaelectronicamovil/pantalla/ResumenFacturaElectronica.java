@@ -30,9 +30,9 @@ import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.ImpuestoComprob
 import ec.bigdata.comprobanteelectronico.esquema.factura.InformacionFactura;
 import ec.bigdata.comprobanteelectronico.esquema.implementacion.ImplementacionFactura;
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.utilidad.Calculos;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 
 public class ResumenFacturaElectronica extends AppCompatActivity {
 
@@ -89,10 +89,9 @@ public class ResumenFacturaElectronica extends AppCompatActivity {
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
 
         tituloToolbar.setText(getResources().getString(R.string.titulo_resumen_factura));
-
 
         textViewSubTotal12 = (TextView) findViewById(R.id.text_view_valor_subtotal_12);
 
@@ -141,7 +140,7 @@ public class ResumenFacturaElectronica extends AppCompatActivity {
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 } else {
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Por favor verificar el PDF-RIDE.");
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Por favor verificar el PDF-RIDE.");
 
                 }
             }
@@ -290,7 +289,7 @@ public class ResumenFacturaElectronica extends AppCompatActivity {
                 File fileDestino = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "RIDES_FACTURA_ELECTRONICA" + File.separator + nombreDocumentoPDF);
                 try {
                     ec.bigdata.facturaelectronicamovil.utilidad.Utilidades.exportFile(fileOrigen, fileDestino);
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "El PDF se copió en la siguiente ruta: /Descargas/RIDES_FACTURA_ELECTRONICA/" + nombreDocumentoPDF);
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "El PDF se copió en la siguiente ruta: /Descargas/RIDES_FACTURA_ELECTRONICA/" + nombreDocumentoPDF);
 
                 } catch (IOException e) {
                     e.printStackTrace();

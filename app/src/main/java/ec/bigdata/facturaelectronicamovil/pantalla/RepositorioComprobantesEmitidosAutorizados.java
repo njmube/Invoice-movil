@@ -12,12 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.adaptador.ArrayListEstados;
 import ec.bigdata.facturaelectronicamovil.adaptador.RecyclerViewAdapterRepositorioComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.modelo.ComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestRepositorioComprobanteElectronico;
@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RepositorioComprobantesEmitidos extends AppCompatActivity {
+public class RepositorioComprobantesEmitidosAutorizados extends AppCompatActivity {
 
     private RecyclerView recyclerViewComprobantesEmitidosAutorizados;
 
@@ -62,35 +62,39 @@ public class RepositorioComprobantesEmitidos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repositorio_comprobantes_emitidos);
+        setContentView(R.layout.activity_repositorio_comprobantes_emitidos_autorizados);
         buttonFiltroBusqueda = (Button) findViewById(R.id.button_filtrar_busqueda);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_comprobantes_emitidos);
         recyclerViewComprobantesEmitidosAutorizados = (RecyclerView) findViewById(R.id.recycler_view_comprobantes_emitidos);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerViewComprobantesEmitidosAutorizados.setLayoutManager(layoutManager);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tituloToolbar.setText(getResources().getString(R.string.titulo_repositorio_comprobantes_emitidos_autorizados));
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         servicioRepositorioComprobanteElectronico = ClienteRestRepositorioComprobanteElectronico.getServicioRepositorioComprobanteElectronico();
-        layoutManager = new LinearLayoutManager(this);
-        recyclerViewComprobantesEmitidosAutorizados.setLayoutManager(layoutManager);
+
         reinicarValoresMaximos();
         cargarComprobanteEmitidosAutorizados();
+
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_dark, android.R.color.holo_blue_dark, android.R.color.holo_green_dark);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                Map<String, String> estados = new HashMap<String, String>();
-                estados.put("ESTADO", "1");
+                ArrayList<String> estados = new ArrayList<>();
+                estados.add("1");
+                ArrayListEstados arrayListEstados = new ArrayListEstados(estados);
                 VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS = VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS + VALOR_MAXIMO + 1;
                 Call<List<ComprobanteElectronico>> call = null;
                 if (existeFiltroBusqueda) {
-                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), estados, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
+                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), arrayListEstados, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
                 } else {
-                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), estados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
+                    call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), null, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
                 }
                 call.enqueue(new Callback<List<ComprobanteElectronico>>() {
                     @Override
@@ -122,14 +126,15 @@ public class RepositorioComprobantesEmitidos extends AppCompatActivity {
     }
 
     private void reinicarValoresMaximos() {
-        VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS = 1;
+        VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS = 0;
         VALOR_MAXIMO = 2;
     }
 
     private void cargarComprobanteEmitidosAutorizados() {
-        Map<String, String> estados = new HashMap<String, String>();
-        estados.put("ESTADO", "1");
-        Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), estados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
+        ArrayList<String> estados = new ArrayList<>();
+        estados.add("1");
+        ArrayListEstados arrayListEstados = new ArrayListEstados(estados);
+        Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresa(claseGlobalUsuario.getIdEmpresa(), arrayListEstados, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
         call.enqueue(new Callback<List<ComprobanteElectronico>>() {
             @Override
             public void onResponse(Call<List<ComprobanteElectronico>> call, Response<List<ComprobanteElectronico>> response) {
@@ -154,8 +159,9 @@ public class RepositorioComprobantesEmitidos extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Codigos.CODIGO_FILTRO_BUSQUEDA) {
             if (resultCode == RESULT_OK) {
-                Map<String, String> estados = new HashMap<String, String>();
-                estados.put("ESTADO", "1");
+                ArrayList<String> estados = new ArrayList<>();
+                estados.add("1");
+                ArrayListEstados arrayListEstados = new ArrayListEstados(estados);
                 existeFiltroBusqueda = true;
                 if (data != null) {
                     reinicarValoresMaximos();
@@ -164,7 +170,7 @@ public class RepositorioComprobantesEmitidos extends AppCompatActivity {
                     tipoComprobanteSeleccionado = data.getExtras().getString(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_TIPO_COMPROBANTE));
                     fechaInicio = (Date) data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_FECHA_INICIO));
                     fechaFin = (Date) data.getExtras().getSerializable(String.valueOf(Codigos.CODIGO_FILTRO_BUSQUEDA_FECHA_FINAL));
-                    Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), estados, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
+                    Call<List<ComprobanteElectronico>> call = servicioRepositorioComprobanteElectronico.obtenerComprobantesElectronicosEmitidosPorEmpresaPorFiltroBusqueda(claseGlobalUsuario.getIdEmpresa(), arrayListEstados, fechaInicio, fechaFin, tipoComprobanteSeleccionado, secuencialSeleccionado, identificacionReceptorSeleccionado, VALOR_MINIMO_CONSULTA_COMPROBANTES_EMITIDOS_AUTORIZADOS, VALOR_MAXIMO);
                     call.enqueue(new Callback<List<ComprobanteElectronico>>() {
                         @Override
                         public void onResponse(Call<List<ComprobanteElectronico>> call, Response<List<ComprobanteElectronico>> response) {

@@ -11,16 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
-import ec.bigdata.facturaelectronicamovil.interfaz.ServicioEmpresa;
 import ec.bigdata.facturaelectronicamovil.menu.NavigationDrawer;
 import ec.bigdata.facturaelectronicamovil.modelo.ClienteEmpresa;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestEmpresa;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
+import ec.bigdata.facturaelectronicamovil.utilidad.PreferenciasUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.ResourceUtils;
 import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import retrofit2.Call;
@@ -39,58 +40,69 @@ public class LoginEmpresaActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    PreferenciasUsuario preferenciasUsuario;
+
+    private String nombreUsuario;
+    private String claveUsuario;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_empresa);
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
+        preferenciasUsuario = new PreferenciasUsuario(getApplicationContext());
+
 
         editTextNombreUsuario = (EditText) findViewById(R.id.edit_text_nombre_usuario_empresa);
         editTextClave = (EditText) findViewById(R.id.edit_text_clave_usuario_empresa);
+
+        HashMap<String, String> stringHashMap = preferenciasUsuario.obtenerDetallesSesionUsuario();
+
+        nombreUsuario = stringHashMap.get(PreferenciasUsuario.LLAVE_NOMBRE_USUARIO);
+        claveUsuario = stringHashMap.get(PreferenciasUsuario.LLAVE_CONTRASENIA);
+        if (nombreUsuario != null && claveUsuario != null) {
+            validarUsuario(nombreUsuario, claveUsuario);
+        }
         editTextClave.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 int idIniciarSesion = getResources().getInteger(R.integer.id_boton_iniciar_sesion);
-                if (id == idIniciarSesion) {
-                    validarUsuario();
-                    return true;
-                }
-                return false;
+                return id == idIniciarSesion;
             }
         });
         Button buttonValidarLogin = (Button) findViewById(R.id.button_validar_login_empresa);
         buttonValidarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validarUsuario();
+                nombreUsuario = editTextNombreUsuario.getText().toString();
+                claveUsuario = editTextClave.getText().toString();
+                validarUsuario(nombreUsuario, claveUsuario);
             }
         });
-
-
     }
 
     /**
      * Método que valida los campos de nombre de usuario y contraseña
      */
-    private void validarUsuario() {
+    private void validarUsuario(final String nombreUsuario, final String claveUsuario) {
 
         // Reset errores.
         editTextNombreUsuario.setError(null);
+
         editTextClave.setError(null);
 
 
-        String nombreUsuario = editTextNombreUsuario.getText().toString();
-        String password = editTextClave.getText().toString();
-
         boolean cancel = false;
         View focusView = null;
-        if (nombreUsuario != null && password != null && !nombreUsuario.equals("") && !password.equals("")) {
 
-            ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
+        if (nombreUsuario != null && claveUsuario != null && !nombreUsuario.trim().equals("") && !claveUsuario.trim().equals("")) {
+
+            ClienteRestEmpresa.ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
 
             progressDialog = DialogProgreso.mostrarDialogProgreso(LoginEmpresaActivity.this);
 
-            Call<ClienteEmpresa> clienteEmpresaCall = servicioEmpresa.validarEmpresa(nombreUsuario, password);
+            Call<ClienteEmpresa> clienteEmpresaCall = servicioEmpresa.validarEmpresa(nombreUsuario, claveUsuario);
 
             clienteEmpresaCall.enqueue(new Callback<ClienteEmpresa>() {
                 @Override
@@ -98,6 +110,9 @@ public class LoginEmpresaActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         ClienteEmpresa clienteEmpresa = response.body();
+//TODO Revisar forma de guardar sesión del usuario
+                        preferenciasUsuario.createSesionUsuario(nombreUsuario, claveUsuario);
+
                         if (clienteEmpresa.getEstadoClienteEmpresa().equals(Boolean.TRUE)) {
 
                             //Ambiente de la aplicación
@@ -129,11 +144,10 @@ public class LoginEmpresaActivity extends AppCompatActivity {
                             }
                             claseGlobalUsuario.setTipoUsuario(Utilidades.USUARIO_EMPRESA);
                             progressDialog.dismiss();
-                            Intent intent_navigation_drawer = new Intent(getApplicationContext(), NavigationDrawer.class);
-                            startActivity(intent_navigation_drawer);
-                            finish();
+                            iniciarIntent();
+
                         } else {
-                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Su cuenta ha sido desactivada.");
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
 
                             editTextNombreUsuario.requestFocus();
                         }
@@ -149,23 +163,23 @@ public class LoginEmpresaActivity extends AppCompatActivity {
             });
 
 
-        } else if (nombreUsuario == null && password == null) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
+        } else if (nombreUsuario == null && claveUsuario == null) {
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
 
             focusView = editTextNombreUsuario;
             cancel = true;
-        } else if (nombreUsuario.equals("") && password.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
+        } else if (nombreUsuario.equals("") && claveUsuario.equals("")) {
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
 
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombreUsuario.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
 
             focusView = editTextNombreUsuario;
             cancel = true;
-        } else if (password.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
+        } else if (claveUsuario.equals("")) {
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
 
             focusView = editTextClave;
             cancel = true;
@@ -173,7 +187,14 @@ public class LoginEmpresaActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         }
+    }
 
+    private void iniciarIntent() {
+        Intent intent = new Intent(getApplicationContext(), NavigationDrawer.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override

@@ -53,7 +53,7 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
 
     private Validator validator;
 
-    private InterfaceDialogImpuestosICE interfaceDialogImpuestosICE;
+    private DialogImpuestosICEComunicacion dialogImpuestosICEComunicacion;
 
     private ImpuestoComprobanteElectronico impuestoComprobanteElectronico;
 
@@ -64,7 +64,7 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
     public DialogImpuestosICE() {
     }
 
-    public interface InterfaceDialogImpuestosICE {
+    public interface DialogImpuestosICEComunicacion {
         void cargarTarifaImpuesto(ImpuestoComprobanteElectronico impuestoComprobanteElectronico);
     }
 
@@ -84,7 +84,7 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
         tarifasImpuestoList = (ArrayList<TarifasImpuesto>) getArguments().getSerializable("tarifasImpuestoList");
         context = getActivity().getApplicationContext();
         claseGlobalUsuario = (ClaseGlobalUsuario) context;
-        interfaceDialogImpuestosICE = (InterfaceDialogImpuestosICE) getActivity();
+        dialogImpuestosICEComunicacion = (DialogImpuestosICEComunicacion) getActivity();
     }
 
     @NonNull
@@ -211,7 +211,7 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
             impuestoComprobanteElectronico.setTarifa(editTextPorcentaje.getText().toString());
             impuestoComprobanteElectronico.setBaseImponible(editTextBaseImponibleICE.getText().toString());
             impuestoComprobanteElectronico.setValor(textViewtValor.getText().toString());
-            interfaceDialogImpuestosICE.cargarTarifaImpuesto(impuestoComprobanteElectronico);
+            dialogImpuestosICEComunicacion.cargarTarifaImpuesto(impuestoComprobanteElectronico);
         }
         dismiss();
 

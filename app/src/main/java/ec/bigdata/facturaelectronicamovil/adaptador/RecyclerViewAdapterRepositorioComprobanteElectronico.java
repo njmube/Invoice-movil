@@ -1,12 +1,14 @@
 package ec.bigdata.facturaelectronicamovil.adaptador;
 
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.List;
 
@@ -21,14 +23,14 @@ public class RecyclerViewAdapterRepositorioComprobanteElectronico extends Recycl
 
     public static class RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder extends RecyclerView.ViewHolder {
         // Campos de la lista
-        private View viewCirculo;
+        private ImageView imageViewIdentificadorComprobante;
         public TextView textViewNumeroComprobante;
         public TextView textViewNumeroAutorizacion;
         public TextView textViewFechaAutorizacion;
 
         public RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder(View v) {
             super(v);
-            viewCirculo = v.findViewById(R.id.view_circulo);
+            imageViewIdentificadorComprobante = (ImageView) v.findViewById(R.id.image_view_identificador_comprobante);
             textViewNumeroComprobante = (TextView) v.findViewById(R.id.text_view_numero_comprobante);
             textViewNumeroAutorizacion = (TextView) v.findViewById(R.id.text_view_numero_autorizacion);
             textViewFechaAutorizacion = (TextView) v.findViewById(R.id.text_view_fecha_autorizacion);
@@ -68,27 +70,35 @@ public class RecyclerViewAdapterRepositorioComprobanteElectronico extends Recycl
     @Override
     public RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.header_swipe_refresh_layout_comprobantes_emitidos, viewGroup, false);
+                .inflate(R.layout.estilo_recycler_view_comprobantes_emitidos, viewGroup, false);
         return new RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder viewHolder, int i) {
 
-        int idImagen = 0;
+        String identificador = "";
+        int color = 0;
+
         if (items.get(i).getTipoComprobanteElectronico().equals("01")) {
-            idImagen = Color.BLUE;
+            identificador = "F";
+            color = Color.BLUE;
         } else if (items.get(i).getTipoComprobanteElectronico().equals("04")) {
-            idImagen = Color.GRAY;
+            identificador = "NC";
+            color = Color.GREEN;
         } else if (items.get(i).getTipoComprobanteElectronico().equals("05")) {
-            idImagen = Color.GREEN;
+            identificador = "ND";
+            color = Color.YELLOW;
         } else if (items.get(i).getTipoComprobanteElectronico().equals("06")) {
-            idImagen = Color.YELLOW;
+            identificador = "GR";
+            color = Color.MAGENTA;
         } else if (items.get(i).getTipoComprobanteElectronico().equals("07")) {
-            idImagen = Color.CYAN;
+            identificador = "CR";
+            color = Color.RED;
         }
-        GradientDrawable gradientDrawable = (GradientDrawable) viewHolder.viewCirculo.getBackground();
-        gradientDrawable.setColor(idImagen);
+        TextDrawable textDrawable = TextDrawable.builder().beginConfig().bold().endConfig()
+                .buildRound(identificador, color);
+        viewHolder.imageViewIdentificadorComprobante.setImageDrawable(textDrawable);
         viewHolder.textViewNumeroComprobante.setText(items.get(i).getCodigoEstablecimientoComprobanteElectronico().concat("-").concat(items.get(i).getPuntoEmisionComprobanteElectronico().concat("-").concat(items.get(i).getSecuencialComprobanteElectronico())));
         viewHolder.textViewNumeroAutorizacion.setText(items.get(i).getNumeroAutorizacionComprobanteElectronico());
         viewHolder.textViewFechaAutorizacion.setText(items.get(i).getFechaAutorizacionComprobanteElectronico().toString());

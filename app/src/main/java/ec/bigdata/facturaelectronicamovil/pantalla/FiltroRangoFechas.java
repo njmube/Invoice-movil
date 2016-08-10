@@ -17,8 +17,8 @@ import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogFecha;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 
 /**
@@ -47,7 +47,7 @@ public class FiltroRangoFechas extends AppCompatActivity implements DatePickerDi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
         setSupportActionBar(toolbar);
 
-        //Get a support ActionBar corresponding to this toolbar_compuesta
+        //Get a support ActionBar
 
         //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,7 +55,7 @@ public class FiltroRangoFechas extends AppCompatActivity implements DatePickerDi
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         tituloToolbar.setText(getResources().getString(R.string.titulo_filtro_rango_fechas));
 
         textViewFechaInicial = (TextView) findViewById(R.id.text_view_fecha_inicial);
@@ -75,10 +75,10 @@ public class FiltroRangoFechas extends AppCompatActivity implements DatePickerDi
                         setResult(RESULT_OK, intent);
                         finish();
                     } else {
-                        Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "La fecha de inicio debe ser menor a la fecha de fin.");
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "La fecha de inicio debe ser menor a la fecha de fin.");
                     }
                 } else {
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Debe seleccionar un rango de fechas.");
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Debe seleccionar un rango de fechas.");
 
                 }
             }

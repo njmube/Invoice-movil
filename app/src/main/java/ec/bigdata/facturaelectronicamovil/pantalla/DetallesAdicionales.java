@@ -83,7 +83,7 @@ public class DetallesAdicionales extends AppCompatActivity implements Validator.
         listViewDetallesAdicionales = (ListView) findViewById(R.id.list_view_detalles_adicionales);
 
         //Cabecera
-        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.header_list_view_informacion_adicional, listViewDetallesAdicionales, false);
+        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.cabecera_list_view_informacion_adicional, listViewDetallesAdicionales, false);
 
         listViewDetallesAdicionales.addHeaderView(headerView, null, false);
 

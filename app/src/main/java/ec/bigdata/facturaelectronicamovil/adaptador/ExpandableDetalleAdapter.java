@@ -21,14 +21,14 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
     private List<Detalle> detalles;
     private int itemLayoutId;
     private int groupLayoutId;
-    private Context ctx;
+    private Context context;
 
-    public ExpandableDetalleAdapter(List<Detalle> detalles, Context ctx) {
+    public ExpandableDetalleAdapter(List<Detalle> detalles, Context context) {
 
-        this.itemLayoutId = R.layout.list_view_group_detalle;
-        this.groupLayoutId = R.layout.list_view_item_detalle;
+        this.itemLayoutId = R.layout.estilo_group_list_view_detalle;
+        this.groupLayoutId = R.layout.estilo_item_list_view_detalle;
         this.detalles = detalles;
-        this.ctx = ctx;
+        this.context = context;
     }
 
     @Override
@@ -45,16 +45,16 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
         View v = convertView;
        /* if (childPosition == 0) {
-            v = inflater.inflate(R.layout.header_hijos_expandable_list_view_detalles, null);
+            v = inflater.inflate(R.layout.cabecera_hijos_expandable_list_view_detalles, null);
         } else {*/
 
         if (v == null) {
 
-            v = inflater.inflate(R.layout.list_view_item_detalle, parent, false);
+            v = inflater.inflate(R.layout.estilo_item_list_view_detalle, parent, false);
         }
 
         TextView itemCodigo = (TextView) v.findViewById(R.id.text_view_item_codigo_impuesto);
@@ -65,11 +65,11 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
 
         ImpuestoComprobanteElectronico det = detalles.get(groupPosition).getImpuestos().get(childPosition);
 
-        itemCodigo.setText(det.getCodigo());
-        itemCodigoPorcentaje.setText(det.getCodigoPorcentaje());
-        itemBaseImponible.setText(det.getBaseImponible());
-        itemTarifa.setText(det.getTarifa());
-        itemValor.setText(det.getValor());
+        itemCodigo.setText(this.context.getResources().getString(R.string.etiqueta_cabecera_impuestos_codigo) + ":" + det.getCodigo());
+        itemCodigoPorcentaje.setText(this.context.getResources().getString(R.string.etiqueta_cabecera_impuestos_codigo_porcentaje) + ":" + det.getCodigoPorcentaje());
+        itemBaseImponible.setText(this.context.getResources().getString(R.string.etiqueta_cabecera_impuestos_base_imponible) + ":" + det.getBaseImponible());
+        itemTarifa.setText(this.context.getResources().getString(R.string.etiqueta_cabecera_impuestos_tarifa) + ":" + det.getTarifa());
+        itemValor.setText(this.context.getResources().getString(R.string.etiqueta_cabecera_impuestos_valor) + ":" + det.getValor());
         //  }
 //TODO Poner cabecera en hijos
         return v;
@@ -105,9 +105,9 @@ public class ExpandableDetalleAdapter extends BaseExpandableListAdapter {
         View v = convertView;
 
         if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService
                     (Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.list_view_group_detalle, parent, false);
+            v = inflater.inflate(R.layout.estilo_group_list_view_detalle, parent, false);
         }
 
 

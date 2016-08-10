@@ -20,11 +20,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.interfaz.ServicioUsuarioAcceso;
 import ec.bigdata.facturaelectronicamovil.modelo.UsuarioAcceso;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestUsuarioAcceso;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +56,7 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
 
     private Validator validator;
 
-    private ServicioUsuarioAcceso clienteRestUsuarioAcceso;
+    private ClienteRestUsuarioAcceso.ServicioUsuarioAcceso clienteRestUsuarioAcceso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,20 +126,18 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
         }
 
         if (validadoCorreoPrincipal && validadoCorreoSecundario) {
-            Call<ResponseBody> call = null;
-            call = clienteRestUsuarioAcceso.actualizarUsuario(claseGlobalUsuario.getIdUsuario(), editTextNombres.getText().toString()
+            Call<ResponseBody> responseBodyCall = null;
+            responseBodyCall = clienteRestUsuarioAcceso.actualizarUsuario(claseGlobalUsuario.getIdUsuario(), editTextNombres.getText().toString()
                     , editTextApellidos.getText().toString(), editTextCorreoPrincipal.getText().toString(), editTextCorreoAdicional.getText().toString(), editTextTelefonoPrincipal.getText().toString(), editTextTelefonoAdicional.getText().toString());
-            call.enqueue(new Callback<ResponseBody>() {
+            responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        JsonParser parser = new JsonParser();
-                        JsonObject o = null;
+                        String contenido = null;
                         try {
-                            String s = new String(response.body().bytes());
-                            o = parser.parse(s).getAsJsonObject();
-
-                            if (o.get("status").getAsBoolean() == true) {
+                            contenido = new String(response.body().bytes());
+                            JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                            if (jsonObject.get("estado").getAsBoolean() == true) {
                                 claseGlobalUsuario.setNombres(editTextNombres.getText().toString());
                                 claseGlobalUsuario.setApellidos(editTextApellidos.getText().toString());
                                 claseGlobalUsuario.setCorreoPrincipal(editTextCorreoPrincipal.getText().toString());
@@ -148,7 +145,7 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
                                 claseGlobalUsuario.setTelefonoPrincipal(editTextTelefonoPrincipal.getText().toString());
                                 claseGlobalUsuario.setTelefonoAdicional(editTextTelefonoAdicional.getText().toString());
 
-                                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "Información de usuario actualizada.");
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Información de usuario actualizada.");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -158,8 +155,8 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Error al actualizar el perfil.");
+                    call.cancel();
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Error al actualizar el perfil.");
                 }
             });
         }
@@ -176,7 +173,7 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
                 ((EditText) view).setError(message);
             } else {
 
-                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, message);
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
             }
         }
     }
@@ -198,13 +195,13 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
         protected Boolean doInBackground(String... params) {
             boolean validado = false;
             String correo = params[0];
-            Call<UsuarioAcceso> call_usuario = clienteRestUsuarioAcceso.obtenerUsuarioPorCorreo(correo);
+            Call<UsuarioAcceso> usuarioAccesoCall = clienteRestUsuarioAcceso.obtenerUsuarioPorCorreo(correo);
             try {
-                Response<UsuarioAcceso> usuarioAccesoResponse = call_usuario.execute();
+                Response<UsuarioAcceso> usuarioAccesoResponse = usuarioAccesoCall.execute();
                 if (usuarioAccesoResponse.isSuccessful()) {
 
-                    UsuarioAcceso cUsuarioAcceso = usuarioAccesoResponse.body();
-                    if (cUsuarioAcceso != null && cUsuarioAcceso.getIdUsuario() != null) {
+                    UsuarioAcceso usuarioAcceso = usuarioAccesoResponse.body();
+                    if (usuarioAcceso != null && usuarioAcceso.getIdUsuario() != null) {
                         errores = errores.concat("El correo electrónico está siendo usado por otro usuario.");
                     } else {
                         validado = true;
@@ -225,9 +222,7 @@ public class PerfilUsuario extends AppCompatActivity implements Validator.Valida
             super.onPostExecute(result);
             if (result.equals(Boolean.FALSE)) {
                 if (!errores.equals("")) {
-
-
-                    Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, errores);
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
 
                 }
             }

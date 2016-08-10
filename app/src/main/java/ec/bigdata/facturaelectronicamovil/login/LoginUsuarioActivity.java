@@ -20,11 +20,11 @@ import java.util.concurrent.TimeUnit;
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.AdaptadorUsuario;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
-import ec.bigdata.facturaelectronicamovil.interfaz.ServicioUsuarioAcceso;
 import ec.bigdata.facturaelectronicamovil.menu.NavigationDrawer;
 import ec.bigdata.facturaelectronicamovil.modelo.UsuarioAcceso;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
+import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestUsuarioAcceso;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -103,7 +103,7 @@ public class LoginUsuarioActivity extends AppCompatActivity {
                     .client(okHttpClient)
                     .build();
 
-            ServicioUsuarioAcceso servicioUsuarioAcceso = retrofit.create(ServicioUsuarioAcceso.class);
+            ClienteRestUsuarioAcceso.ServicioUsuarioAcceso servicioUsuarioAcceso = retrofit.create(ClienteRestUsuarioAcceso.ServicioUsuarioAcceso.class);
             Call<UsuarioAcceso> call = servicioUsuarioAcceso.validarUsuarioAcceso(nombre_usuario, password);
             progressDialog = DialogProgreso.mostrarDialogProgreso(LoginUsuarioActivity.this);
             call.enqueue(new Callback<UsuarioAcceso>() {
@@ -140,11 +140,11 @@ public class LoginUsuarioActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Su cuenta ha sido desactivada.");
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
                             editTextNombreUsuario.requestFocus();
                         }
                     } else {
-                        Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "El usuario no existe.");
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El usuario no existe.");
 
                         editTextNombreUsuario.requestFocus();
 
@@ -159,19 +159,19 @@ public class LoginUsuarioActivity extends AppCompatActivity {
 
 
         } else if (nombre_usuario == null && password == null) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombre_usuario.equals("") && password.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (nombre_usuario.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
             focusView = editTextNombreUsuario;
             cancel = true;
         } else if (password.equals("")) {
-            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
+            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
 
             focusView = editTextClave;
             cancel = true;

@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
-import ec.bigdata.facturaelectronicamovil.utilidad.Personalizacion;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -137,16 +137,14 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    JsonParser parser = new JsonParser();
-                    JsonObject o = null;
-                    String s = null;
+                    String contenido = null;
                     try {
-                        s = new String(response.body().bytes());
-                        o = parser.parse(s).getAsJsonObject();
-                        if (o.get("status").getAsBoolean() == true) {
+                        contenido = new String(response.body().bytes());
+                        JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                        if (jsonObject.get("estado").getAsBoolean() == true) {
                             //TODO Refrescar objeto producto actualizado.
 
-                            Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_INFORMACION, "Producto actualizado.");
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Producto actualizado.");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -156,8 +154,8 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, "Error al actualizar el producto.");
+                call.cancel();
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Error al actualizar el producto.");
 
             }
         });
@@ -180,7 +178,7 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
                 ((EditText) view).setError(message);
             } else {
 
-                Personalizacion.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), Personalizacion.TOAST_ERROR, message);
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
             }
         }
     }

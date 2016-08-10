@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".recyclerview.AdministracionClientesActividad">
+    <item
+        android:id="@+id/item_edicion_cliente"
+        android:title="@string/nombre_app"
+        android:icon="@drawable/ic_mode_edit_black_48dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_llamar_cliente"
+        android:title="@string/nombre_app"
+        android:icon="@drawable/ic_call_black_48dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_enviar_correo_cliente"
+        android:title="@string/nombre_app"
+        android:icon="@drawable/ic_email_black_48dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_compartir_cliente"
+        android:title="@string/nombre_app"
+        android:icon="@drawable/ic_action_share"
+        app:showAsAction="ifRoom" />
+</menu>

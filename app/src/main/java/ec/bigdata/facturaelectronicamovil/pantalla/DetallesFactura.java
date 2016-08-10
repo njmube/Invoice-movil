@@ -26,8 +26,6 @@ import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
 
 public class DetallesFactura extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
     private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ExpandableDetalleAdapter expandableDetalleAdapter;
@@ -52,7 +50,7 @@ public class DetallesFactura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_factura);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
         //Get a support ActionBar corresponding to this toolbar_compuesta
 
@@ -71,7 +69,7 @@ public class DetallesFactura extends AppCompatActivity {
         expandableListViewDetalles = (ExpandableListView) findViewById(R.id.expandable_list_view_detalles);
 
         //Cabecera
-        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.header_expandable_list_view_detalles, expandableListViewDetalles, false);
+        ViewGroup headerView = (ViewGroup) getLayoutInflater().inflate(R.layout.cabecera_expandable_list_view_detalles, expandableListViewDetalles, false);
 
         expandableListViewDetalles.addHeaderView(headerView, null, false);
 

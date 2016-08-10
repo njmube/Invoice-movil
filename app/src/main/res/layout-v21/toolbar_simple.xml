@@ -2,23 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_simple"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?attr/actionBarSize"
+    app:layout_scrollFlags="scroll|enterAlways"
     android:background="@color/colorPrimary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:theme="@style/ToolbarTheme"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:titleTextColor="@android:color/white"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-
     >
 
-    <TextView
-        android:id="@+id/text_view_titulo_toolbar"
-        android:layout_width="wrap_content"
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/text_view_titulo_toolbar_simple"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:layout_gravity="center"
-
         />
 </android.support.v7.widget.Toolbar>

@@ -5,13 +5,13 @@
 
     <item
         android:id="@+id/item_compartir"
-        android:title="@string/app_name"
+        android:title="@string/nombre_app"
         android:icon="@drawable/ic_action_share"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_copiar"
-        android:title="@string/app_name"
+        android:title="@string/nombre_app"
         android:icon="@drawable/ic_save_black_48dp"
         app:showAsAction="ifRoom" />
 

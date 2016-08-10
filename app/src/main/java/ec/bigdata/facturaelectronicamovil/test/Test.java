@@ -1,14 +1,9 @@
 package ec.bigdata.facturaelectronicamovil.test;
 
-import android.util.Log;
+import java.util.List;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.io.IOException;
-
-import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestArchivo;
-import okhttp3.ResponseBody;
+import ec.bigdata.facturaelectronicamovil.modelo.Cliente;
+import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestCliente;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,9 +12,10 @@ import retrofit2.Response;
  * Created by DavidLeonardo on 25/4/2016.
  */
 public class Test {
+    private static final String TAG = Test.class.getSimpleName();
     public static void main(String args[]) throws Exception {
 
-        ClienteRestArchivo.ServicioArchivo servicioArchivo = ClienteRestArchivo.getServicioArchivo();
+        /*ClienteRestArchivo.ServicioArchivo servicioArchivo = ClienteRestArchivo.getServicioArchivo();
 
         Call<ResponseBody> responseBodyCall = servicioArchivo.obtenerArchivoPorBytes(10);
 
@@ -44,6 +40,27 @@ public class Test {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("ERROR", t.getMessage());
+            }
+        });*/
+        ClienteRestCliente.ServicioCliente servicioCliente = ClienteRestCliente.getServicioCliente();
+
+        Call<List<Cliente>> listCall = servicioCliente.obtenerClientesPorEmpresaAsociado("1792547164001", 0, 1);
+        listCall.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                if (response.isSuccessful()) {
+                    List<Cliente> clientes = response.body();
+                    if (clientes != null) {
+                        for (Cliente cliente : clientes) {
+                            System.out.println(cliente.getNombreCliente());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                System.out.println(t.getMessage());
             }
         });
     }
