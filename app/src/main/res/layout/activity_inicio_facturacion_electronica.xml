@@ -11,22 +11,40 @@
         android:id="@+id/linear_layout_componentes_factura_electronica"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
     <ListView
-        android:id="@+id/list_view_componentes_factura_electronica"
+        android:id="@+id/list_view_componentes_factura_electronica_obligatorios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="10dp"
         android:divider="@color/colorPrimary"
         android:dividerHeight="1dp"
-
+        android:layout_weight="1"
         ></ListView>
+
+        <TextView
+            android:id="@+id/text_view_componentes_opcionales"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/titulo_componente_factura_electronica_opcional" />
+
+        <ListView
+            android:id="@+id/list_view_componentes_factura_electronica_opcionales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="1dp"
+            android:layout_weight="1"></ListView>
     </LinearLayout>
 
     <LinearLayout

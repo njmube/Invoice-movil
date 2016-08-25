@@ -14,7 +14,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/black"
         android:layout_weight="1" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:text="@string/nombre_app"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/black"
         android:layout_weight="1" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:text="@string/nombre_app"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/black"
         android:layout_weight="1" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:text="@string/nombre_app"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/black"
         android:layout_weight="1" />
 
 

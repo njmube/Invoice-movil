@@ -21,6 +21,7 @@ import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.modelo.Cliente;
 import ec.bigdata.facturaelectronicamovil.modelo.CorreoAdicional;
+import ec.bigdata.facturaelectronicamovil.modelo.Producto;
 import ec.bigdata.facturaelectronicamovil.modelo.RespuestaSRIMovil;
 import ec.bigdata.utilidades.Validaciones;
 
@@ -29,12 +30,12 @@ import ec.bigdata.utilidades.Validaciones;
  */
 public class Utilidades {
     // public static String IP_DOMINIO_WEB_SERVICE = "http://192.168.10.7:8080/aw_web_service_rest_jersey/";
-    public static String IP_DOMINIO_WEB_SERVICE = "http://192.168.10.7:8080/aw_web_service_rest_jersey/";
+    public static String IP_DOMINIO_WEB_SERVICE = "http://192.168.10.9:8080/aw_web_service_rest_jersey/";
 
     private static final String TAG = Utilidades.class.getSimpleName();
 
     public static final String USUARIO_EMPRESA = "1";
-    public static final String USUARIO_PERSONA = "2";
+    public static final String USUARIO_RECEPTOR = "2";
 
     public static Date obtenerFechaDateFormatoddMMyyyy(String _cadena) {
         Date fecha = null;
@@ -166,34 +167,75 @@ public class Utilidades {
         List<String> correos = new ArrayList<>();
         int longitud = correoAdicionalList.size();
         for (CorreoAdicional correoAdicional : correoAdicionalList) {
-            correos.add(correoAdicional.getCorreo());
+            correos.add(correoAdicional.getCorreoElectronicoCorreoAdicional());
         }
         String correosSeparados = longitud > 1 ? StringUtils.join(correos, ",") : correos.get(0);
         stringBuilderContenido.append("<p>").append("<b>").append(correosSeparados).append("</b>").append("</p>");
         return stringBuilderContenido.toString();
     }
 
+    public static String formatearFormasPagoEliminacion(List<String> pagosList) {
+        StringBuilder stringBuilderContenido = new StringBuilder();
+        List<String> pagos = new ArrayList<>();
+        int longitud = pagos.size();
+
+        for (String pago : pagosList) {
+            pagos.add(pago);
+        }
+        String pagosSeparados = longitud > 1 ? StringUtils.join(pagos, ",") : pagos.get(0);
+        stringBuilderContenido.append("<p>").append("<b>").append(pagosSeparados).append("</b>").append("</p>");
+        return stringBuilderContenido.toString();
+    }
+
     public static String formaterListaClientesACompartir(List<Cliente> clientes) {
-        StringBuilder stringBuilder = new StringBuilder("Cliente(s)\r\n");
+        StringBuilder stringBuilder = new StringBuilder("Listado de clientes\r\n");
         String patron = "%s %s %s";
         for (Cliente cliente : clientes) {
-            String formateado = String.format(patron, cliente.getIdentificacionCliente(), cliente.getNombreCliente(), cliente.getCorreoElectronicoCliente());
-            stringBuilder.append(formateado).append("\r\n");
+            String formateado = String.format(patron, cliente.getIdentificacionCliente(), cliente.getRazonSocialCliente(), cliente.getCorreoElectronicoCliente());
+            stringBuilder.append(formateado).append("/").append("\r\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String formaterListaProductosACompartir(List<Producto> productos) {
+        StringBuilder stringBuilder = new StringBuilder("Listado de productos\r\n");
+        String patron = "%s %s %s";
+        for (Producto producto : productos) {
+            String formateado = String.format(patron, producto.getCodigoPrincipalProducto(), producto.getDescripcionProducto(), producto.getPrecioUnitarioProducto());
+            stringBuilder.append(formateado).append("/").append("\r\n");
         }
         return stringBuilder.toString();
     }
 
     public static String obtenerNombreCliente(Cliente cliente) {
         if (cliente != null) {
-            if (cliente.getTipoCliente()) {
-                return cliente.getNombreCliente() + " " + cliente.getApellidoCliente();
-            } else {
-                return cliente.getRazonSocialCliente();
-            }
+            return cliente.getRazonSocialCliente();
         } else {
             return null;
         }
+    }
 
+    public static String obtenerTipoDocumento(String tipoDocumento) {
+
+        String nombreDocumento = "";
+
+        if (tipoDocumento.equals("01")) {
+            nombreDocumento = "FACTURA";
+        }
+        if (tipoDocumento.equals("04")) {
+            nombreDocumento = "NOTA DE CRÉDITO";
+        }
+        if (tipoDocumento.equals("05")) {
+            nombreDocumento = "NOTA DE DÉBITO";
+        }
+        if (tipoDocumento.equals("06")) {
+            nombreDocumento = "GUÍA DE REMISIÓN";
+        }
+        if (tipoDocumento.equals("07")) {
+            nombreDocumento = "COMPROBANTE DE RETENCIÓN";
+        }
+
+        return nombreDocumento;
     }
 
     /**
@@ -212,6 +254,7 @@ public class Utilidades {
             throw new RuntimeException("No se puede obtener el número: " + e);
         }
     }
+
     public static void main(String args[]) {
 
 

@@ -10,38 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
-        android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/text_view_codigo_item_porcentaje_impuesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
-        android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/text_view_item_base_imponible_impuesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
-        android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/text_view_item_tarifa_impuesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
-        android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/text_view_item_valor_impuesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
-        android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textColor="@android:color/black" />
 </LinearLayout>

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".recyclerview.AdministracionProductosActividad">
+    <item
+        android:id="@+id/item_edicion_producto"
+        android:title="@string/opcion_editar_cliente"
+        android:icon="@drawable/ic_mode_edit_black_48dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_compartir_producto"
+        android:title="@string/opcion_compartir_cliente"
+        android:icon="@drawable/ic_action_share"
+        app:showAsAction="ifRoom" />
+</menu>

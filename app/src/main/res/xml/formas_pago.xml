@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <map linked="true">
-    <entry key="01">SIN UTILIZACION DEL SISTEMA FINANCIERO</entry>
-    <entry key="02">CHEQUE PROPIO</entry>
-    <entry key="03">CHEQUE CERTIFICADO</entry>
-    <entry key="04">CHEQUE DE GERENCIA</entry>
-    <entry key="05">CHEQUE DEL EXTERIOR</entry>
-    <entry key="06">DÉBITO DE CUENTA</entry>
-    <entry key="07">TRANSFERENCIA PROPIO BANCO</entry>
-    <entry key="08">TRANSFERENCIA OTRO BANCO NACIONAL</entry>
-    <entry key="09">TRANSFERENCIA BANCO EXTERIOR</entry>
-    <entry key="10">TARJETA DE CRÉDITO NACIONAL</entry>
-    <entry key="11">TARJETA DE CRÉDITO INTERNACIONAL</entry>
-    <entry key="12">GIRO</entry>
-    <entry key="13">DEPOSITO EN CUENTA (CORRIENTE/AHORROS)</entry>
-    <entry key="14">ENDOSO DE INVERSIÓN</entry>
-    <entry key="15">COMPENSACIÓN DE DEUDAS</entry>
-    <entry key="16">TARJETA DE DÉBITO</entry>
-    <entry key="17">DINERO ELECTRÓNICO</entry>
-    <entry key="18">TARJETA PREPAGO</entry>
+    <entry key="SIN UTILIZACION DEL SISTEMA FINANCIERO">01</entry>
+    <entry key="CHEQUE PROPIO">02</entry>
+    <entry key="CHEQUE CERTIFICADO">03</entry>
+    <entry key="CHEQUE DE GERENCIA">04</entry>
+    <entry key="CHEQUE DEL EXTERIOR">05</entry>
+    <entry key="DÉBITO DE CUENTA">06</entry>
+    <entry key="TRANSFERENCIA PROPIO BANCO">07</entry>
+    <entry key="TRANSFERENCIA OTRO BANCO NACIONAL">08</entry>
+    <entry key="TRANSFERENCIA BANCO EXTERIOR">09</entry>
+    <entry key="TARJETA DE CRÉDITO NACIONAL">10</entry>
+    <entry key="TARJETA DE CRÉDITO INTERNACIONAL">11</entry>
+    <entry key="GIRO">12</entry>
+    <entry key="DEPOSITO EN CUENTA (CORRIENTE/AHORROS)">13</entry>
+    <entry key="ENDOSO DE INVERSIÓN">14</entry>
+    <entry key="COMPENSACIÓN DE DEUDAS">15</entry>
+    <entry key="TARJETA DE DÉBITO">16</entry>
+    <entry key="DINERO ELECTRÓNICO">17</entry>
+    <entry key="TARJETA PREPAGO">18</entry>
 
 </map>

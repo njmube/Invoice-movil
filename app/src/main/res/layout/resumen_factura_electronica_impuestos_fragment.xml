@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pantalla.FragmentoResumenFacturaImpuestos"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll_view_resumen_impuestos">
+
+        <TableLayout
+            android:id="@+id/table_layout_valores_factura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:id="@+id/text_view_subtotal_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_12" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtotal_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/valor_cero" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_subtotal_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_14"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtotal_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_subtotal_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_0"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtotal_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_subtototal_no_objeto_iva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_no_objeto_iva"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtototal_no_objeto_iva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_subtototal_exento_iva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_exento_iva"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtototal_exento_iva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_subtototal_sin_impuestos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_subtototal_sin_impuestos"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_subtototal_sin_impuestos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_total_descuento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_total_descuento"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_total_descuento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_ice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_ice"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_ice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_iva_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_iva_12"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_iva_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_iva_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_iva_14"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_iva_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_IRBPNR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_irbpnr"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_irbpnr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <Switch
+                    android:id="@+id/switch_propina"
+                    android:text="@string/etiqueta_propina"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_propina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="1dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_view_importe_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_valor_total"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TextView
+                    android:id="@+id/text_view_valor_importe_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor_cero"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

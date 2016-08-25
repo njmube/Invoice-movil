@@ -4,22 +4,22 @@
     tools:context=".recyclerview.AdministracionClientesActividad">
     <item
         android:id="@+id/item_edicion_cliente"
-        android:title="@string/nombre_app"
+        android:title="@string/opcion_editar_cliente"
         android:icon="@drawable/ic_mode_edit_black_48dp"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_llamar_cliente"
-        android:title="@string/nombre_app"
+        android:title="@string/opcion_llamar_cliente"
         android:icon="@drawable/ic_call_black_48dp"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_enviar_correo_cliente"
-        android:title="@string/nombre_app"
+        android:title="@string/opcion_enviar_correo_cliente"
         android:icon="@drawable/ic_email_black_48dp"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_compartir_cliente"
-        android:title="@string/nombre_app"
+        android:title="@string/opcion_compartir_cliente"
         android:icon="@drawable/ic_action_share"
         app:showAsAction="ifRoom" />
 </menu>

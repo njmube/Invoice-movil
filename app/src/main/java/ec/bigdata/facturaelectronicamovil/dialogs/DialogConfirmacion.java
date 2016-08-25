@@ -17,6 +17,7 @@ public class DialogConfirmacion extends DialogFragment {
     private String tituloDialog;
     private String mensajeDialog;
     private boolean esContenidoHtml;
+    private int identificadorDialog;
 
     // Interfaz de comunicación
     private DialogConfirmacionComunicacion dialogConfirmacionComunicacion;
@@ -26,12 +27,12 @@ public class DialogConfirmacion extends DialogFragment {
     }
 
     public interface DialogConfirmacionComunicacion {
-        void presionarBotonSI();
+        void presionarBotonSI(int identificadorDialog);
 
-        void presionarBotonCancelar();
+        void presionarBotonCancelar(int identificadorDialog);
     }
 
-    public static DialogConfirmacion newInstance(String titulo, String mensaje, boolean esContenidoHtml) {
+    public static DialogConfirmacion newInstance(String titulo, String mensaje, int identificadorDialog, boolean esContenidoHtml) {
 
         DialogConfirmacion dialogConfirmacion = new DialogConfirmacion();
 
@@ -39,6 +40,7 @@ public class DialogConfirmacion extends DialogFragment {
         args.putString("titulo", titulo);
         args.putString("mensaje", mensaje);
         args.putBoolean("esHtml", esContenidoHtml);
+        args.putInt("idDialog", identificadorDialog);
         dialogConfirmacion.setArguments(args);
         return dialogConfirmacion;
     }
@@ -49,6 +51,7 @@ public class DialogConfirmacion extends DialogFragment {
         tituloDialog = getArguments().getString("titulo");
         mensajeDialog = getArguments().getString("mensaje");
         esContenidoHtml = getArguments().getBoolean("esHtml");
+        identificadorDialog = getArguments().getInt("idDialog");
         dialogConfirmacionComunicacion = (DialogConfirmacionComunicacion) getActivity();
     }
 
@@ -71,14 +74,14 @@ public class DialogConfirmacion extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialogConfirmacionComunicacion.presionarBotonSI();
+                                dialogConfirmacionComunicacion.presionarBotonSI(identificadorDialog);
                             }
                         })
                 .setNegativeButton("Cancelar",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialogConfirmacionComunicacion.presionarBotonCancelar();
+                                dialogConfirmacionComunicacion.presionarBotonCancelar(identificadorDialog);
                             }
                         });
 

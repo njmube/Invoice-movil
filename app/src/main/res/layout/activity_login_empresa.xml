@@ -43,7 +43,7 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:imeOptions="actionUnspecified"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente" />
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente" />
 
             </android.support.design.widget.TextInputLayout>
 

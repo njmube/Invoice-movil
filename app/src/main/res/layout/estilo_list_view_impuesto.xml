@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center|top">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/text_view_codigo_impuesto"
@@ -11,8 +10,8 @@
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
         android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/text_view_codigo_porcentaje_impuesto"
@@ -20,8 +19,8 @@
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
         android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/text_view_base_imponible_impuesto"
@@ -29,8 +28,9 @@
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
         android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center" />
+
 
     <TextView
         android:id="@+id/text_view_tarifa_impuesto"
@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
         android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/text_view_valor_impuesto"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="@string/nombre_app"
         android:textColor="@android:color/black"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center" />
 
 </LinearLayout>

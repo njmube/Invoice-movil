@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ec.bigdata.facturaelectronicamovil">
 
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCfEDeGn95xgxB1HE8BQbGXsFDdMnaYsds" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -147,11 +151,6 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".pantalla.ResumenFacturaElectronica"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".pantalla.FirmaAutorizacionSRI"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
@@ -194,7 +193,33 @@
             android:name=".pantalla.CorreosAdicionalesCliente"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pantalla.Pago"></activity>
+        <activity android:name=".pantalla.Pago" />
+        <activity
+            android:name=".recyclerview.AdministracionProductosActividad"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".recyclerview.ComprobantesEmitidosAutorizados"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantalla.NuevoEstablecimiento"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantalla.FormasPago"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pantalla.ResumenFacturaPrincipal"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".pantalla.RIDE"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service android:name=".intentservice.ServicioDescarga" />
     </application>
 
 </manifest>

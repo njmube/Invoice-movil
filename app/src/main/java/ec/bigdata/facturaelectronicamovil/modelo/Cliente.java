@@ -8,14 +8,11 @@ public class Cliente implements java.io.Serializable {
 
     private Integer idCliente;
     private String identificacionCliente;
-    private String nombreCliente;
-    private String apellidoCliente;
     private String razonSocialCliente;
     private String direccionCliente;
     private String correoElectronicoCliente;
     private String telefonoCliente;
     private boolean estadoCliente;
-    private Boolean tipoCliente;
 
     public Cliente() {
     }
@@ -35,14 +32,6 @@ public class Cliente implements java.io.Serializable {
 
     public void setIdentificacionCliente(String identificacionCliente) {
         this.identificacionCliente = identificacionCliente;
-    }
-
-    public String getNombreCliente() {
-        return this.nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
     }
 
     public String getDireccionCliente() {
@@ -75,23 +64,6 @@ public class Cliente implements java.io.Serializable {
 
     public void setEstadoCliente(boolean estadoCliente) {
         this.estadoCliente = estadoCliente;
-    }
-
-
-    public String getApellidoCliente() {
-        return apellidoCliente;
-    }
-
-    public void setApellidoCliente(String apellidoCliente) {
-        this.apellidoCliente = apellidoCliente;
-    }
-
-    public Boolean getTipoCliente() {
-        return tipoCliente;
-    }
-
-    public void setTipoCliente(Boolean tipoCliente) {
-        this.tipoCliente = tipoCliente;
     }
 
     public String getRazonSocialCliente() {

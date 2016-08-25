@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.NuevoProducto">
+    tools:context=".pantalla.NuevoProducto">
 
     <include
-        layout="@layout/toolbar_compuesta"
+        layout="@layout/toolbar_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_codigo_principal_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_codigo_auxiliar_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_descripcion_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_precio_unitario_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />

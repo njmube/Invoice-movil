@@ -29,7 +29,15 @@ import retrofit2.Response;
 
 public class Cliente extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Button buttonNuevoCliente;
+
+    private Button buttonActualizarCliente;
+
+    private Button buttonContinuar;
+
+    private TextView textViewClienteSeleccionado;
+
+    private ProgressDialog progressDialog;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -39,34 +47,20 @@ public class Cliente extends AppCompatActivity {
 
     private AutoCompleteTextView autoCompleteTextViewClientes;
 
-    private Button buttonNuevoCliente;
-
-    private Button buttonActualizarCliente;
-
-    private Button buttonContinuar;
-
-    private TextView textViewClienteSeleccionado;
-
     private ec.bigdata.facturaelectronicamovil.modelo.Cliente clienteSeleccionado;
-
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
 
-        //Get a support ActionBar corresponding to this toolbar_compuesta
-
-        //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Get access to the custom title view
+
         TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
         tituloToolbar.setText(getResources().getString(R.string.titulo_cliente));
         autoCompleteTextViewClientes = (AutoCompleteTextView) findViewById(R.id.auto_complete_text_view_cliente);
@@ -83,7 +77,7 @@ public class Cliente extends AppCompatActivity {
             }
         }
 
-        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> listCall = servicioCliente.obtenerClientesPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), 1, 2);
+        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> listCall = servicioCliente.obtenerClientesPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), 0, 100);
         listCall.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>>() {
             @Override
             public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> call, Response<List<ec.bigdata.facturaelectronicamovil.modelo.Cliente>> response) {
@@ -91,7 +85,7 @@ public class Cliente extends AppCompatActivity {
                     List<ec.bigdata.facturaelectronicamovil.modelo.Cliente> clientes = response.body();
                     if (clientes != null && !clientes.isEmpty()) {
                         //Se asigna el origen de datos
-                        arrayAdapterCliente = new ArrayAdapterCliente(getApplicationContext(), R.layout.activity_cliente, R.id.tv_cliente_filtrado, clientes);
+                        arrayAdapterCliente = new ArrayAdapterCliente(getApplicationContext(), R.layout.activity_cliente, R.id.text_view_filtrado, clientes);
                         //Se setea el adaptador
                         autoCompleteTextViewClientes.setAdapter(arrayAdapterCliente);
                     }
@@ -150,12 +144,14 @@ public class Cliente extends AppCompatActivity {
         buttonContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
                 if (clienteSeleccionado != null) {
-                    Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
                     intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO), clienteSeleccionado);
                     setResult(RESULT_OK, intent);
-                    finish();
+                } else {
+                    setResult(RESULT_CANCELED, intent);
                 }
+                finish();
             }
         });
     }
@@ -173,6 +169,13 @@ public class Cliente extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
+        if (clienteSeleccionado != null) {
+            intent.putExtra(String.valueOf(Codigos.CODIGO_CLIENTE_SELECCIONADO), clienteSeleccionado);
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED, intent);
+        }
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }

@@ -27,6 +27,7 @@ public class RecyclerViewAdapterAdmClientes extends RecyclerView.Adapter<Recycle
 
 
     public RecyclerViewAdapterAdmClientes(List<Cliente> clientes, Context context) {
+
         this.clientes = clientes;
         sparseBooleanArrayIds = new SparseBooleanArray();
     }

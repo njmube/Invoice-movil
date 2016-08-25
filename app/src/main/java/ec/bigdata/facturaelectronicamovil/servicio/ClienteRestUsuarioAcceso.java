@@ -42,25 +42,16 @@ public class ClienteRestUsuarioAcceso {
 
     public interface ServicioUsuarioAcceso {
 
-        @GET("usuarioAcceso/obtenerUsuarios")
+        @GET("usuarioAcceso")
         Call<List<UsuarioAcceso>> obtenerUsuarios();
 
-        @GET("usuarioAcceso/validarUsuarioObject/{nombreUsuario}/{claveUsuario}")
+        @GET("usuarioAcceso/{nombreUsuario}/{claveUsuario}")
         Call<UsuarioAcceso> validarUsuarioAcceso(@Path("nombreUsuario") String _nombreUsuario, @Path("claveUsuario") String _claveUsuario);
 
-        @GET("usuarioAcceso/obtenerUsuarioPorCorreo/{correoUsuario}")
+        @GET("usuarioAcceso/usuarioCorreo/{correoUsuario}")
         Call<UsuarioAcceso> obtenerUsuarioPorCorreo(@Path("correoUsuario") String _correoUsuario);
 
-        @PUT("usuarioAcceso/actualizarNombres/{idUsuario}/{nombres}")
-        Call<ResponseBody> actualizarNombres(@Path("idUsuario") String _idUsuario, @Path("nombres") String _nombres);
-
-        @PUT("usuarioAcceso/actualizarApellidos/{idUsuario}/{apellidos}")
-        Call<ResponseBody> actualizarApellidos(@Path("idUsuario") String _idUsuario, @Path("apellidos") String _apellidos);
-
-        @PUT("usuarioAcceso/actualizarCorreoPrincipal/{idUsuario}/{correoPrincipal}")
-        Call<ResponseBody> actualizarCorreoPrincipal(@Path("idUsuario") String _idUsuario, @Path("correoPrincipal") String _correoPrincipal);
-
-        @PUT("usuarioAcceso/actualizarUsuario/{idUsuario}/{nombres}/{apellidos}/{correoPrincipal}/{correoAdicional}/{telefonoPrincipal}/{telefonoAdicional}")
+        @PUT("usuarioAcceso/{idUsuario}/{nombres}/{apellidos}/{correoPrincipal}/{correoAdicional}/{telefonoPrincipal}/{telefonoAdicional}")
         Call<ResponseBody> actualizarUsuario(@Query(value = "idUsuario", encoded = true) String _idUsuario,
                                              @Query(value = "nombres", encoded = true) String _nombres,
                                              @Query(value = "apellidos", encoded = true) String _apellidos,

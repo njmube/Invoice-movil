@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".pantalla.FragmentoResumenEmisorReceptorComprobante">
+
+    <TableLayout
+        android:id="@+id/table_layout_resumen_emisor_receptor_comprobante"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:gravity="center"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/text_view_numero_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etiqueta_numero_comprobante"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+            <TextView
+                android:id="@+id/text_view_valor_numero_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/valor_vacio" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/text_view_emisor_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etiqueta_emisor_comprobante"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+            <TextView
+                android:id="@+id/text_view_valor_emisor_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/valor_vacio" />
+
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/text_view_receptor_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etiqueta_receptor_comprobante"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+            <TextView
+                android:id="@+id/text_view_valor_receptor_comprobante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/valor_vacio" />
+
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

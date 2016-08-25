@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.Cliente">
+    tools:context=".pantalla.Cliente">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:gravity="center|center_vertical"
+        android:gravity="center"
+        android:padding="@dimen/normal_padding"
         android:orientation="horizontal">
 
         <AutoCompleteTextView
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
         android:orientation="horizontal"
+        android:padding="@dimen/normal_padding"
         android:gravity="center_vertical|bottom">
 
 

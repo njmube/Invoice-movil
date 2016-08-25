@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,10 @@ import java.util.List;
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.ImpuestoComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterProducto;
+import ec.bigdata.facturaelectronicamovil.facturacion.Calculos;
+import ec.bigdata.facturaelectronicamovil.modelo.Producto;
 import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
-import ec.bigdata.facturaelectronicamovil.utilidad.Calculos;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
 import retrofit2.Call;
@@ -33,19 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Detalle extends AppCompatActivity {
-
-    private Toolbar toolbar;
-
-    private ClaseGlobalUsuario claseGlobalUsuario;
-
-    private ClienteRestProducto.ServicioProducto servicioProducto;
-
-
-    private ArrayAdapterProducto arrayAdapterProducto;
-
-    private AutoCompleteTextView autoCompleteTextViewProductos;
-
-    private ec.bigdata.facturaelectronicamovil.modelo.Producto productoSeleccionado;
 
     private TextView textViewProductoSeleccionado;
 
@@ -67,6 +54,16 @@ public class Detalle extends AppCompatActivity {
 
     private Button buttonContinuar;
 
+    private ClaseGlobalUsuario claseGlobalUsuario;
+
+    private ClienteRestProducto.ServicioProducto servicioProducto;
+
+    private ArrayAdapterProducto arrayAdapterProducto;
+
+    private AutoCompleteTextView autoCompleteTextViewProductos;
+
+    private ec.bigdata.facturaelectronicamovil.modelo.Producto productoSeleccionado;
+
     private ec.bigdata.comprobanteelectronico.esquema.factura.Detalle nuevoDetalle;
 
     @Override
@@ -74,16 +71,13 @@ public class Detalle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
-        //Get a support ActionBar corresponding to this toolbar_compuesta
 
-        //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Get access to the custom title view
+
         TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
 
         tituloToolbar.setText(getResources().getString(R.string.titulo_detalle));
@@ -184,7 +178,7 @@ public class Detalle extends AppCompatActivity {
                 }
             }
         });
-        cargarProductos();
+
         buttonNuevoProducto = (Button) findViewById(R.id.button_nuevo_producto);
         buttonNuevoProducto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,7 +198,8 @@ public class Detalle extends AppCompatActivity {
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 } else {
-                    Toast.makeText(Detalle.this, "Debe seleccionar un producto.", Toast.LENGTH_SHORT).show();
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Debe seleccionar un producto.");
+
                 }
             }
         });
@@ -252,10 +247,30 @@ public class Detalle extends AppCompatActivity {
                 enviarDetalle();
             }
         });
+
+        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> callProducto = servicioProducto.obtenerProductosPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), 0, 100);
+        callProducto.enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Response<List<Producto>> response) {
+                if (response.isSuccessful()) {
+                    List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productosConsultados = response.body();
+                    if (productosConsultados != null && !productosConsultados.isEmpty()) {
+                        arrayAdapterProducto = new ArrayAdapterProducto(getApplicationContext(), R.layout.activity_detalle, R.id.text_view_filtrado, productosConsultados);
+                        //Se setea el adaptador
+                        autoCompleteTextViewProductos.setAdapter(arrayAdapterProducto);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 
     private void enviarDetalle() {
-        Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
+        Intent intent = new Intent(getApplicationContext(), DetallesFactura.class);
         //TODO definir que se envía como extra al continuar
         if (nuevoDetalle != null) {
             intent.putExtra(String.valueOf(Codigos.CODIGO_DETALLE_NUEVO_AGREGADO), nuevoDetalle);
@@ -285,35 +300,12 @@ public class Detalle extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Codigos.CODIGO_PRODUCTO_SELECCIONADO_ACTUALIZADO) {
+        if (requestCode == Codigos.CODIGO_PRODUCTO_ACTUALIZADO) {
             if (resultCode == RESULT_OK) {
-                cargarProductos();
+
             }
         }
     }
 
-    private void cargarProductos() {
-
-        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call_producto = servicioProducto.obtenerProductosPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa());
-        call_producto.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>>() {
-            @Override
-            public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Response<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> response) {
-                if (response.isSuccessful()) {
-                    List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productos = response.body();
-                    if (productos != null && !productos.isEmpty()) {
-                        //Se asigna el origen de datos
-                        arrayAdapterProducto = new ArrayAdapterProducto(getApplicationContext(), R.layout.activity_cliente, R.id.tv_cliente_filtrado, productos);
-                        //Se setea el adaptador
-                        autoCompleteTextViewProductos.setAdapter(arrayAdapterProducto);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Throwable t) {
-
-            }
-        });
-    }
 
 }

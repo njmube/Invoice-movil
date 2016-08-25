@@ -23,7 +23,7 @@
         android:id="@+id/linear_layout_detalles_factura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|center_vertical"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
         <TextView

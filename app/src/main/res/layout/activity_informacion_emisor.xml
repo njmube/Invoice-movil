@@ -20,6 +20,7 @@
             android:id="@+id/linear_layout_informacion_emisor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/normal_padding"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -35,7 +36,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -53,7 +54,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -71,7 +72,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -116,7 +117,7 @@
                     android:maxLength="13"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>
 

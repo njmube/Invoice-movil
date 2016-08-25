@@ -8,7 +8,7 @@
     tools:context="ec.bigdata.facturaelectronicamovil.pantalla.ActualizacionProducto">
 
     <include
-        layout="@layout/toolbar_compuesta"
+        layout="@layout/toolbar_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_codigo_auxiliar_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_descripcion_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_precio_unitario_producto"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/boton_actualizar_producto"
+                android:text="@string/etiqueta_boton_actualizar"
                 android:textStyle="bold" />
 
         </LinearLayout>

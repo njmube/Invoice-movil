@@ -1,13 +1,16 @@
 package ec.bigdata.facturaelectronicamovil.adaptador;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.InformacionAdicional;
 import ec.bigdata.facturaelectronicamovil.R;
@@ -16,8 +19,11 @@ import ec.bigdata.facturaelectronicamovil.R;
  * Created by DavidLeonardo on 15/6/2016.
  */
 public class ArrayAdapterInformacionAdicional<T> extends ArrayAdapter<InformacionAdicional> {
+    private HashMap<Integer, Boolean> selecccionados;
+
     public ArrayAdapterInformacionAdicional(Context context, List<InformacionAdicional> objects) {
         super(context, 0, objects);
+        selecccionados = new HashMap<Integer, Boolean>();
     }
 
     @Override
@@ -51,10 +57,36 @@ public class ArrayAdapterInformacionAdicional<T> extends ArrayAdapter<Informacio
         nombre.setText(item.getNombre());
         valor.setText(item.getValor());
 
-
+        //Color cuando se seleccione un item
+        listItemView.setBackgroundColor(selecccionados.get(position) != null ? 0x9934B5E4
+                : Color.TRANSPARENT);
         //Devolver al ListView la fila creada
         return listItemView;
 
+    }
+
+    public void setNuevaSeleccion(int position, boolean value) {
+        selecccionados.put(position, value);
+        notifyDataSetChanged();
+    }
+
+    public boolean estaPosicionActualSeleccionada(int position) {
+        Boolean result = selecccionados.get(position);
+        return result == null ? false : result;
+    }
+
+    public Set<Integer> obtenerPosicionActualSeleccionada() {
+        return selecccionados.keySet();
+    }
+
+    public void quitarSeleccion(int position) {
+        selecccionados.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void limpiarSeleccion() {
+        selecccionados = new HashMap<>();
+        notifyDataSetChanged();
     }
 
 }

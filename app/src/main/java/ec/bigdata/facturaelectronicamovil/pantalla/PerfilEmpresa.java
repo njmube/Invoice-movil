@@ -1,9 +1,8 @@
 package ec.bigdata.facturaelectronicamovil.pantalla;
 
-import android.os.AsyncTask;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -15,27 +14,25 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.modelo.ClienteEmpresa;
+import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
 import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestEmpresa;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
-import ec.bigdata.utilidades.Validaciones;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PerfilEmpresa extends AppCompatActivity implements Validator.ValidationListener {
-
-    private static final String TAG = PerfilEmpresa.class.getSimpleName();
+public class PerfilEmpresa extends AppCompatActivity {
 
     @NotEmpty(message = "La razón social es requerida.")
     private EditText editTextRazonSocial;
@@ -57,9 +54,17 @@ public class PerfilEmpresa extends AppCompatActivity implements Validator.Valida
 
     private TextView textViewObligadoLlevarContabilidad;
 
-    ClaseGlobalUsuario claseGlobalUsuario;
+    @NotEmpty(message = "La contraseña actual es requerida.", sequence = 1)
+    private EditText editTextContraseniaActual;
+
+    @NotEmpty(message = "La contraseña nueva es requerida.", sequence = 1)
+    @Password(scheme = Password.Scheme.ALPHA_NUMERIC, min = 8, message = "La contraseña debe tener al menos 8 caracteres entre dígitos,símbolos y letras.", sequence = 2)
+    @ConfirmPassword(message = "Las contraseñas no coinciden.", sequence = 3)
+    private EditText editTextContraseniaNueva;
 
     private Button buttonActualizarPerfilEmpresa;
+
+    private Button buttonActualizarContrasenia;
 
     private String razonSocialActualizado;
 
@@ -75,9 +80,19 @@ public class PerfilEmpresa extends AppCompatActivity implements Validator.Valida
 
     private String llevaContabilidad;
 
-    private Validator validator;
+    private String contraseniaActual;
+
+    private String contraseniaNueva;
+
+    private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ClienteRestEmpresa.ServicioEmpresa clienteRestEmpresa;
+
+    private ProgressDialog progressDialog;
+
+    private ValidacionInformacionEmpresa validacionInformacionEmpresa;
+
+    private ValidacionCambioContrasenia validacionCambioContrasenia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +108,143 @@ public class PerfilEmpresa extends AppCompatActivity implements Validator.Valida
         editTextDireccionEmpresa = (EditText) findViewById(R.id.edit_text_direccion_empresa);
         textViewObligadoLlevarContabilidad = (TextView) findViewById(R.id.text_view_obligado_llevar_contabilidad);
         buttonActualizarPerfilEmpresa = (Button) findViewById(R.id.button_actualizar_informacion_empresa);
+        buttonActualizarContrasenia = (Button) findViewById(R.id.button_actualizar_contrasenia);
+        editTextContraseniaActual = (EditText) findViewById(R.id.edit_text_contrasenia_actual_empresa);
+        editTextContraseniaNueva = (EditText) findViewById(R.id.edit_text_contrasenia_nueva_empresa);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+        validacionInformacionEmpresa = new ValidacionInformacionEmpresa(editTextRazonSocial, editTextNombreComercial, editTextCorreoPrincipalEmpresa, editTextTelefonoPrincipalEmpresa, editTextDireccionEmpresa, editTextNumeroResolucion, new Validator.ValidationListener() {
+            @Override
+            public void onValidationSucceeded() {
 
+
+                nombreComercialActualizado = editTextNombreComercial.getText().toString();
+
+                razonSocialActualizado = editTextRazonSocial.getText().toString();
+
+                telefonoPrincipalActualizado = editTextTelefonoPrincipalEmpresa.getText().toString();
+
+                direccionMatrizActualizado = editTextDireccionEmpresa.getText().toString();
+
+                numeroResolucion = editTextNumeroResolucion.getText().toString();
+
+                correoPrincipalActualizado = editTextCorreoPrincipalEmpresa.getText().toString();
+                progressDialog = DialogProgreso.mostrarDialogProgreso(PerfilEmpresa.this);
+                Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarEmpresa(
+                        claseGlobalUsuario.getIdEmpresa(), nombreComercialActualizado, razonSocialActualizado, direccionMatrizActualizado
+                        , correoPrincipalActualizado, telefonoPrincipalActualizado, numeroResolucion);
+                responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            String contenido = null;
+                            try {
+                                contenido = new String(response.body().bytes());
+                                JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                                if (jsonObject.get("estado").getAsBoolean() == true) {
+                                    claseGlobalUsuario.setNombreComercial(nombreComercialActualizado);
+                                    claseGlobalUsuario.setRazonSocial(razonSocialActualizado);
+                                    claseGlobalUsuario.setDireccionMatriz(direccionMatrizActualizado);
+                                    claseGlobalUsuario.setTelefonoPrincipal(telefonoPrincipalActualizado);
+                                    claseGlobalUsuario.setCorreoPrincipal(correoPrincipalActualizado);
+                                    claseGlobalUsuario.setNumeroResolucion(numeroResolucion);
+
+                                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Información de empresa actualizada.");
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        call.cancel();
+                        progressDialog.dismiss();
+                    }
+                });
+            }
+
+            @Override
+            public void onValidationFailed(List<ValidationError> errors) {
+                for (ValidationError error : errors) {
+                    View view = error.getView();
+                    String message = error.getCollatedErrorMessage(getApplicationContext());
+
+                    // Display error messages
+                    if (view instanceof EditText) {
+                        ((EditText) view).setError(message);
+                    } else {
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
+                    }
+                }
+            }
+        });
+
+        validacionCambioContrasenia = new ValidacionCambioContrasenia(editTextContraseniaActual, editTextContraseniaNueva, new Validator.ValidationListener() {
+            @Override
+            public void onValidationSucceeded() {
+                contraseniaActual = editTextContraseniaActual.getText().toString();
+                contraseniaNueva = editTextContraseniaNueva.getText().toString();
+
+                progressDialog = DialogProgreso.mostrarDialogProgreso(PerfilEmpresa.this);
+                Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarContrasenia(claseGlobalUsuario.getIdEmpresa(), contraseniaActual, contraseniaNueva);
+                responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            String contenido = null;
+                            try {
+                                contenido = new String(response.body().bytes());
+                                JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                                if (jsonObject.get("estado").getAsBoolean() == true) {
+                                    //TODO como actualizo la nueva contrasenia.
+                                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Contraseña actualizada.");
+                                } else {
+                                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, jsonObject.get("mensajeError").getAsString());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        call.cancel();
+                        progressDialog.dismiss();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onValidationFailed(List<ValidationError> errors) {
+                for (ValidationError error : errors) {
+                    View view = error.getView();
+                    String message = error.getCollatedErrorMessage(getApplicationContext());
+
+                    // Display error messages
+                    if (view instanceof EditText) {
+                        ((EditText) view).setError(message);
+                    } else {
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
+                    }
+                }
+            }
+        });
         buttonActualizarPerfilEmpresa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actualizarPerfilEmpresa();
+                validacionInformacionEmpresa.validarCampos();
+            }
+        });
+        buttonActualizarContrasenia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validacionCambioContrasenia.validarCampos();
             }
         });
 
@@ -114,7 +258,7 @@ public class PerfilEmpresa extends AppCompatActivity implements Validator.Valida
         editTextTelefonoPrincipalEmpresa.setText(claseGlobalUsuario.getTelefonoPrincipal());
         editTextDireccionEmpresa.setText(claseGlobalUsuario.getDireccionMatriz());
         editTextNumeroResolucion.setText(claseGlobalUsuario.getNumeroResolucion());
-
+        progressDialog = DialogProgreso.mostrarDialogProgreso(PerfilEmpresa.this);
         llevaContabilidad = claseGlobalUsuario.isObligadoLlevarContabilidad() == true ? "SI" : "NO";
         textViewObligadoLlevarContabilidad.setText(llevaContabilidad);
         switchObligadoLlevarContabilidad.setChecked(claseGlobalUsuario.isObligadoLlevarContabilidad());
@@ -131,194 +275,100 @@ public class PerfilEmpresa extends AppCompatActivity implements Validator.Valida
                 } else {
                     textViewObligadoLlevarContabilidad.setText("NO");
                 }
-
+                progressDialog = DialogProgreso.mostrarDialogProgreso(PerfilEmpresa.this);
                 Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarObligadoLlevarContabilidad(claseGlobalUsuario.getIdEmpresa(), isChecked);
                 responseBodyCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
+                            progressDialog.dismiss();
                             String contenido = null;
                             try {
                                 contenido = new String(response.body().bytes());
                                 JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
                                 if (jsonObject.get("estado").getAsBoolean() == true) {
                                     claseGlobalUsuario.setObligadoLlevarContabilidad(isChecked);
-
                                     MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Obligado a llevar contabilidad actualizado.");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         call.cancel();
+                        progressDialog.dismiss();
                     }
                 });
             }
         });
+        progressDialog.dismiss();
     }
 
-    @Override
-    public void onValidationSucceeded() {
-        actualizarPerfilEmpresa();
-    }
+    //Validador de información de la empresa
+    class ValidacionInformacionEmpresa {
+        @NotEmpty(message = "La razón social es requerida.")
+        private EditText editTextRazonSocial;
 
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
+        @NotEmpty(message = "El nombre comercial es requerido.")
+        private EditText editTextNombreComercial;
 
-            // Display error messages
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
-            }
+        @NotEmpty
+        @Email(message = "El correo electrónico no es válido.")
+        private EditText editTextCorreoPrincipalEmpresa;
+
+        private EditText editTextTelefonoPrincipalEmpresa;
+
+        private EditText editTextDireccionEmpresa;
+
+        private EditText editTextNumeroResolucion;
+
+        private Validator validator;
+
+        public ValidacionInformacionEmpresa(EditText editTextRazonSocial, EditText editTextNombreComercial, EditText editTextCorreoPrincipalEmpresa, EditText editTextTelefonoPrincipalEmpresa, EditText editTextDireccionEmpresa, EditText editTextNumeroResolucion, Validator.ValidationListener validationListener) {
+            this.editTextRazonSocial = editTextRazonSocial;
+            this.editTextNombreComercial = editTextNombreComercial;
+            this.editTextCorreoPrincipalEmpresa = editTextCorreoPrincipalEmpresa;
+            this.editTextTelefonoPrincipalEmpresa = editTextTelefonoPrincipalEmpresa;
+
+            this.editTextDireccionEmpresa = editTextDireccionEmpresa;
+            this.editTextNumeroResolucion = editTextNumeroResolucion;
+            this.validator = new Validator(this);
+            this.validator.setValidationListener(validationListener);
+        }
+
+        public void validarCampos() {
+            validator.validate();
         }
     }
 
-    private class ActualizacionPerfilEmpresaAsyncTask extends AsyncTask<String, Integer, Boolean> {
+    class ValidacionCambioContrasenia {
+        @NotEmpty(message = "La contraseña actual es requerida.", sequence = 1)
+        private EditText editTextContraseniaActual;
 
+        @NotEmpty(message = "La contraseña nueva es requerida.", sequence = 1)
+        @Password(scheme = Password.Scheme.ALPHA_NUMERIC, min = 8, message = "La contraseña debe tener al menos 8 caracteres entre dígitos,símbolos y letras.", sequence = 2)
+        @ConfirmPassword(message = "Las contraseñas no coinciden.", sequence = 3)
+        private EditText editTextContraseniaNueva;
 
-        private String errores;
+        private Validator validator;
 
-        public ActualizacionPerfilEmpresaAsyncTask() {
-            this.errores = "";
+        public ValidacionCambioContrasenia(EditText editTextContraseniaActual, EditText editTextContraseniaNueva, Validator.ValidationListener validationListener) {
+            this.editTextContraseniaActual = editTextContraseniaActual;
+            this.editTextContraseniaNueva = editTextContraseniaNueva;
+            this.validator = new Validator(this);
+            this.validator.setValidationListener(validationListener);
         }
 
-        @Override
-        protected void onPreExecute() {
+        public void validarCampos() {
 
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            boolean validado = false;
-            String correo = params[0];
-            Call<ClienteEmpresa> clienteEmpresaCall = clienteRestEmpresa.obtenerClienteEmpresaPorCorreo(correo);
-            try {
-                Response<ClienteEmpresa> clienteEmpresaResponse = clienteEmpresaCall.execute();
-                if (clienteEmpresaResponse.isSuccessful()) {
-
-                    ClienteEmpresa clienteEmpresa = clienteEmpresaResponse.body();
-                    if (clienteEmpresa != null && clienteEmpresa.getIdClienteEmpresa() != null) {
-                        errores = errores.concat("El correo electrónico está siendo usado por otra empresa.");
-                    } else {
-                        validado = true;
-                    }
-                } else {
-                    ResponseBody responseBody = clienteEmpresaResponse.errorBody();
-                    Log.e(TAG, responseBody.string());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return validado;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result.equals(Boolean.FALSE)) {
-                if (!errores.equals("")) {
-                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
-                }
-            }
+            validator.validate();
         }
 
     }
 
-    private void actualizarPerfilEmpresa() {
-        ActualizacionPerfilEmpresaAsyncTask actualizacionPerfilEmpresaAsyncTask = new ActualizacionPerfilEmpresaAsyncTask();
 
-        if (!editTextNombreComercial.getText().toString().trim().equals("")) {
-            nombreComercialActualizado = editTextNombreComercial.getText().toString();
-        } else {
-            nombreComercialActualizado = claseGlobalUsuario.getNombreComercial();
-        }
-        if (!editTextRazonSocial.getText().toString().trim().equals("")) {
-            razonSocialActualizado = editTextRazonSocial.getText().toString();
-        } else {
-            razonSocialActualizado = claseGlobalUsuario.getRazonSocial();
-        }
-
-        if (!editTextTelefonoPrincipalEmpresa.getText().toString().trim().equals("")) {
-            telefonoPrincipalActualizado = editTextTelefonoPrincipalEmpresa.getText().toString();
-        } else {
-            telefonoPrincipalActualizado = claseGlobalUsuario.getTelefonoPrincipal();
-        }
-        if (!editTextDireccionEmpresa.getText().toString().trim().equals("")) {
-            direccionMatrizActualizado = editTextDireccionEmpresa.getText().toString();
-        } else {
-            direccionMatrizActualizado = claseGlobalUsuario.getTelefonoPrincipal();
-        }
-
-        if (!editTextNumeroResolucion.getText().toString().trim().equals("")) {
-            numeroResolucion = editTextNumeroResolucion.getText().toString();
-        } else {
-            numeroResolucion = claseGlobalUsuario.getNumeroResolucion();
-        }
-        correoPrincipalActualizado = editTextCorreoPrincipalEmpresa.getText().toString();
-        if (!correoPrincipalActualizado.trim().equals("")) {
-            if (Validaciones.isEmail(correoPrincipalActualizado)) {
-                Boolean validadoCorreo = Boolean.FALSE;
-                if (editTextCorreoPrincipalEmpresa.getText().toString().equals(claseGlobalUsuario.getCorreoPrincipal())) {
-                    validadoCorreo = Boolean.TRUE;
-                } else {
-                    try {
-                        validadoCorreo = actualizacionPerfilEmpresaAsyncTask.execute(correoPrincipalActualizado).get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (validadoCorreo) {
-
-                    Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarEmpresa(
-                            claseGlobalUsuario.getIdEmpresa(), nombreComercialActualizado, razonSocialActualizado, direccionMatrizActualizado
-                            , correoPrincipalActualizado, telefonoPrincipalActualizado, numeroResolucion);
-                    responseBodyCall.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.isSuccessful()) {
-                                String contenido = null;
-                                try {
-                                    contenido = new String(response.body().bytes());
-                                    JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
-                                    if (jsonObject.get("estado").getAsBoolean() == true) {
-                                        claseGlobalUsuario.setNombreComercial(nombreComercialActualizado);
-                                        claseGlobalUsuario.setRazonSocial(razonSocialActualizado);
-                                        claseGlobalUsuario.setDireccionMatriz(direccionMatrizActualizado);
-                                        claseGlobalUsuario.setTelefonoPrincipal(telefonoPrincipalActualizado);
-                                        claseGlobalUsuario.setCorreoPrincipal(correoPrincipalActualizado);
-                                        claseGlobalUsuario.setNumeroResolucion(numeroResolucion);
-
-                                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Información de empresa actualizada.");
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            call.cancel();
-                        }
-                    });
-                }
-            } else {
-                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El correo principal no es válido.");
-            }
-        } else {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El correo principal no puede estar vacío.");
-        }
-
-    }
 }

@@ -1,5 +1,6 @@
 package ec.bigdata.facturaelectronicamovil.pantalla;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -22,7 +25,6 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import java.util.List;
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.AdaptadorCorreoAdicionalCliente;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogConfirmacion;
+import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
 import ec.bigdata.facturaelectronicamovil.modelo.CorreoAdicional;
 import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestCorreoAdicionalCliente;
@@ -44,14 +47,15 @@ import retrofit2.Response;
 
 public class CorreosAdicionalesCliente extends AppCompatActivity implements Validator.ValidationListener, DialogConfirmacion.DialogConfirmacionComunicacion {
 
-    @Order(value = 1)
-    @NotEmpty(message = "El correo electronico es requerido.", sequence = 1)
+    @NotEmpty(message = "El correo electrónico es requerido.", sequence = 1)
     @Email(message = "El correo electrónico no es válido.", sequence = 2)
     private EditText editTextCorreoAdicional;
 
-    private Button buttonAgregarCorreoAdicional;
+    private RadioButton radioButtonTipoCliente;
 
-    private List<CorreoAdicional> correosAdicionales;
+    private RadioButton radioButtonTipoProveedor;
+
+    private Button buttonAgregarCorreoAdicional;
 
     private ListView listViewCorreosAdicionales;
 
@@ -69,11 +73,21 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
 
     private ActionMode actionMode;
 
+    private Boolean tipoCliente;
+
+    private String correoAdicional;
+
+    private List<CorreoAdicional> correosAdicionales;
+
+    private List<CorreoAdicional> correoAdicionalListEliminar;
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_correos_adicionales_cliente);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
 
         setSupportActionBar(toolbar);
 
@@ -81,13 +95,17 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
 
         tituloToolbar.setText(getResources().getString(R.string.titulo_correos_adicionales_cliente));
 
         TextView textViewClienteAsociadoCorreosAdicionales = (TextView) findViewById(R.id.text_view_cliente_asociado_correos_adicionales);
 
         editTextCorreoAdicional = (EditText) findViewById(R.id.edit_text_correo_adicional_cliente);
+
+        radioButtonTipoCliente = (RadioButton) findViewById(R.id.radio_button_tipo_cliente1);
+
+        radioButtonTipoProveedor = (RadioButton) findViewById(R.id.radio_button_tipo_cliente2);
 
         buttonAgregarCorreoAdicional = (Button) findViewById(R.id.button_agregar_correo_adicional);
 
@@ -102,6 +120,27 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
         validator = new Validator(this);
         validator.setValidationListener(this);
 
+        //Por defecto se toma que el tipo de cliente es CLIENTE.
+        tipoCliente = radioButtonTipoCliente.isChecked();
+
+        //Escucha cuando se seleccionen los RadioButton.
+        radioButtonTipoCliente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tipoCliente = Boolean.TRUE;
+                }
+            }
+        });
+        radioButtonTipoProveedor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tipoCliente = Boolean.FALSE;
+                }
+            }
+        });
+
         //Se recibe el id del cliente
 
         Bundle bundle = getIntent().getExtras();
@@ -110,24 +149,30 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
 
             textViewClienteAsociadoCorreosAdicionales.setText(getResources().getString(R.string.titulo_cliente_seleccionado) + " " + Utilidades.obtenerNombreCliente(cliente));
         }
+        progressDialog = DialogProgreso.mostrarDialogProgreso(CorreosAdicionalesCliente.this);
         Call<List<CorreoAdicional>> listCall = servicioCorreoAdicional.obtenerCorreosAdicionalesPorCliente(cliente.getIdCliente());
         listCall.enqueue(new Callback<List<CorreoAdicional>>() {
             @Override
             public void onResponse(Call<List<CorreoAdicional>> call, Response<List<CorreoAdicional>> response) {
                 if (response.isSuccessful()) {
                     correosAdicionales = response.body();
-
                     adaptadorCorreoAdicionalCliente = new AdaptadorCorreoAdicionalCliente(getApplicationContext(), correosAdicionales);
                     listViewCorreosAdicionales.setAdapter(adaptadorCorreoAdicionalCliente);
 
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<List<CorreoAdicional>> call, Throwable t) {
                 call.cancel();
+                progressDialog.dismiss();
             }
+
         });
+        //Vista vacía.
+        View viewVistaVacia = findViewById(R.id.text_view_vista_vacia);
+        listViewCorreosAdicionales.setEmptyView(viewVistaVacia);
 
         buttonAgregarCorreoAdicional.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +181,8 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
             }
         });
 
+
+        //Se activa el modo de selección múltiple.
         listViewCorreosAdicionales.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listViewCorreosAdicionales.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             private int totalSeleccionado;
@@ -173,7 +220,7 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
                         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                         dialogFragmentConfirmacionEliminadoCorreosAdicionales = DialogConfirmacion.newInstance(
                                 getResources().getString(R.string.titulo_confirmacion),
-                                getResources().getString(R.string.mensaje_confirmacion_eliminado_correos_adicionales) + " " + Utilidades.formatearCorreosAdicionalesEliminacion(seleccionarCorreosAdicionales()), Boolean.TRUE);
+                                getResources().getString(R.string.mensaje_confirmacion_eliminado_correos_adicionales) + " " + Utilidades.formatearCorreosAdicionalesEliminacion(seleccionarCorreosAdicionales()), 1, Boolean.TRUE);
                         dialogFragmentConfirmacionEliminadoCorreosAdicionales.show(fragmentManager, "DialogConfirmacionBorradoCorreosAdicionales");
                         break;
                 }
@@ -207,7 +254,8 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
     }
 
     private void agregarCorreo() {
-        Call<ResponseBody> responseBodyCall = servicioCorreoAdicional.guardarCorreoAdicional(cliente.getIdCliente(), editTextCorreoAdicional.getText().toString());
+        correoAdicional = editTextCorreoAdicional.getText().toString();
+        Call<ResponseBody> responseBodyCall = servicioCorreoAdicional.guardarCorreoAdicional(cliente.getIdCliente(), tipoCliente, correoAdicional);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -217,7 +265,7 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
                         contenido = new String(response.body().bytes());
                         JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
                         if (jsonObject.get("estado").getAsBoolean() == true) {
-                            correosAdicionales.add(new CorreoAdicional(jsonObject.get("identificador").getAsInt(), editTextCorreoAdicional.getText().toString()));
+                            correosAdicionales.add(new CorreoAdicional(jsonObject.get("identificador").getAsInt(), correoAdicional, tipoCliente));
                             adaptadorCorreoAdicionalCliente.notifyDataSetChanged();
                             MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Correo adicional agregado.");
                         } else {
@@ -277,45 +325,50 @@ public class CorreosAdicionalesCliente extends AppCompatActivity implements Vali
     }
 
     @Override
-    public void presionarBotonSI() {
-        final List<CorreoAdicional> correoAdicionalList = seleccionarCorreosAdicionales();
-        if (correoAdicionalList != null && !correoAdicionalList.isEmpty()) {
-            Call<ResponseBody> responseBodyCall = servicioCorreoAdicional.eliminarCorreosAdicionales(correoAdicionalList);
-            responseBodyCall.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        String contenido = null;
-                        try {
-                            contenido = new String(response.body().bytes());
-                            JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
-                            if (jsonObject.get("estado").getAsBoolean() == true) {
-                                actionMode.finish();
-                                correosAdicionales.removeAll(correoAdicionalList);
-                                adaptadorCorreoAdicionalCliente.notifyDataSetChanged();
-                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Correo adicionales eliminados.");
-                            } else {
-                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, jsonObject.get("mensajeError").getAsString());
+    public void presionarBotonSI(int idDialog) {
+        switch (idDialog) {
+            case 1:
+                correoAdicionalListEliminar = seleccionarCorreosAdicionales();
+                if (correoAdicionalListEliminar != null && !correoAdicionalListEliminar.isEmpty()) {
+                    Call<ResponseBody> responseBodyCall = servicioCorreoAdicional.eliminarCorreosAdicionales(seleccionarCorreosAdicionales());
+                    responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                String contenido = null;
+                                try {
+                                    contenido = new String(response.body().bytes());
+                                    JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                                    if (jsonObject.get("estado").getAsBoolean() == true) {
+                                        actionMode.finish();
+                                        correosAdicionales.removeAll(correoAdicionalListEliminar);
+                                        adaptadorCorreoAdicionalCliente.notifyDataSetChanged();
+                                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Correo adicionales eliminados.");
+                                    } else {
+                                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, jsonObject.get("mensajeError").getAsString());
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            } else {
+                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Correo adicionales no eliminados.");
                         }
-                    } else {
-                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Correo adicionales no eliminados.");
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    call.cancel();
-                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Correo adicionales no eliminados.");
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            call.cancel();
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Correo adicionales no eliminados.");
+                        }
+                    });
                 }
-            });
+                break;
         }
+
     }
 
     @Override
-    public void presionarBotonCancelar() {
+    public void presionarBotonCancelar(int idDialog) {
         actionMode.finish();
     }
 }

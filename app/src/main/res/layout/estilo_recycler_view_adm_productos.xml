@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:background="?attr/selectableItemBackground"
+    android:focusable="true"
+    android:padding="@dimen/normal_padding">
+
+    <ImageView
+        android:id="@+id/image_view_inicial_producto"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/circulo" />
+
+    <TextView
+        android:id="@+id/text_view_codigo_principal_producto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nombre_app"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/text_view_identificacion_nombre_cliente"
+        android:layout_toEndOf="@+id/image_view_inicial_producto"
+        android:layout_toRightOf="@+id/image_view_inicial_producto"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/text_view_descripcion_producto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        autofit:minTextSize="10sp"
+        android:maxLines="3"
+        android:textStyle="bold"
+        android:text="@string/nombre_app"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/text_view_codigo_principal_producto"
+        android:layout_toRightOf="@+id/text_view_codigo_principal_producto"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/text_view_precio_unitario_producto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?attr/textAppearanceListItemSmall"
+        android:text="@string/nombre_app" />
+</RelativeLayout>

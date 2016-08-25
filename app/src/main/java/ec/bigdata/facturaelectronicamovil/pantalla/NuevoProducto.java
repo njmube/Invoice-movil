@@ -1,11 +1,9 @@
 package ec.bigdata.facturaelectronicamovil.pantalla;
 
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +18,9 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import ec.bigdata.facturaelectronicamovil.R;
-import ec.bigdata.facturaelectronicamovil.modelo.Producto;
+import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
 import ec.bigdata.facturaelectronicamovil.personalizacion.MensajePersonalizado;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
@@ -32,11 +29,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by DavidLeonardo on 19/8/2016.
+ */
 public class NuevoProducto extends AppCompatActivity implements Validator.ValidationListener {
-
-    private static final String TAG = NuevoProducto.class.getSimpleName();
-
-    private Toolbar toolbar;
 
     @NotEmpty(message = "El código principal del producto es requerido.")
     private EditText editTextCodigoPrincipalProducto;
@@ -46,17 +42,24 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
     @NotEmpty(message = "La descripción del producto es requerida.")
     private EditText editTextDescripcionProducto;
 
+    @NotEmpty(message = "El precio unitario del producto es requerido.")
     private EditText editTextPrecioUnitarioProducto;
 
     private Button buttonGuardarProducto;
-
-    private Button buttonContinuar;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ClienteRestProducto.ServicioProducto servicioProducto;
 
     private Validator validator;
+
+    private ProgressDialog progressDialog;
+
+    private String codigoPrincipalProducto;
+    private String codigoAuxiliarProducto;
+    private String descripcionProducto;
+    private String precioUnitarioProducto;
+    private boolean productoNuevoRegistrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
         editTextPrecioUnitarioProducto = (EditText) findViewById(R.id.edit_text_precio_unitario_producto);
         buttonGuardarProducto = (Button) findViewById(R.id.button_nuevo_producto
         );
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
         setSupportActionBar(toolbar);
 
         //Get a support ActionBar corresponding to this toolbar_compuesta
@@ -81,7 +84,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         tituloToolbar.setText(getResources().getString(R.string.titulo_nuevo_producto));
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         servicioProducto = ClienteRestProducto.getServicioProducto();
@@ -95,17 +98,7 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
             }
         });
 
-        buttonContinuar = (Button) toolbar.findViewById(R.id.button_continuar);
-        buttonContinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Cliente.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -120,52 +113,53 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
 
     @Override
     public void onBackPressed() {
+        if (productoNuevoRegistrado) {
+            setResult(RESULT_OK);
+        }
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 
     @Override
     public void onValidationSucceeded() {
-        ProductoAsyncTask productoAsyncTask = new ProductoAsyncTask();
-        boolean validadoExistenciaProducto = Boolean.FALSE;
-        try {
-            validadoExistenciaProducto = productoAsyncTask.execute(editTextCodigoPrincipalProducto.getText().toString()).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if (validadoExistenciaProducto) {
-            Call<ResponseBody> responseBodyCall = servicioProducto.guardarProducto(claseGlobalUsuario.getIdEmpresa(), editTextCodigoPrincipalProducto.getText().toString()
-                    , editTextCodigoAuxiliarProducto.getText().toString(), editTextDescripcionProducto.getText().toString(), editTextPrecioUnitarioProducto.getText().toString());
-            responseBodyCall.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        JsonParser parser = new JsonParser();
-                        JsonObject o = null;
-                        try {
-                            String s = new String(response.body().bytes());
-                            o = parser.parse(s).getAsJsonObject();
+        progressDialog = DialogProgreso.mostrarDialogProgreso(NuevoProducto.this);
+        codigoPrincipalProducto = "";
+        codigoAuxiliarProducto = "";
+        descripcionProducto = "";
+        precioUnitarioProducto = "";
+        codigoPrincipalProducto = editTextCodigoPrincipalProducto.getText().toString();
+        codigoAuxiliarProducto = editTextCodigoAuxiliarProducto.getText().toString();
+        descripcionProducto = editTextDescripcionProducto.getText().toString();
+        precioUnitarioProducto = editTextPrecioUnitarioProducto.getText().toString();
+        Call<ResponseBody> responseBodyCall = servicioProducto.guardarProducto(claseGlobalUsuario.getIdEmpresa(), codigoPrincipalProducto, codigoAuxiliarProducto, descripcionProducto, precioUnitarioProducto);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    JsonParser parser = new JsonParser();
+                    JsonObject o = null;
+                    try {
+                        String s = new String(response.body().bytes());
+                        o = parser.parse(s).getAsJsonObject();
 
-                            if (o.get("status").getAsBoolean() == true) {
-
-
-                                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Producto guardado.");
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if (o.get("estado").getAsBoolean() == true) {
+                            progressDialog.cancel();
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Producto guardado.");
+                        } else {
+                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, o.get("mensajeError").getAsString());
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Error al guardar el producto.");
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                call.cancel();
+                progressDialog.cancel();
+            }
+        });
     }
 
     @Override
@@ -181,57 +175,5 @@ public class NuevoProducto extends AppCompatActivity implements Validator.Valida
                 MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
             }
         }
-    }
-
-    private class ProductoAsyncTask extends AsyncTask<String, Integer, Boolean> {
-
-
-        private String errores;
-
-        public ProductoAsyncTask() {
-            this.errores = "";
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            boolean validado = false;
-            String codigoPrincipalProducto = params[0];
-            Call<ec.bigdata.facturaelectronicamovil.modelo.Producto> callProducto = servicioProducto.obtenerProductoPorCodigoPrincipalPorEmpresaAsociado(codigoPrincipalProducto, claseGlobalUsuario.getIdEmpresa());
-            try {
-                Response<Producto> productoResponse = callProducto.execute();
-                if (productoResponse.isSuccessful()) {
-
-                    Producto producto = productoResponse.body();
-                    if (producto != null && producto.getIdProducto() != null) {
-                        errores = errores.concat("El producto ya se encuentra registrado.");
-                    } else {
-                        validado = true;
-                    }
-                } else {
-                    ResponseBody responseBody = productoResponse.errorBody();
-                    Log.e(TAG, responseBody.string());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return validado;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result.equals(Boolean.FALSE)) {
-                if (!errores.equals("")) {
-                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores);
-                }
-            }
-        }
-
     }
 }

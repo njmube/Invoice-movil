@@ -5,20 +5,18 @@ package ec.bigdata.facturaelectronicamovil.modelo;
  */
 public class CorreoAdicional implements java.io.Serializable {
 
-
     private Integer idCorreoAdicional;
-    private String correo;
+
+    private String correoElectronicoCorreoAdicional;
+    private Boolean tipoClienteCorreoAdicional;
 
     public CorreoAdicional() {
     }
 
-    public CorreoAdicional(String correo) {
-        this.correo = correo;
-    }
-
-    public CorreoAdicional(Integer idCorreoAdicional, String correo) {
+    public CorreoAdicional(Integer idCorreoAdicional, String correoElectronicoCorreoAdicional, Boolean tipoClienteCorreoAdicional) {
         this.idCorreoAdicional = idCorreoAdicional;
-        this.correo = correo;
+        this.correoElectronicoCorreoAdicional = correoElectronicoCorreoAdicional;
+        this.tipoClienteCorreoAdicional = tipoClienteCorreoAdicional;
     }
 
     public Integer getIdCorreoAdicional() {
@@ -29,12 +27,20 @@ public class CorreoAdicional implements java.io.Serializable {
         this.idCorreoAdicional = idCorreoAdicional;
     }
 
-    public String getCorreo() {
-        return this.correo;
+    public String getCorreoElectronicoCorreoAdicional() {
+        return this.correoElectronicoCorreoAdicional;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setCorreoElectronicoCorreoAdicional(String correoElectronicoCorreoAdicional) {
+        this.correoElectronicoCorreoAdicional = correoElectronicoCorreoAdicional;
+    }
+
+    public Boolean getTipoClienteCorreoAdicional() {
+        return this.tipoClienteCorreoAdicional;
+    }
+
+    public void setTipoClienteCorreoAdicional(Boolean tipoClienteCorreoAdicional) {
+        this.tipoClienteCorreoAdicional = tipoClienteCorreoAdicional;
     }
 
 }

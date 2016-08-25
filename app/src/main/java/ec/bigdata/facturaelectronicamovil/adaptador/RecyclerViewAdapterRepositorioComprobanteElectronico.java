@@ -32,7 +32,7 @@ public class RecyclerViewAdapterRepositorioComprobanteElectronico extends Recycl
             super(v);
             imageViewIdentificadorComprobante = (ImageView) v.findViewById(R.id.image_view_identificador_comprobante);
             textViewNumeroComprobante = (TextView) v.findViewById(R.id.text_view_numero_comprobante);
-            textViewNumeroAutorizacion = (TextView) v.findViewById(R.id.text_view_numero_autorizacion);
+            textViewNumeroAutorizacion = (TextView) v.findViewById(R.id.text_view_receptor);
             textViewFechaAutorizacion = (TextView) v.findViewById(R.id.text_view_fecha_autorizacion);
         }
     }
@@ -76,7 +76,6 @@ public class RecyclerViewAdapterRepositorioComprobanteElectronico extends Recycl
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapterRepositorioComprobanteElectronicoViewHolder viewHolder, int i) {
-
         String identificador = "";
         int color = 0;
 

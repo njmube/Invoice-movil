@@ -43,20 +43,23 @@ public class ClienteRestProducto {
 
     public interface ServicioProducto {
 
-        @GET("producto/obtenerProductosPorEmpresaAsociado/{idEmpresa}")
-        Call<List<Producto>> obtenerProductosPorEmpresaAsociado(@Path("idEmpresa") String idEmpresa);
+        @GET("producto/productos/{idEmpresa}/{resultadoMinimo}/{resultadoMaximo}")
+        Call<List<Producto>> obtenerProductosPorEmpresaAsociado(@Path("idEmpresa") String idEmpresa, @Path("resultadoMinimo") Integer resultadoMinimo, @Path("resultadoMaximo") Integer resultadoMaximo);
 
-        @GET("producto/obtenerProductoPorCodigoPrincipalPorEmpresaAsociado/{idEmpresa}/{codigoPrincipalProducto}")
+        @GET("producto/productos/{idEmpresa}/{codigoPrincipalProducto}")
         Call<Producto> obtenerProductoPorCodigoPrincipalPorEmpresaAsociado(@Path("idEmpresa") String idEmpresa, @Path("codigoPrincipalProducto") String codigoPrincipalProducto);
 
-        @POST("producto/guardarProducto/{idEmpresa}/{codigoPrincipalProducto}/{codigoAuxiliarProducto}/{descripcionProducto}/{precioUnitarioProducto}")
+        @GET("producto/productos/{idEmpresa}/{coincidencia}")
+        Call<List<Producto>> obtenerProductosPorCoincidenciaPorEmpresaAsociado(@Path("idEmpresa") String idEmpresa, @Query(value = "coincidencia", encoded = true) String coincidencia);
+
+        @POST("producto/productos/{idEmpresa}/{codigoPrincipalProducto}/{codigoAuxiliarProducto}/{descripcionProducto}/{precioUnitarioProducto}")
         Call<ResponseBody> guardarProducto(@Query(value = "idEmpresa", encoded = true) String idEmpresa,
                                            @Query(value = "codigoPrincipalProducto", encoded = true) String codigoPrincipalProducto,
                                            @Query(value = "codigoAuxiliarProducto", encoded = true) String codigoAuxiliarProducto,
                                            @Query(value = "descripcionProducto", encoded = true) String descripcionProducto,
                                            @Query(value = "precioUnitarioProducto", encoded = true) String precioUnitarioProducto);
 
-        @PUT("producto/actualizarProducto/{idEmpresa}/{idProducto}/{codigoAuxiliarProducto}/{descripcionProducto}/{precioUnitarioProducto}")
+        @PUT("producto/productos/{idEmpresa}/{idProducto}/{codigoAuxiliarProducto}/{descripcionProducto}/{precioUnitarioProducto}")
         Call<ResponseBody> actualizarProducto(@Query(value = "idEmpresa", encoded = true) String idEmpresa,
                                               @Query(value = "idProducto", encoded = true) Integer idProducto,
                                               @Query(value = "codigoAuxiliarProducto", encoded = true) String codigoAuxiliarProducto,

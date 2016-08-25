@@ -37,8 +37,8 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:width="100dp"
                     android:completionThreshold="1"
+                    android:maxLength="50"
                     android:drawableRight="@drawable/ic_action_search"
                     android:hint="@string/sugerencia_busqueda_producto"
                     android:imeOptions="flagNoFullscreen"
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/boton_actualizar_producto"
+                    android:text="@string/etiqueta_boton_actualizar"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -131,7 +131,7 @@
                         android:maxLength="100"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                        android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                         android:imeOptions="actionUnspecified" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -150,7 +150,7 @@
                         android:maxLength="100"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                        android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                         android:imeOptions="actionUnspecified" />
 
                 </android.support.design.widget.TextInputLayout>

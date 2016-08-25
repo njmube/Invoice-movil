@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.FormasPago">
+
+    <include
+        layout="@layout/toolbar_compuesta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/normal_padding">
+
+        <TextView
+            android:id="@+id/text_view_formas_pago"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_forma_pago" />
+
+        <Spinner
+            android:id="@+id/spinner_formas_pago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:spinnerMode="dialog"></Spinner>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_text_total_forma_pago"
+                style="@style/Numero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/etiqueta_total_forma_pago"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+                android:imeOptions="actionUnspecified" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_text_plazo_forma_pago"
+                style="@style/Numero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/etiqueta_plazo_forma_pago"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+                android:imeOptions="actionUnspecified" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_text_unidad_tiempo_forma_pago"
+                style="@style/Texto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/etiqueta_unidad_tiempo_forma_pago"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+                android:imeOptions="actionUnspecified" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_agregar_forma_pago"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_boton_agregar"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_view_suma_totales_formas_pago"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/etiqueta_total" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_vista_vacia"
+            android:text="@string/etiqueta_no_existe_informacion"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:gravity="center"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/list_view_formas_pago_factura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="1dp"
+            android:padding="@dimen/normal_padding"></ListView>
+
+    </LinearLayout>
+
+</LinearLayout>

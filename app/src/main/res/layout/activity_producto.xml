@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:gravity="center|center_vertical"
+        android:gravity="center"
+        android:padding="@dimen/normal_padding"
         android:orientation="horizontal">
 
         <AutoCompleteTextView
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
         android:orientation="horizontal"
+        android:padding="@dimen/normal_padding"
         android:gravity="center_vertical|bottom">
 
         <Button
@@ -69,7 +71,7 @@
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/boton_actualizar_producto"
+            android:text="@string/etiqueta_boton_actualizar"
             android:textStyle="bold"
             android:layout_weight="1" />
     </LinearLayout>

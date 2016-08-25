@@ -15,8 +15,12 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.io.IOException;
+import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
@@ -28,16 +32,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InformacionEmisor extends AppCompatActivity {
+public class InformacionEmisor extends AppCompatActivity implements Validator.ValidationListener {
 
-    private Toolbar toolbar;
-
+    @NotEmpty(message = "La razón social es requerida.")
     private EditText editTextRazonSocial;
 
+    @NotEmpty(message = "El nombre comercial es requerido.")
     private EditText editTextNombreComercial;
 
     private Switch switchObligadoLlevarContabilidad;
 
+    @NotEmpty(message = "La dirección matríz es requerida.")
     private EditText editTextDireccionEmpresa;
 
     private EditText editTextNumeroResolucion;
@@ -46,13 +51,7 @@ public class InformacionEmisor extends AppCompatActivity {
 
     private Button botonContinuar;
 
-    private String razonSocialActualizado;
-
-    private String nombreComercialActualizado;
-
-    private String direccionMatrizActualizada;
-
-    private String numeroResolucion;
+    private ProgressDialog progressDialog;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -62,57 +61,62 @@ public class InformacionEmisor extends AppCompatActivity {
 
     private boolean validadoInformacionTributaria;
 
-    private ProgressDialog progressDialog;
+    private Validator validator;
+
+    private String razonSocialActualizado;
+
+    private String nombreComercialActualizado;
+
+    private String direccionMatrizActualizada;
+
+    private String numeroResolucion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        validadoInformacionTributaria = false;
         setContentView(R.layout.activity_informacion_emisor);
+
+        validadoInformacionTributaria = false;
+
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+
         editTextRazonSocial = (EditText) findViewById(R.id.edit_text_razon_social_emisor);
         editTextNombreComercial = (EditText) findViewById(R.id.edit_text_nombre_comercial_emisor);
         switchObligadoLlevarContabilidad = (Switch) findViewById(R.id.switch_obligado_llevar_contabilidad_emisor);
         editTextDireccionEmpresa = (EditText) findViewById(R.id.edit_text_direccion_empresa_emisor);
         editTextNumeroResolucion = (EditText) findViewById(R.id.edit_text_numero_resolucion_emisor);
         textViewObligadoLlevarContabilidad = (TextView) findViewById(R.id.text_view_obligado_llevar_contabilidad_emisor);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
 
         clienteRestEmpresa = ClienteRestEmpresa.getServicioEmpresa();
 
         botonContinuar = (Button) toolbar.findViewById(R.id.button_continuar);
 
-        //Valida la información que edite el usuario de su información tributaria y regresa al menu de componentes de la factura
+        //Valida la información que edite el usuario de su información tributaria y regresa al menú de componentes de la factura electrónica.
         botonContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validarBotonContinuar();
+                validator.validate();
             }
         });
 
-        //Get a support ActionBar corresponding to this toolbar_compuesta
-
-        //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Get access to the custom title view
+
         TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
-        tituloToolbar.setText(getResources().getString(R.string.titulo_informacion_tributaria));
+        tituloToolbar.setText(getResources().getString(R.string.titulo_informacion_emisor));
         progressDialog = DialogProgreso.mostrarDialogProgreso(InformacionEmisor.this);
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         editTextRazonSocial.setText(claseGlobalUsuario.getRazonSocial());
         editTextNombreComercial.setText(claseGlobalUsuario.getNombreComercial());
         editTextDireccionEmpresa.setText(claseGlobalUsuario.getDireccionMatriz());
         editTextNumeroResolucion.setText(claseGlobalUsuario.getNumeroResolucion());
-
         llevaContabilidad = claseGlobalUsuario.isObligadoLlevarContabilidad() == true ? "SI" : "NO";
         textViewObligadoLlevarContabilidad.setText(llevaContabilidad);
-
         switchObligadoLlevarContabilidad.setTextOn("SI");
         switchObligadoLlevarContabilidad.setTextOff("NO");
-
         switchObligadoLlevarContabilidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -124,21 +128,21 @@ public class InformacionEmisor extends AppCompatActivity {
                 } else {
                     textViewObligadoLlevarContabilidad.setText("NO");
                 }
-
-                Call<ResponseBody> call_response_body = clienteRestEmpresa.actualizarObligadoLlevarContabilidad(claseGlobalUsuario.getIdEmpresa(), isChecked);
-                call_response_body.enqueue(new Callback<ResponseBody>() {
+                progressDialog = DialogProgreso.mostrarDialogProgreso(InformacionEmisor.this);
+                Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarObligadoLlevarContabilidad(claseGlobalUsuario.getIdEmpresa(), isChecked);
+                responseBodyCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
-                            JsonParser parser = new JsonParser();
-                            JsonObject o = null;
-                            String s = null;
+                            progressDialog.dismiss();
+                            String contenido = null;
                             try {
-                                s = new String(response.body().bytes());
-                                o = parser.parse(s).getAsJsonObject();
-                                if (o.get("status").getAsBoolean() == true) {
-                                    claseGlobalUsuario.setObligadoLlevarContabilidad(isChecked);
+                                contenido = new String(response.body().bytes());
+                                JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                                if (jsonObject.get("estado").getAsBoolean() == true) {
 
+                                    claseGlobalUsuario.setObligadoLlevarContabilidad(isChecked);
+                                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Obligado a llevar contabilidad actualizado.");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -148,7 +152,8 @@ public class InformacionEmisor extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                        call.cancel();
+                        progressDialog.dismiss();
                     }
                 });
             }
@@ -156,73 +161,54 @@ public class InformacionEmisor extends AppCompatActivity {
         progressDialog.dismiss();
     }
 
-    private void validarBotonContinuar() {
+    private void validarInformacionEmisor() {
+        progressDialog = DialogProgreso.mostrarDialogProgreso(InformacionEmisor.this);
+        nombreComercialActualizado = editTextNombreComercial.getText().toString();
+        razonSocialActualizado = editTextRazonSocial.getText().toString();
+        direccionMatrizActualizada = editTextDireccionEmpresa.getText().toString();
 
-        String errores_edicion_info_tributaria = "";
-        if (editTextNombreComercial.getText() != null && !editTextNombreComercial.getText().toString().trim().equals("")) {
-            nombreComercialActualizado = editTextNombreComercial.getText().toString();
-        } else {
-            nombreComercialActualizado = claseGlobalUsuario.getNombreComercial();
-        }
-        if (editTextRazonSocial.getText() != null && !editTextRazonSocial.getText().toString().trim().equals("")) {
-            razonSocialActualizado = editTextRazonSocial.getText().toString();
-        } else {
-            razonSocialActualizado = claseGlobalUsuario.getRazonSocial();
-        }
-
-        if (editTextDireccionEmpresa.getText() != null && !editTextDireccionEmpresa.getText().toString().trim().equals("")) {
-            direccionMatrizActualizada = editTextDireccionEmpresa.getText().toString();
-        } else {
-            direccionMatrizActualizada = claseGlobalUsuario.getDireccionMatriz();
-        }
-
-        if (editTextNumeroResolucion.getText() != null && !editTextNumeroResolucion.getText().toString().trim().equals("")) {
+        if (!editTextNumeroResolucion.getText().toString().trim().equals("")) {
             numeroResolucion = editTextNumeroResolucion.getText().toString();
         } else {
             numeroResolucion = claseGlobalUsuario.getNumeroResolucion();
         }
-        if (errores_edicion_info_tributaria.equals("")) {
+        Call<ResponseBody> responseBodyCall = clienteRestEmpresa.actualizarEmpresa(
+                claseGlobalUsuario.getIdEmpresa(), nombreComercialActualizado, razonSocialActualizado, null, null, direccionMatrizActualizada
+                , numeroResolucion);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
 
-            Call<ResponseBody> call_response_body = clienteRestEmpresa.actualizarEmpresa(
-                    claseGlobalUsuario.getIdEmpresa(), nombreComercialActualizado, razonSocialActualizado, direccionMatrizActualizada
-                    , numeroResolucion);
-            call_response_body.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        JsonParser parser = new JsonParser();
-                        JsonObject o = null;
-                        String s = null;
-                        try {
-                            s = new String(response.body().bytes());
-                            o = parser.parse(s).getAsJsonObject();
-                            if (o.get("status").getAsBoolean() == true) {
-                                claseGlobalUsuario.setNombreComercial(nombreComercialActualizado);
-                                claseGlobalUsuario.setRazonSocial(razonSocialActualizado);
-                                claseGlobalUsuario.setDireccionMatriz(direccionMatrizActualizada);
-                                claseGlobalUsuario.setNumeroResolucion(numeroResolucion);
+                    String contenido = null;
+                    try {
+                        contenido = new String(response.body().bytes());
+                        JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
+                        if (jsonObject.get("estado").getAsBoolean() == true) {
+                            claseGlobalUsuario.setNombreComercial(nombreComercialActualizado);
+                            claseGlobalUsuario.setRazonSocial(razonSocialActualizado);
+                            claseGlobalUsuario.setDireccionMatriz(direccionMatrizActualizada);
+                            claseGlobalUsuario.setNumeroResolucion(numeroResolucion);
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(getApplicationContext(), getCallingActivity().getClass());
+                            setResult(RESULT_OK, intent);
+                            finish();
 
-                                Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
-                                setResult(RESULT_OK, intent);
-                                finish();
-
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                call.cancel();
+                progressDialog.dismiss();
+            }
+        });
 
-                }
-            });
 
-        } else {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, errores_edicion_info_tributaria);
-
-        }
     }
 
     @Override
@@ -239,7 +225,27 @@ public class InformacionEmisor extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
-
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        validarInformacionEmisor();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
+            }
+        }
     }
 }

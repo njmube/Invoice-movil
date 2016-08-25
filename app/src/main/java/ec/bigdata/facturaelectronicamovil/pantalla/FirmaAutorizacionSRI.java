@@ -89,8 +89,8 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            if (bundle.containsKey(String.valueOf(Codigos.CODIGO_FACTURA_ELECTRONICA))) {
-                comprobanteElectronico = (ComprobanteElectronico) bundle.getSerializable(String.valueOf(Codigos.CODIGO_FACTURA_ELECTRONICA));
+            if (bundle.containsKey(String.valueOf(Codigos.CODIGO_EXTRA_COMPROBANTE_ELECTRONICO))) {
+                comprobanteElectronico = (ComprobanteElectronico) bundle.getSerializable(String.valueOf(Codigos.CODIGO_EXTRA_COMPROBANTE_ELECTRONICO));
             }
         }
         buttonConfirmarFirmarAutorizarSRI.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +99,7 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 dialogFragmentConfirmacionFirmaAutorizacionSRI = DialogConfirmacion.newInstance(
                         getResources().getString(R.string.titulo_confirmacion),
-                        getResources().getString(R.string.mensaje_continuar_firma_autorizacion_sri), Boolean.FALSE);
+                        getResources().getString(R.string.mensaje_continuar_firma_autorizacion_sri), 1, Boolean.FALSE);
                 dialogFragmentConfirmacionFirmaAutorizacionSRI.show(fragmentManager, "DialogConfirmacion");
             }
         });
@@ -127,76 +127,81 @@ public class FirmaAutorizacionSRI extends AppCompatActivity implements
 
 
     @Override
-    public void presionarBotonSI() {
-        dialogFragmentConfirmacionFirmaAutorizacionSRI.dismiss();
-        progressDialog = DialogProgreso.mostrarDialogProcesComprobantesElectronicos(FirmaAutorizacionSRI.this);
-        GeneradorComprobanteElectronicoXML generadorComprobanteElectronicoXML = new GeneradorComprobanteElectronicoXML();
-        String stringComprobante = generadorComprobanteElectronicoXML.generarStringComprobante(comprobanteElectronico, "1.1.0");
-        nombreDocumentoXML = comprobanteElectronico.getInformacionTributariaComprobanteElectronico().getClaveAcceso().concat(".xml");
+    public void presionarBotonSI(int idDialog) {
+        switch (idDialog) {
+            case 1:
+                dialogFragmentConfirmacionFirmaAutorizacionSRI.dismiss();
+                progressDialog = DialogProgreso.mostrarDialogProcesComprobantesElectronicos(FirmaAutorizacionSRI.this);
+                GeneradorComprobanteElectronicoXML generadorComprobanteElectronicoXML = new GeneradorComprobanteElectronicoXML();
+                String stringComprobante = generadorComprobanteElectronicoXML.generarStringComprobante(comprobanteElectronico, "1.1.0");
+                nombreDocumentoXML = comprobanteElectronico.getInformacionTributariaComprobanteElectronico().getClaveAcceso().concat(".xml");
 
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = openFileOutput(nombreDocumentoXML, Context.MODE_PRIVATE);
-            outputStream.write(stringComprobante.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        File fileXML = new File(getFilesDir() + "/" + nombreDocumentoXML);
+                FileOutputStream outputStream = null;
+                try {
+                    outputStream = openFileOutput(nombreDocumentoXML, Context.MODE_PRIVATE);
+                    outputStream.write(stringComprobante.getBytes());
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                File fileXML = new File(getFilesDir() + "/" + nombreDocumentoXML);
 
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), fileXML);
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("multipart/form-data"), fileXML);
 
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("archivo", fileXML.getName(), requestFile);
+                // MultipartBody.Part is used to send also the actual file name
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("archivo", fileXML.getName(), requestFile);
 
-        Call<ResponseBody> responseBodyCall = servicioComprobanteElectronico.archivo(body, claseGlobalUsuario.getIdEmpresa());
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    progressDialog.dismiss();
+                Call<ResponseBody> responseBodyCall = servicioComprobanteElectronico.archivo(body, claseGlobalUsuario.getIdEmpresa());
+                responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
 
 
-                    JsonParser parser = new JsonParser();
-                    JsonObject o = null;
-                    String s = null;
-                    RespuestaSRIMovil respuestaSRIMovil = null;
-                    try {
-                        s = new String(response.body().bytes());
-                        Gson gson = new GsonBuilder().serializeNulls().create();
-                        respuestaSRIMovil = gson.fromJson(s, RespuestaSRIMovil.class);
+                            JsonParser parser = new JsonParser();
+                            JsonObject o = null;
+                            String s = null;
+                            RespuestaSRIMovil respuestaSRIMovil = null;
+                            try {
+                                s = new String(response.body().bytes());
+                                Gson gson = new GsonBuilder().serializeNulls().create();
+                                respuestaSRIMovil = gson.fromJson(s, RespuestaSRIMovil.class);
 
-                        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                        dialogFragmenResultadoFirmaAutorizacionSRI = DialogConfirmacionUnBoton.newInstance(
-                                getResources().getString(R.string.titulo_mensaje_resultado_firma_autorizacion_sri),
-                                Utilidades.formatearRespuestaSRIMovil(respuestaSRIMovil));
-                        dialogFragmenResultadoFirmaAutorizacionSRI.show(fragmentManager, "DialogConfirmacionUnBoton");
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                                dialogFragmenResultadoFirmaAutorizacionSRI = DialogConfirmacionUnBoton.newInstance(
+                                        getResources().getString(R.string.titulo_mensaje_resultado_firma_autorizacion_sri),
+                                        Utilidades.formatearRespuestaSRIMovil(respuestaSRIMovil));
+                                dialogFragmenResultadoFirmaAutorizacionSRI.show(fragmentManager, "DialogConfirmacionUnBoton");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            progressDialog.dismiss();
+
+
+                        }
                     }
 
-                } else {
-                    progressDialog.dismiss();
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        call.cancel();
+                        progressDialog.dismiss();
 
 
-                }
-            }
+                    }
+                });
+                break;
+        }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                call.cancel();
-                progressDialog.dismiss();
-
-
-            }
-        });
     }
 
     @Override
-    public void presionarBotonCancelar() {
+    public void presionarBotonCancelar(int idDialog) {
 
     }
 

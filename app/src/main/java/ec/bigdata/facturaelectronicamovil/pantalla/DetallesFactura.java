@@ -15,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.ImpuestoComprobanteElectronico;
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.InformacionAdicional;
@@ -25,8 +26,6 @@ import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.Codigos;
 
 public class DetallesFactura extends AppCompatActivity {
-
-    private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ExpandableDetalleAdapter expandableDetalleAdapter;
 
@@ -41,6 +40,8 @@ public class DetallesFactura extends AppCompatActivity {
     private Button buttonNuevoDetalle;
 
     private Detalle detalleFacturaSeleccionado;
+
+    private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ArrayList<ImpuestoComprobanteElectronico> impuestosDetalleSeleccionado;
 
@@ -94,12 +95,14 @@ public class DetallesFactura extends AppCompatActivity {
         buttonContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
                 if (detalles != null && !detalles.isEmpty()) {
-                    Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
                     intent.putExtra(String.valueOf(Codigos.CODIGO_LISTA_DETALLES_FACTURA), detalles);
                     setResult(RESULT_OK, intent);
-                    finish();
+                } else {
+                    setResult(RESULT_CANCELED, intent);
                 }
+                finish();
             }
         });
         buttonNuevoDetalle = (Button) findViewById(R.id.button_nuevo_detalle);
@@ -164,7 +167,11 @@ public class DetallesFactura extends AppCompatActivity {
                                 case R.id.item_adicionales:
                                     intent = new Intent(getApplicationContext(), DetallesAdicionales.class);
                                     intent.putExtra(String.valueOf(Codigos.CODIGO_ID_DETALLE), position - 1);
-                                    startActivityForResult(intent, Codigos.CODIGO_LISTA_DETALLES_ADICIONALES);
+                                    List<InformacionAdicional> detallesAdicionales = detalles.get(position - 1).getDetallesAdicionales();
+                                    if (detallesAdicionales != null) {
+                                        intent.putExtra(String.valueOf(Codigos.CODIGO_LISTA_DETALLES_ADICIONALES), new ArrayList<InformacionAdicional>(detallesAdicionales));
+                                    }
+                                    startActivityForResult(intent, Codigos.CODIGO_REQUEST_LISTA_DETALLES_ADICIONALES);
                                     break;
 
 
@@ -200,7 +207,7 @@ public class DetallesFactura extends AppCompatActivity {
                 detalles.get(posicionDetalle).setImpuestos(impuestosComprobanteElectronico);
                 expandableDetalleAdapter.notifyDataSetChanged();
             }
-        } else if (requestCode == Codigos.CODIGO_LISTA_DETALLES_ADICIONALES) {
+        } else if (requestCode == Codigos.CODIGO_REQUEST_LISTA_DETALLES_ADICIONALES) {
 
             if (resultCode == RESULT_OK) {
                 int posicionDetalle = data.getExtras().getInt(String.valueOf(Codigos.CODIGO_ID_DETALLE));
@@ -225,6 +232,13 @@ public class DetallesFactura extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), InicioFacturacionElectronica.class);
+        if (detalles != null && !detalles.isEmpty()) {
+            intent.putExtra(String.valueOf(Codigos.CODIGO_LISTA_DETALLES_FACTURA), detalles);
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED, intent);
+        }
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }

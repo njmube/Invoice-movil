@@ -13,7 +13,7 @@ public class ComprobanteElectronico implements java.io.Serializable {
     private String secuencialComprobanteElectronico;
     private String numeroAutorizacionComprobanteElectronico;
     private String rucEmisorComprobanteElectronico;
-    private String nombreComercialEmisorComprobanteElectronico;
+    private String razonSocialEmisorComprobanteElectronico;
     private String ambienteComprobanteElectronico;
     private String estadoComprobanteElectronico;
     private String mensajeComprobanteElectronico;
@@ -26,15 +26,16 @@ public class ComprobanteElectronico implements java.io.Serializable {
     public ComprobanteElectronico() {
     }
 
-    public ComprobanteElectronico(Integer idComprobanteElectronico, String tipoComprobanteElectronico, String claveAccesoComprobanteElectronico, String codigoEstablecimientoComprobanteElectronico, String puntoEmisionComprobanteElectronico, String secuencialComprobanteElectronico, String rucEmisorComprobanteElectronico, String nombreComercialEmisorComprobanteElectronico, String razonSocialEmisorComprobanteElectronico, String ambienteComprobanteElectronico, String estadoComprobanteElectronico, String mensajeComprobanteElectronico, String fechaEmisionComprobanteElectronico, String fechaAutorizacionComprobanteElectronico, String tipoPagoComprobanteElectronico, String rucReceptor, String razonSocialReceptor) {
+    public ComprobanteElectronico(Integer idComprobanteElectronico, String tipoComprobanteElectronico, String claveAccesoComprobanteElectronico, String codigoEstablecimientoComprobanteElectronico, String puntoEmisionComprobanteElectronico, String secuencialComprobanteElectronico, String numeroAutorizacionComprobanteElectronico, String rucEmisorComprobanteElectronico, String razonSocialEmisorComprobanteElectronico, String ambienteComprobanteElectronico, String estadoComprobanteElectronico, String mensajeComprobanteElectronico, String fechaEmisionComprobanteElectronico, String fechaAutorizacionComprobanteElectronico, String tipoPagoComprobanteElectronico, String rucReceptor, String razonSocialReceptor) {
         this.idComprobanteElectronico = idComprobanteElectronico;
         this.tipoComprobanteElectronico = tipoComprobanteElectronico;
         this.claveAccesoComprobanteElectronico = claveAccesoComprobanteElectronico;
         this.codigoEstablecimientoComprobanteElectronico = codigoEstablecimientoComprobanteElectronico;
         this.puntoEmisionComprobanteElectronico = puntoEmisionComprobanteElectronico;
         this.secuencialComprobanteElectronico = secuencialComprobanteElectronico;
+        this.numeroAutorizacionComprobanteElectronico = numeroAutorizacionComprobanteElectronico;
         this.rucEmisorComprobanteElectronico = rucEmisorComprobanteElectronico;
-        this.nombreComercialEmisorComprobanteElectronico = nombreComercialEmisorComprobanteElectronico;
+        this.razonSocialEmisorComprobanteElectronico = razonSocialEmisorComprobanteElectronico;
         this.ambienteComprobanteElectronico = ambienteComprobanteElectronico;
         this.estadoComprobanteElectronico = estadoComprobanteElectronico;
         this.mensajeComprobanteElectronico = mensajeComprobanteElectronico;
@@ -109,12 +110,12 @@ public class ComprobanteElectronico implements java.io.Serializable {
         this.rucEmisorComprobanteElectronico = rucEmisorComprobanteElectronico;
     }
 
-    public String getNombreComercialEmisorComprobanteElectronico() {
-        return this.nombreComercialEmisorComprobanteElectronico;
+    public String getRazonSocialEmisorComprobanteElectronico() {
+        return razonSocialEmisorComprobanteElectronico;
     }
 
-    public void setNombreComercialEmisorComprobanteElectronico(String nombreComercialEmisorComprobanteElectronico) {
-        this.nombreComercialEmisorComprobanteElectronico = nombreComercialEmisorComprobanteElectronico;
+    public void setRazonSocialEmisorComprobanteElectronico(String razonSocialEmisorComprobanteElectronico) {
+        this.razonSocialEmisorComprobanteElectronico = razonSocialEmisorComprobanteElectronico;
     }
 
     public String getAmbienteComprobanteElectronico() {

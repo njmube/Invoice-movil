@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public class ActualizacionProducto extends AppCompatActivity implements Validator.ValidationListener {
 
-    private static final String TAG = NuevoProducto.class.getSimpleName();
+    private static final String TAG = NuevoProductoCorregir.class.getSimpleName();
 
     private TextView textViewCodigoPrincipalProducto;
 
@@ -40,13 +40,10 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
     @NotEmpty(message = "La descripción del producto es requerida.")
     private EditText editTextDescripcionProducto;
 
+    @NotEmpty(message = "El precio unitario del producto es requerida.")
     private EditText editTextPrecioUnitarioProducto;
 
     private Button buttonActualizarProducto;
-
-    private Button buttonContinuar;
-
-    private Toolbar toolbar;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
@@ -55,6 +52,14 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
     private ec.bigdata.facturaelectronicamovil.modelo.Producto productoSeleccionado;
 
     private Validator validator;
+
+    private String codigoAuxiliarProducto;
+
+    private String descripcionProducto;
+
+    private String precioUnitarioProducto;
+
+    private boolean productoActualizado;
 
 
     @Override
@@ -65,10 +70,10 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
         editTextCodigoAuxiliarProducto = (EditText) findViewById(R.id.edit_text_codigo_auxiliar_edicion_producto);
         editTextDescripcionProducto = (EditText) findViewById(R.id.edit_text_descripcion_edicion_producto);
         editTextPrecioUnitarioProducto = (EditText) findViewById(R.id.edit_text_precio_unitario_edicion_producto);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_simple);
         setSupportActionBar(toolbar);
 
-        //Get a support ActionBar corresponding to this toolbar_compuesta
+        //Get a support ActionBar corresponding to this toolbar_simple
 
         //Enable the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,7 +81,7 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar);
+        TextView tituloToolbar = (TextView) toolbar.findViewById(R.id.text_view_titulo_toolbar_simple);
         tituloToolbar.setText(getResources().getString(R.string.titulo_actualizar_producto));
 
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
@@ -104,35 +109,20 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
                 validator.validate();
             }
         });
-        buttonContinuar = (Button) toolbar.findViewById(R.id.button_continuar);
-        buttonContinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Cliente.class);
-                intent.putExtra(String.valueOf(Codigos.CODIGO_PRODUCTO_SELECCIONADO_ACTUALIZADO), productoSeleccionado);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
+
     }
 
     private void actualizarProducto() {
         Call<ResponseBody> call = null;
-        String codigoAuxiliar = "";
-        String precioUnitario = "";
-        if (editTextCodigoAuxiliarProducto.getText().toString().trim().equals("")) {
-            codigoAuxiliar = productoSeleccionado.getCodigoAuxiliarProducto() != null ? productoSeleccionado.getCodigoAuxiliarProducto() : "";
-        } else {
-            codigoAuxiliar = editTextCodigoAuxiliarProducto.getText().toString();
-        }
+        codigoAuxiliarProducto = "";
+        descripcionProducto = "";
+        precioUnitarioProducto = "";
 
-        if (editTextPrecioUnitarioProducto.getText().toString().trim().equals("")) {
-            precioUnitario = productoSeleccionado.getPrecioUnitarioProducto() != null ? productoSeleccionado.getPrecioUnitarioProducto() : "";
-        } else {
-            precioUnitario = editTextPrecioUnitarioProducto.getText().toString();
-        }
+        codigoAuxiliarProducto = editTextCodigoAuxiliarProducto.getText().toString();
+        descripcionProducto = editTextDescripcionProducto.getText().toString();
+        precioUnitarioProducto = editTextPrecioUnitarioProducto.getText().toString();
 
-        call = servicioProducto.actualizarProducto(claseGlobalUsuario.getIdEmpresa(), productoSeleccionado.getIdProducto(), codigoAuxiliar, editTextDescripcionProducto.getText().toString(), precioUnitario);
+        call = servicioProducto.actualizarProducto(claseGlobalUsuario.getIdEmpresa(), productoSeleccionado.getIdProducto(), codigoAuxiliarProducto, descripcionProducto, precioUnitarioProducto);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -142,8 +132,11 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
                         contenido = new String(response.body().bytes());
                         JsonObject jsonObject = new JsonParser().parse(contenido).getAsJsonObject();
                         if (jsonObject.get("estado").getAsBoolean() == true) {
+                            productoActualizado = true;
                             //TODO Refrescar objeto producto actualizado.
-
+                            productoSeleccionado.setPrecioUnitarioProducto(precioUnitarioProducto);
+                            productoSeleccionado.setCodigoAuxiliarProducto(codigoAuxiliarProducto);
+                            productoSeleccionado.setDescripcionProducto(descripcionProducto);
                             MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_INFORMACION, "Producto actualizado.");
                         }
                     } catch (IOException e) {
@@ -196,6 +189,14 @@ public class ActualizacionProducto extends AppCompatActivity implements Validato
 
     @Override
     public void onBackPressed() {
+
+        Intent intent = new Intent(getApplicationContext(), getCallingActivity().getClass());
+        intent.putExtra(String.valueOf(Codigos.CODIGO_PRODUCTO_ACTUALIZADO), productoSeleccionado);
+        if (productoActualizado) {
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED, intent);
+        }
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }

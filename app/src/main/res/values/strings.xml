@@ -2,7 +2,7 @@
     <string name="nombre_app">Factura Móvil</string>
     <string name="numero_proyecto">721380486862</string>
     <string name="bienvenido">FacturaMovil</string>
-    <!--Strings relacionados de login -->
+    <!--Strings relacionados con el login -->
     <string name="boton_iniciar_sesion_persona">Persona</string>
     <string name="boton_iniciar_sesion_empresa">Empresa</string>
 
@@ -24,8 +24,8 @@
     <string name="titulo_factura_electronica">Factura</string>
     <string name="titulo_repositorio">Repositorio</string>
 
-    <!--Strings relacionados a la información tributaria-->
-    <string name="titulo_informacion_tributaria">Información Tributaria</string>
+    <!--Strings relacionados a la información del emisor-->
+    <string name="titulo_informacion_emisor">Información Emisor</string>
     <string name="titulo_establecimiento_seleccionado">Establecimiento actual</string>
     <string name="titulo_mensaje_error_establecimiento_noseleccionado">Debe seleccionar el establecimiento.</string>
 
@@ -35,6 +35,10 @@
     <string name="sugerencia_codigo_establecimiento">Código de establecimiento</string>
     <string name="sugerencia_punto_emision">Punto de emisión</string>
     <string name="sugerencia_direccion_establecimiento">Dirección de establecimiento</string>
+
+    <!--Strings relacionados a un nuevo establecimiento-->
+
+    <string name="titulo_nuevo_establecimiento">Nuevo establecimiento</string>
 
     <!--Strings relacionados a la edición del perfil del usuario-->
     <string name="sugerencia_nombre">Nombres</string>
@@ -58,23 +62,37 @@
     <string name="sugerencia_numero_resolucion">Número de resolución</string>
     <string name="boton_actualizar_informacion_empresa">Actualizar información</string>
 
+    <string name="boton_actualizar_contrasenia_empresa">Actualizar contraseña</string>
+
     <!--String para botón siguiente-->
     <string name="etiqueta_boton_siguiente">Continuar</string>
 
     <!--String para botón aceptar-->
-    <string name="etiqueta_siguiente_componente">Continuar</string>
+    <string name="etiqueta_boton_siguiente_componente">Continuar</string>
 
     <!--String para botón aceptar-->
-    <string name="etiqueta_cancelar_aceptar">Aceptar</string>
+    <string name="etiqueta_boton_cancelar_aceptar">Aceptar</string>
 
     <!--String para botón aceptar-->
-    <string name="etiqueta_agregar">Agregar</string>
+    <string name="etiqueta_boton_agregar">Agregar</string>
+
+    <!--String para botón seleccionar-->
+    <string name="etiqueta_boton_seleccionar">Seleccionar</string>
+
+    <!--String para botón nuevo-->
+    <string name="etiqueta_boton_nuevo">Nuevo</string>
+
+    <!--String para botón actualizar-->
+    <string name="etiqueta_boton_actualizar">Actualizar</string>
 
     <!--String para botón cancelar-->
-    <string name="etiqueta_cancelar_componente">Cancelar</string>
+    <string name="etiqueta_boton_cancelar_componente">Cancelar</string>
+
+    <!--String para botón aplicar-->
+    <string name="etiqueta_boton_aplicar">Aplicar</string>
 
     <!--String para valor no definido-->
-    <string name="etiqueta_valor_nodefinido">No definido</string>
+    <string name="etiqueta_boton_valor_nodefinido">No definido</string>
 
     <!--String para valor no seleccionado-->
     <string name="etiqueta_valor_noseleccionado">No seleccionado</string>
@@ -82,7 +100,7 @@
     <!--String para valor no verificado-->
     <string name="etiqueta_valor_noverificado">No verificado:</string>
 
-    <string name="etiqueta_boton_aplicar">Aplicar</string>
+    <string name="etiqueta_valor_pendiente">Información pendiente:</string>
 
     <!--String para fecha vacia-->
     <string name="etiqueta_fecha_vacia">dd/MM/yyyy</string>
@@ -90,22 +108,26 @@
     <!--String para detalles vacíos-->
     <string name="etiqueta_detalle_vacio">No existen detalles.</string>
 
+    <!--String para detalles vacíos-->
+    <string name="etiqueta_no_existe_informacion">No existe información.</string>
+
     <!--String para registros vacíos-->
     <string name="etiqueta_no_existen_registros">No existen registros.</string>
 
+    <string name="etiqueta_total">Total:</string>
 
     <!--String relacionados a la información factura-->
     <string name="titulo_informacion_factura">Información Factura</string>
 
     <!--String para el manejo de cliente/receptor del comprobante-->
-    <string name="sugerencia_busqueda_cliente">Búsqueda por identificación/razón social</string>
+    <string name="sugerencia_busqueda_cliente">Búsqueda</string>
     <string name="boton_cliente">Cliente</string>
     <string name="titulo_administracion_clientes">Administración de clientes</string>
     <string name="titulo_cliente">Búsqueda de cliente</string>
     <string name="sugerencia_identificacion_cliente">Identificación</string>
     <string name="sugerencia_nombres">Nombres</string>
     <string name="sugerencia_apellidos">Apellidos</string>
-    <string name="sugerencia_razon_social_cliente">Razón social</string>
+    <string name="sugerencia_razon_social_cliente">Razón social/Nombre</string>
     <string name="sugerencia_direccion_cliente">Dirección</string>
     <string name="sugerencia_correo_cliente">Correo electrónico</string>
     <string name="sugerencia_telefono_cliente">Teléfono</string>
@@ -117,14 +139,14 @@
     <string name="titulo_actualizar_cliente">Actualizar cliente</string>
     <string name="titulo_correos_adicionales_cliente">Correos adicionales</string>
     <string name="titulo_cliente_seleccionado">Cliente:</string>
-
     <string name="etiqueta_estado_cliente">Estado</string>
+
     <!--String para el manejo del producto-->
     <string name="boton_producto">Producto</string>
     <string name="sugerencia_busqueda_producto">Búsqueda por codigoPrincipal/descripción</string>
-    <string name="boton_actualizar_producto">Actualizar</string>
     <string name="boton_nuevo_producto">Nuevo</string>
     <string name="titulo_producto">Búsqueda de producto</string>
+    <string name="titulo_administracion_productos">Administración de productos</string>
     <string name="titulo_actualizar_producto">Actualizar producto</string>
     <string name="sugerencia_codigo_principal_producto">Código principal</string>
     <string name="sugerencia_codigo_auxiliar_producto">Código auxiliar</string>
@@ -147,6 +169,13 @@
     <string name="etiqueta_tarifa_impuesto">Tarifas de impuestos:</string>
     <string name="etiqueta_seleccione_impuesto">Seleccione el tipo de impuesto:</string>
     <string name="etiqueta_seleccione_tarifa_impuesto">Seleccione la tarifa del impuesto:</string>
+
+    <!--Formas de pago-->
+    <string name="etiqueta_forma_pago">Forma de pago</string>
+    <string name="etiqueta_total_forma_pago">Total</string>
+    <string name="etiqueta_plazo_forma_pago">Plazo</string>
+    <string name="etiqueta_unidad_tiempo_forma_pago">Unidad tiempo</string>
+    <string name="titulo_formas_pago">Formas de pago</string>
 
     <!--ICE-->
     <string name="sugerencia_base_imponible_ice">Base imponible</string>
@@ -177,24 +206,49 @@
     <string name="boton_agregar_detalle_adicional">Agregar detalle adicional</string>
     <string name="titulo_informacion_adicional">Información Adicional</string>
     <string name="boton_agregar_informacion_adicional">Agregar información adicional</string>
+    <string name="titulo_informacion_adicional_cliente">Agregar información del cliente</string>
+    <string name="etiqueta_informacion_adicional_personal_cliente">Correo electrónico principal,teléfono</string>
+    <string name="etiqueta_correos_adicionales_cliente">Correos adicionales</string>
 
-    <!--Descripción de contenido de imagen-->
+    <!--Descripción de contenido de imágenes-->
 
     <string name="descripcion_imagen_pdf_ride">Imagen para PDF RIDE</string>
+    <string name="descripcion_imagen_xml">Imagen para XML</string>
+    <string name="descripcion_imagen_componentes_factura">Imagen OK/KO componentes de factura</string>
 
     <!--String para la facturación electrónica-->
 
-    <string name="titulo_resumen_factura">Resumen</string>
+    <string name="titulo_componente_factura_electronica_obligatorios">Obligatorios</string>
+
+    <string name="titulo_componente_factura_electronica_opcional">Opcionales</string>
+
+    <string name="titulo_resumen_impuestos_factura">Resumen impuestos</string>
+
+    <string name="titulo_resumen_comprobante_electronico">Resumen comprobante electrónico</string>
 
     <string name="titulo_firma_autorizacion_sri">Firma y Autorización</string>
 
     <string name="valor_cero">0.00</string>
+
+    <string name="valor_vacio">Vacío</string>
 
     <string name="ambiente">1</string>
 
     <string name="tipo_emision">1</string>
 
     <string name="moneda">DOLAR</string>
+
+    <string name="etiqueta_numero_comprobante">Número:</string>
+
+    <string name="etiqueta_emisor_comprobante">Emisor:</string>
+
+    <string name="etiqueta_receptor_comprobante">Receptor:</string>
+
+    <string name="etiqueta_detalles_comprobante">Detalles:</string>
+
+    <string name="etiqueta_informacion_adicional_comprobante">Información adicional:</string>
+
+    <string name="etiqueta_forma_pago_factura">Forma pago:</string>
 
     <string name="etiqueta_subtototal_12">Subtotal 12%:</string>
 
@@ -222,13 +276,19 @@
 
     <string name="etiqueta_valor_total">Valor total:</string>
 
+    <string name="etiqueta_boton_continuar_resumen_impuestos_factura">Continuar Resumen de impuestos</string>
+
     <string name="etiqueta_ver_pdf_ride">Ver documento PDF-RIDE</string>
+
+    <string name="etiqueta_boton_continuar_ride">Continuar RIDE</string>
 
     <string name="etiqueta_boton_continuar_firma_autorizacion_sri">Continuar Firma y Autorización SRI</string>
 
     <string name="etiqueta_boton_firmar_autorizar_sri">Firma y Autorización SRI</string>
 
     <string name="titulo_proceso_firma_autorizacion_sri">Proceso de comprobantes electronicos</string>
+
+    <string name="titulo_pdf_ride_previsualizacion">PDF RIDE Previo</string>
 
     <string name="mensaje_html_proceso_firma_autorizacion_sri">
          <![CDATA[
@@ -249,13 +309,35 @@
 
     <string name="titulo_cancelar_inicio_factura">Confirmación</string>
 
+    <string name="titulo_descarga_archivo">Descargar archivo</string>
+
+    <string name="titulo_dialog_seleccion_multiple">Seleccione</string>
+
+    <string name="etiqueta_boton_enviar_dialog_seleccion_multipe">Enviar</string>
+
     <string name="mensaje_continuar_cancelar_inicio_factura">¿Desea continuar con la CANCELACIÓN DEL INGRESO DE LA FACTURA?</string>
 
     <string name="titulo_mensaje_resultado_firma_autorizacion_sri">Resultado FIRMA y AUTORIZACIÓN EN EL SRI</string>
 
     <string name="mensaje_confirmacion_eliminado_correos_adicionales">¿Está seguro de eliminar los correos adicionales?</string>
 
+    <string name="mensaje_confirmacion_eliminado_formas_pago">¿Está seguro de eliminar las formas de pago?</string>
+
+    <string name="mensaje_confirmacion_eliminado_detalles_adicionales">¿Está seguro de eliminar los detalles adicionales seleccionados?</string>
+
     <string name="titulo_telefonos_cliente">Teléfonos del cliente(Al seleccionar el número se realizará el marcado)</string>
+
+    <string name="titulo_envio_correo_cliente">Enviar correo a cliente</string>
+
+    <!--Strings para dialog envío de correo-->
+
+    <string name="sugerencia_correo_electronico_envio">De:</string>
+
+    <string name="sugerencia_correo_electronico_recepcion">Para:</string>
+
+    <string name="sugerencia_asunto_correo_electronico">Asunto:</string>
+
+    <string name="sugerencia_contenido_correo_electronico">Contenido:</string>
 
     <!--Strings para repositorio-->
     <string name="titulo_repositorio_comprobantes_emitidos_autorizados">Comprobantes Emitidos Autorizados</string>
@@ -269,6 +351,16 @@
     <string name="etiqueta_fecha_final">Fecha final</string>
     <string name="titulo_filtro_rango_fechas">Rango de fechas</string>
     <string name="titulo_filtro_busqueda_comprobantes">Filtro de búsqueda</string>
+    <string name="etiqueta_secuencial_comprobante">Secuencial:</string>
+    <string name="etiqueta_fecha_emision_comprobante">Fecha de emisión:</string>
+    <string name="etiqueta_tipo_comprobante">Tipo de comprobante:</string>
+    <string name="etiqueta_ruc_receptor_comprobante">RUC receptor:</string>
+    <string name="etiqueta_razon_social_receptor">Razón social receptor:</string>
+    <string name="etiqueta_clave_acceso">Clave de acceso:</string>
+    <string name="etiqueta_numero_autorizacion">Número de autorización:</string>
+    <string name="etiqueta_fecha_autorizacion">Fecha de autorización:</string>
+    <string name="etiqueta_observacion">Observación:</string>
+
 
     <!--String para swiperefreshlayout-->
     <string name="etiqueta_deslizar">Deslice para refrescar</string>
@@ -283,16 +375,21 @@
         <item>Periodo personalizado</item>
     </string-array>
 
-    <!--Strings para dialog envío de correo-->
+    <!--RadioButton-->
+    <string name="radio_button_tipo_cliente1">CLIENTE</string>
 
-    <string name="sugerencia_correo_electronico_envio">De:</string>
+    <string name="radio_button_tipo_cliente2">PROVEEDOR</string>
 
-    <string name="sugerencia_correo_electronico_recepcion">Para:</string>
-
-    <string name="sugerencia_asunto_correo_electronico">Asunto:</string>
-
-    <string name="sugerencia_contenido_correo_electronico">Contenido:</string>
-
+    <!--Menús-->
+    <string name="opcion_editar_cliente">Editar cliente</string>
+    <string name="opcion_llamar_cliente">Llamar cliente</string>
+    <string name="opcion_enviar_correo_cliente">Enviar correo</string>
+    <string name="opcion_compartir_cliente">Compartir</string>
+    <string name="opcion_borrar">Borrar</string>
+    <string name="opcion_mas_info_comprobante">Ver detalles comprobante</string>
+    <string name="opcion_compartir_comprobante">Compartir comprobante</string>
+    <string name="opcion_guardar_comprobante">Descargar comprobante</string>
+    <string name="opcion_reenviar_comprobante">Reenviar comprobante</string>
 
 </resources>
 

@@ -56,10 +56,10 @@ public class ClienteRestCliente {
         Call<Cliente> obtenerClientePorCorreoPrincipalYPorEmpresaAsociado(@Path("idEmpresa") String idEmpresa, @Path("correoPrincipal") String correoPrincipal);
 
         @POST("cliente/clientes/{clienteActualizado}")
-        Call<ResponseBody> actualizarCliente(@Body Cliente clienteActualizado);
+        Call<ResponseBody> actualizarCliente(@Body Cliente cliente);
 
-        @POST("cliente/clientes/{idCliente}/{idEmpresa}/{razonSocial}/{direccion}/{telefonoPrincipal}/{correoPrincipal}")
-        Call<ResponseBody> guardarCliente(@Query(value = "idCliente", encoded = true) String idCliente,
+        @POST("cliente/clientes/{identificacionCliente}/{idEmpresa}/{razonSocial}/{direccion}/{telefonoPrincipal}/{correoPrincipal}")
+        Call<ResponseBody> guardarCliente(@Query(value = "identificacionCliente", encoded = true) String identificacionCliente,
                                           @Query(value = "idEmpresa", encoded = true) String idEmpresa,
                                           @Query(value = "razonSocial", encoded = true) String razonSocial,
                                           @Query(value = "direccion", encoded = true) String direccion,

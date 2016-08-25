@@ -1,6 +1,8 @@
 package ec.bigdata.facturaelectronicamovil.adaptador;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +16,35 @@ import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.modelo.Producto;
+import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestProducto;
+import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by DavidLeonardo on 6/5/2016.
  */
 public class ArrayAdapterProducto extends ArrayAdapter<Producto> {
 
-    Context context;
-    int resource, textViewResourceId;
-    List<Producto> items, tempItems, suggestions;
+    private Context context;
+    private int resource;
+    private int textViewResourceId;
+    private List<Producto> sugerencias;
+    private List<Producto> productosTemporales;
+    private ClaseGlobalUsuario claseGlobalUsuario;
+    private ClienteRestProducto.ServicioProducto servicioProducto;
 
-    public ArrayAdapterProducto(Context context, int resource, int textViewResourceId, List<Producto> items) {
-        super(context, resource, textViewResourceId, items);
+    public ArrayAdapterProducto(Context context, int resource, int textViewResourceId, List<Producto> productos) {
+        super(context, resource, textViewResourceId);
         this.context = context;
         this.resource = resource;
         this.textViewResourceId = textViewResourceId;
-        this.items = items;
-        tempItems = new ArrayList<Producto>(items); // this makes the difference.
-        suggestions = new ArrayList<Producto>();
+        productosTemporales = new ArrayList<Producto>(productos);
+        sugerencias = new ArrayList<Producto>();
+        claseGlobalUsuario = (ClaseGlobalUsuario) this.context.getApplicationContext();
+        servicioProducto = ClienteRestProducto.getServicioProducto();
+
     }
 
     @Override
@@ -41,14 +54,15 @@ public class ArrayAdapterProducto extends ArrayAdapter<Producto> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.fila_auto_complete, parent, false);
         }
-        Producto producto = items.get(position);
+        Producto producto = productosTemporales.get(position);
         if (producto != null) {
-            TextView lblName = (TextView) view.findViewById(R.id.tv_cliente_filtrado);
+            TextView lblName = (TextView) view.findViewById(R.id.text_view_filtrado);
             if (lblName != null) {
                 lblName.setText(producto.getCodigoPrincipalProducto() + "-" + producto.getDescripcionProducto());
                 lblName.setTextColor(ContextCompat.getColor(context, android.R.color.black));
             }
         }
+
         return view;
     }
 
@@ -57,29 +71,38 @@ public class ArrayAdapterProducto extends ArrayAdapter<Producto> {
         return nameFilter;
     }
 
-    /**
-     * Custom Filter implementation for custom suggestions we provide.
-     */
     Filter nameFilter = new Filter() {
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            String str = ((Producto) resultValue).getDescripcionProducto();
+            String str = ((ec.bigdata.facturaelectronicamovil.modelo.Producto) resultValue).getDescripcionProducto();
             return str;
         }
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
-                suggestions.clear();
-                for (Producto producto : tempItems) {
+                sugerencias.clear();
+                for (Producto producto : productosTemporales) {
                     if (producto.getCodigoPrincipalProducto().contains(constraint.toString()) ||
                             producto.getDescripcionProducto().toUpperCase().contains(constraint.toString().toUpperCase())) {
-                        suggestions.add(producto);
+                        sugerencias.add(producto);
                     }
                 }
+                /*AsyncTaskCargaProductos asyncTaskCargaProductos=new AsyncTaskCargaProductos();
+                try {List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productosFiltrados=asyncTaskCargaProductos.execute(constraint.toString().toUpperCase()).get();
+                    if(productosFiltrados!=null && !productosFiltrados.isEmpty()){
+                        sugerencias.addAll(productosFiltrados);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }*/
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = suggestions;
-                filterResults.count = suggestions.size();
+
+                filterResults.values = sugerencias;
+                filterResults.count = sugerencias.size();
+
                 return filterResults;
             } else {
                 return new FilterResults();
@@ -88,14 +111,64 @@ public class ArrayAdapterProducto extends ArrayAdapter<Producto> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            List<Producto> filterList = (ArrayList<Producto>) results.values;
+            List<ec.bigdata.facturaelectronicamovil.modelo.Producto> filterList = (ArrayList<ec.bigdata.facturaelectronicamovil.modelo.Producto>) results.values;
             if (results != null && results.count > 0) {
                 clear();
-                for (Producto producto : filterList) {
+                for (ec.bigdata.facturaelectronicamovil.modelo.Producto producto : filterList) {
+
                     add(producto);
                     notifyDataSetChanged();
                 }
             }
         }
     };
+
+    class AsyncTaskCargaProductos extends AsyncTask<String, String, List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> {
+
+        private ProgressDialog progressDialog;
+        private List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productosConsultados;
+
+        @Override
+        protected List<ec.bigdata.facturaelectronicamovil.modelo.Producto> doInBackground(String... params) {
+
+
+            Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> callProducto = servicioProducto.obtenerProductosPorCoincidenciaPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), params[0].toUpperCase());
+            callProducto.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>>() {
+                @Override
+                public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Response<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> response) {
+                    if (response.isSuccessful()) {
+                        productosConsultados = response.body();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Throwable t) {
+                    call.cancel();
+                }
+            });
+
+            return productosConsultados;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            productosConsultados = new ArrayList<>();
+        }
+
+        @Override
+        protected void onPostExecute(List<ec.bigdata.facturaelectronicamovil.modelo.Producto> result) {
+            super.onPostExecute(result);
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+
+
+        }
+    }
+
+
 }

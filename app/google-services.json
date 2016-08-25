@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "721380486862",
+    "project_id": "facturamovil-1469961601232"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721380486862:android:79c88fbb33a055e9",
+        "android_client_info": {
+          "package_name": "ec.bigdata.facturaelectronicamovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmITgnJ_yHzhjMneT5lXY_p6BsUsT3nMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

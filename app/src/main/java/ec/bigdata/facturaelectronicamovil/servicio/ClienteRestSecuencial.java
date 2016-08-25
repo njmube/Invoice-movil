@@ -43,8 +43,12 @@ public class ClienteRestSecuencial {
         Call<List<Secuencial>> obtenerEstablecimientosPorEmpresa(@Path("idEmpresa") String idEmpresa);
 
 
-        @PUT("establecimiento/establecimientos/{idEmpresa}/{idEstablecimiento}/{codigoEstablecmiento}/{puntoEmision}/{direccion}")
-        Call<ResponseBody> actualizarEstablecimiento(@Path("idEmpresa") String idEmpresa, @Path("idEstablecimiento") Integer idEstablecimiento, @Path("codigoEstablecmiento") String codigoEstablecmiento,
+        @PUT("establecimiento/establecimientos/{idEmpresa}/{idEstablecimiento}/{codigoEstablecimiento}/{puntoEmision}/{direccion}")
+        Call<ResponseBody> actualizarEstablecimiento(@Path("idEmpresa") String idEmpresa, @Path("idEstablecimiento") Integer idEstablecimiento, @Path("codigoEstablecimiento") String codigoEstablecimiento,
+                                                     @Path("puntoEmision") String puntoEmision, @Query(value = "direccion", encoded = true) String direccion);
+
+        @PUT("establecimiento/establecimientos/{idEmpresa}/{codigoEstablecimiento}/{puntoEmision}/{direccion}")
+        Call<ResponseBody> guardarEstablecimiento(@Path("idEmpresa") String idEmpresa, @Path("codigoEstablecimiento") String codigoEstablecimiento,
                                                      @Path("puntoEmision") String puntoEmision, @Query(value = "direccion", encoded = true) String direccion);
     }
 }

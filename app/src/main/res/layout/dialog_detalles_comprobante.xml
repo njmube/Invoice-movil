@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dialog_body">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_secuencial_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_secuencial_comprobante"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_secuencial_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_fecha_emision_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_fecha_emision_comprobante"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_fecha_emision_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_tipo_comprobante_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_tipo_comprobante"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_tipo_comprobante_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_ruc_receptor_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_ruc_receptor_comprobante"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_ruc_receptor_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_razon_social_receptor_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_razon_social_receptor"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_razon_social_receptor_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_clave_acceso_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_clave_acceso"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_clave_acceso_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_numero_autorizacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_numero_autorizacion"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_numero_autorizacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_fecha_autorizacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_fecha_autorizacion"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_fecha_autorizacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="@dimen/padding_between_table_rows">
+
+                <TextView
+                    android:id="@+id/text_view_etiqueta_observacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_observacion"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_observacion_detalle_comprobante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_app"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <Button
+                android:id="@+id/button_continuar"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/etiqueta_boton_siguiente"
+                android:textStyle="bold"
+
+                />
+
+        </TableLayout>
+    </LinearLayout>
+
+</ScrollView>

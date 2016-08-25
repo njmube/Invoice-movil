@@ -43,9 +43,9 @@ public class ArrayAdapterCliente extends ArrayAdapter<Cliente> {
         }
         Cliente cliente = items.get(position);
         if (cliente != null) {
-            TextView textViewCliente = (TextView) view.findViewById(R.id.tv_cliente_filtrado);
+            TextView textViewCliente = (TextView) view.findViewById(R.id.text_view_filtrado);
             if (textViewCliente != null) {
-                textViewCliente.setText(cliente.getIdentificacionCliente() + "-" + cliente.getNombreCliente());
+                textViewCliente.setText(cliente.getIdentificacionCliente() + "-" + cliente.getRazonSocialCliente());
                 textViewCliente.setTextColor(ContextCompat.getColor(context, android.R.color.black));
             }
         }
@@ -61,7 +61,7 @@ public class ArrayAdapterCliente extends ArrayAdapter<Cliente> {
     Filter nameFilter = new Filter() {
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            String str = ((Cliente) resultValue).getNombreCliente();
+            String str = ((Cliente) resultValue).getRazonSocialCliente();
             return str;
         }
 
@@ -71,7 +71,7 @@ public class ArrayAdapterCliente extends ArrayAdapter<Cliente> {
                 suggestions.clear();
                 for (Cliente clientes : tempItems) {
                     if (clientes.getIdentificacionCliente().contains(constraint.toString()) ||
-                            clientes.getNombreCliente().toUpperCase().contains(constraint.toString().toUpperCase())) {
+                            clientes.getRazonSocialCliente().toUpperCase().contains(constraint.toString().toUpperCase())) {
                         suggestions.add(clientes);
                     }
                 }

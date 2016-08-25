@@ -2,7 +2,6 @@ package ec.bigdata.facturaelectronicamovil.servicio;
 
 import java.util.concurrent.TimeUnit;
 
-import ec.bigdata.facturaelectronicamovil.modelo.Archivo;
 import ec.bigdata.facturaelectronicamovil.utilidad.Utilidades;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -20,7 +19,6 @@ public class ClienteRestArchivo {
 
     public static ServicioArchivo getServicioArchivo() {
         if (servicioArchivo == null) {
-            //  Gson gson = new GsonBuilder().registerTypeAdapter(Archivo.class, new AdaptadorArchivo()).serializeNulls().create();
             final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(30, TimeUnit.SECONDS)
                     .connectTimeout(30, TimeUnit.SECONDS)
@@ -37,10 +35,11 @@ public class ClienteRestArchivo {
 
     public interface ServicioArchivo {
 
-        @GET("archivo/archivo/{idComprobanteElectronico}")
-        Call<Archivo> obtenerArchivoPorComprobante(@Path("idComprobanteElectronico") Integer idComprobanteElectronico);
+        @GET("archivo/archivo-bytes/{idComprobanteElectronico}/{tipoArchivo}")
+        Call<ResponseBody> obtenerArchivoPorBytesPorTipoArchivo(@Path("idComprobanteElectronico") Integer idComprobanteElectronico, @Path("tipoArchivo") Integer tipoArchivo);
 
-        @GET("archivo/archivo-bytes/{idComprobanteElectronico}")
-        Call<ResponseBody> obtenerArchivoPorBytes(@Path("idComprobanteElectronico") Integer idComprobanteElectronico);
+        @GET("archivo/zip/{idComprobanteElectronico}")
+            //@Streaming
+        Call<ResponseBody> obtenerZipRIDERespuestaSRI(@Path("idComprobanteElectronico") Integer idComprobanteElectronico);
     }
 }

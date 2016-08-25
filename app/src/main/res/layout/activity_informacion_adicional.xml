@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.InformacionAdicional"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="ec.bigdata.facturaelectronicamovil.pantalla.InformacionAdicional">
 
     <include
         layout="@layout/toolbar_compuesta"
@@ -14,9 +14,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp"
-        android:gravity="center">
+        android:padding="@dimen/normal_padding">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -27,11 +27,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/etiqueta_nombre_detalle_adicional"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+                android:imeOptions="actionUnspecified"
                 android:maxLength="300"
                 android:maxLines="1"
-                android:singleLine="true"
-                android:imeActionLabel="@string/etiqueta_siguiente_componente"
-                android:imeOptions="actionUnspecified" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -44,11 +44,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/etiqueta_valor_detalle_adicional"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+                android:imeOptions="actionUnspecified"
                 android:maxLength="300"
                 android:maxLines="1"
-                android:singleLine="true"
-                android:imeActionLabel="@string/etiqueta_siguiente_componente"
-                android:imeOptions="actionUnspecified" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -59,14 +59,71 @@
             android:layout_height="wrap_content"
             android:text="@string/boton_agregar_informacion_adicional"
             android:textStyle="bold" />
+        android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/normal_padding">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/text_view_titulo_informacion_adicional_cliente"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titulo_informacion_adicional_cliente"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:paddingTop="@dimen/normal_padding">
+
+                <TextView
+                    android:id="@+id/text_view_informacion_personal"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_informacion_adicional_personal_cliente" />
+
+                <Switch
+                    android:id="@+id/switch_informacion_adicional_personal_cliente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+            <TableRow android:paddingTop="@dimen/normal_padding">
+
+                <TextView
+                    android:id="@+id/text_view_correos_adicionales_cliente"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_correos_adicionales_cliente" />
+
+                <Switch
+                    android:id="@+id/switch_correos_adicionales_cliente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/text_view_vista_vacia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/etiqueta_no_existe_informacion"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:visibility="invisible" />
 
         <ListView
             android:id="@+id/list_view_informacion_adicional"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:divider="@color/colorPrimary"
-            android:dividerHeight="2dp"></ListView>
+            android:dividerHeight="1dp"></ListView>
     </LinearLayout>
 
 </LinearLayout>

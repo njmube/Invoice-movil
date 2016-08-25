@@ -24,6 +24,7 @@ import ec.bigdata.facturaelectronicamovil.pantalla.PerfilEmpresa;
 import ec.bigdata.facturaelectronicamovil.pantalla.PerfilUsuario;
 import ec.bigdata.facturaelectronicamovil.pantalla.Test;
 import ec.bigdata.facturaelectronicamovil.recyclerview.AdministracionClientesActividad;
+import ec.bigdata.facturaelectronicamovil.recyclerview.AdministracionProductosActividad;
 import ec.bigdata.facturaelectronicamovil.servicio.ClienteRestPantallas;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.facturaelectronicamovil.utilidad.PreferenciasUsuario;
@@ -134,7 +135,7 @@ public class NavigationDrawer extends AppCompatActivity {
                 return true;
             case R.id.item_perfil:
                 drawerLayout.closeDrawer(GravityCompat.START);
-                if (claseGlobalUsuario.getTipoUsuario().equals(Utilidades.USUARIO_PERSONA)) {
+                if (claseGlobalUsuario.getTipoUsuario().equals(Utilidades.USUARIO_RECEPTOR)) {
                     intent = new Intent(this.getApplicationContext(), PerfilUsuario.class);
                 } else {
                     intent = new Intent(this.getApplicationContext(), PerfilEmpresa.class);
@@ -155,14 +156,15 @@ public class NavigationDrawer extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent intent = null;
                         textViewTitulo = (TextView) findViewById(R.id.text_view_titulo);
-                        int position = menuItems.indexOf(menuItem) + 1;
-                        switch (position) {
-                            case 1:
+                        //int position = menuItems.indexOf(menuItem) + 1;
+                        String titulo = menuItem.getTitle().toString();
+                        switch (titulo) {
+                            case "Inicio":
                                 menuItem.setChecked(true);
                                 // textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
-                            case 2:
+                            case "Facturación Electrónica":
                                 menuItem.setChecked(true);
                                 //textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -170,14 +172,14 @@ public class NavigationDrawer extends AppCompatActivity {
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case 3:
+                            case "Repositorio":
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 intent = new Intent(getApplicationContext(), OpcionesRepositorio.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case 4:
+                            case "Test":
                                 menuItem.setChecked(true);
                                 //textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -185,7 +187,7 @@ public class NavigationDrawer extends AppCompatActivity {
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case 5:
+                            case "Clientes":
                                 menuItem.setChecked(true);
                                 // textViewTitulo.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -193,13 +195,15 @@ public class NavigationDrawer extends AppCompatActivity {
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 return true;
-                            case 6:
+                            case "Productos":
                                 menuItem.setChecked(true);
                                 //textViewTitulo.setText(menuItem.getTitle());
+                                intent = new Intent(getApplicationContext(), AdministracionProductosActividad.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
-                            case R.id.item_no_definida:
-                            case R.id.item_salir:
+                            case "Salir":
                                 preferenciasUsuario.cerrarSesion();
                                 return true;
 

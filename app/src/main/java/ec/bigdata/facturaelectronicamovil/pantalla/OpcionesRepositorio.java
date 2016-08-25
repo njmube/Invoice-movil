@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ec.bigdata.facturaelectronicamovil.R;
+import ec.bigdata.facturaelectronicamovil.recyclerview.ComprobantesEmitidosAutorizados;
 
 public class OpcionesRepositorio extends AppCompatActivity {
     private ListView listViewOpcionesRepositorio;
@@ -43,7 +44,7 @@ public class OpcionesRepositorio extends AppCompatActivity {
                 Intent intent = null;
                 switch (position) {
                     case 0:
-                        intent = new Intent(getApplicationContext(), RepositorioComprobantesEmitidosAutorizados.class);
+                        intent = new Intent(getApplicationContext(), ComprobantesEmitidosAutorizados.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);
                         break;

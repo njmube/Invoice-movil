@@ -44,7 +44,7 @@ public class AdaptadorComprobanteElectronico implements JsonDeserializer<Comprob
                 , jsonObjectComprobanteElectronico.get("secuencial").getAsString()
                 , numeroAutorizacion
                 , jsonObjectComprobanteElectronico.get("rucEmisor").getAsString()
-                , jsonObjectComprobanteElectronico.get("nombreComercialEmisor").getAsString()
+                , jsonObjectComprobanteElectronico.get("razonSocialEmisorComprobanteElectronico").getAsString()
                 , jsonObjectComprobanteElectronico.get("ambienteComprobanteElectronico").getAsString()
                 , jsonObjectComprobanteElectronico.get("estadoComprobanteElectronico").getAsString()
                 , jsonObjectComprobanteElectronico.get("mensajeComprobanteElectronico").getAsString()

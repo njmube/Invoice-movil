@@ -8,7 +8,7 @@
     tools:context="ec.bigdata.facturaelectronicamovil.pantalla.ActualizacionCliente">
 
     <include
-        layout="@layout/toolbar_compuesta"
+        layout="@layout/toolbar_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -32,50 +32,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_identificacion_cliente"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edit_text_nombres_edicion_cliente"
-                    style="@style/Texto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sugerencia_nombres"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
-                    android:imeOptions="actionUnspecified"
-                    android:maxLines="1"
-                    android:visibility="gone"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edit_text_apellidos_edicion_cliente"
-                    style="@style/Texto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sugerencia_apellidos"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
-                    android:imeOptions="actionUnspecified"
-                    android:maxLines="1"
-                    android:visibility="gone"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -86,10 +48,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_razon_social_cliente"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
-                    android:visibility="gone"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -104,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_direccion_cliente"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -121,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_telefono_cliente"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -138,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sugerencia_correo_cliente"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true" />

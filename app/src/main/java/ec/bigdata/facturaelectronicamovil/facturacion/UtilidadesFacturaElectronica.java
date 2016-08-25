@@ -12,10 +12,10 @@ import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.InformacionAdic
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.InformacionTributariaComprobanteElectronico;
 import ec.bigdata.comprobanteelectronico.esquema.factura.Detalle;
 import ec.bigdata.comprobanteelectronico.esquema.factura.InformacionFactura;
+import ec.bigdata.comprobanteelectronico.esquema.factura.Pagos;
 import ec.bigdata.comprobanteelectronico.esquema.implementacion.ImplementacionFactura;
 import ec.bigdata.facturaelectronicamovil.modelo.Cliente;
 import ec.bigdata.facturaelectronicamovil.modelo.Secuencial;
-import ec.bigdata.facturaelectronicamovil.utilidad.Calculos;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 import ec.bigdata.utilidades.Validaciones;
 
@@ -30,12 +30,15 @@ public class UtilidadesFacturaElectronica {
 
     private Cliente clienteSeleccionado;
 
+    private ArrayList<Pagos> pagosArrayList;
+
     private ArrayList<InformacionAdicional> informacionAdicionalArrayList;
 
-    public UtilidadesFacturaElectronica(ClaseGlobalUsuario claseGlobalUsuario, Secuencial secuencialSeleccionado, Cliente clienteSeleccionado, ArrayList<InformacionAdicional> informacionAdicionalArrayList) {
+    public UtilidadesFacturaElectronica(ClaseGlobalUsuario claseGlobalUsuario, Secuencial secuencialSeleccionado, Cliente clienteSeleccionado, ArrayList<Pagos> pagosArrayList, ArrayList<InformacionAdicional> informacionAdicionalArrayList) {
         this.claseGlobalUsuario = claseGlobalUsuario;
         this.secuencialSeleccionado = secuencialSeleccionado;
         this.clienteSeleccionado = clienteSeleccionado;
+        this.pagosArrayList = pagosArrayList;
         this.informacionAdicionalArrayList = informacionAdicionalArrayList;
     }
 
@@ -78,10 +81,13 @@ public class UtilidadesFacturaElectronica {
         informacionFactura.setObligadoContabilidad(Validaciones.obtenerObligadoContabilidad(claseGlobalUsuario.isObligadoLlevarContabilidad().toString()));
 
         informacionFactura.setTipoIdentificacionComprador(Validaciones.comprTipoId(clienteSeleccionado.getIdentificacionCliente()));
-        informacionFactura.setRazonSocialComprador(clienteSeleccionado.getNombreCliente());
+        informacionFactura.setRazonSocialComprador(clienteSeleccionado.getRazonSocialCliente());
         informacionFactura.setIdentificacionComprador(clienteSeleccionado.getIdentificacionCliente());
         if (clienteSeleccionado.getDireccionCliente() != null && !clienteSeleccionado.getDireccionCliente().equals("")) {
             informacionFactura.setDireccionComprador(clienteSeleccionado.getDireccionCliente());
+        }
+        if (pagosArrayList != null && !pagosArrayList.isEmpty()) {
+            informacionFactura.setPagos(pagosArrayList);
         }
 
         informacionFactura.setTotalSinImpuestos(Calculos.obtenerTotalSinImpuestos(detallesFactura).toString());

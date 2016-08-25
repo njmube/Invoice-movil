@@ -14,7 +14,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ec.bigdata.facturaelectronicamovil.R;
@@ -33,32 +37,37 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+public class LoginUsuarioActivity extends AppCompatActivity implements Validator.ValidationListener {
 
-public class LoginUsuarioActivity extends AppCompatActivity {
-
-    private static final String TAG = "LoginUsuarioActivity";
-
+    @NotEmpty(message = "El nombre de usuario no puede estar vacío.")
     private EditText editTextNombreUsuario;
 
+    @NotEmpty(message = "La clave del usuario no puede estar vacío.")
     private EditText editTextClave;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ProgressDialog progressDialog;
 
+    private Validator validator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_login_usuario);
+
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
+
+        validator = new Validator(this);
+        validator.setValidationListener(this);
 
         editTextNombreUsuario = (EditText) findViewById(R.id.edit_text_nombre_usuario_persona);
         editTextClave = (EditText) findViewById(R.id.edit_text_clave_usuario_persona);
         editTextClave.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                int id_iniciar_sesion = getResources().getInteger(R.integer.id_boton_iniciar_sesion);
-                if (id == id_iniciar_sesion) {
+                int idIniciarSesion = getResources().getInteger(R.integer.id_boton_iniciar_sesion);
+                if (id == idIniciarSesion) {
                     validarUsuario();
                     return true;
                 }
@@ -77,7 +86,7 @@ public class LoginUsuarioActivity extends AppCompatActivity {
     }
 
     /**
-     * Método que valida los campos de nombre de usuario y contraseña
+     * Método que valida el acceso a un usuario por nombre de usuario y contraseña.
      */
     private void validarUsuario() {
 
@@ -86,99 +95,80 @@ public class LoginUsuarioActivity extends AppCompatActivity {
         editTextClave.setError(null);
 
 
-        String nombre_usuario = editTextNombreUsuario.getText().toString();
-        String password = editTextClave.getText().toString();
+        String nombreUsuario = editTextNombreUsuario.getText().toString();
+        String contrasenia = editTextClave.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
-        if (nombre_usuario != null && password != null && !nombre_usuario.equals("") && !password.equals("")) {
-            Gson gson = new GsonBuilder().registerTypeAdapter(UsuarioAcceso.class, new AdaptadorUsuario()).setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-            final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .readTimeout(5, TimeUnit.SECONDS)
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .build();
+        /** boolean cancel = false;
+         View focusView = null;
+         */
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Utilidades.obtenerURLWebService()).addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(okHttpClient)
-                    .build();
+        Gson gson = new GsonBuilder().registerTypeAdapter(UsuarioAcceso.class, new AdaptadorUsuario()).setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .build();
 
-            ClienteRestUsuarioAcceso.ServicioUsuarioAcceso servicioUsuarioAcceso = retrofit.create(ClienteRestUsuarioAcceso.ServicioUsuarioAcceso.class);
-            Call<UsuarioAcceso> call = servicioUsuarioAcceso.validarUsuarioAcceso(nombre_usuario, password);
-            progressDialog = DialogProgreso.mostrarDialogProgreso(LoginUsuarioActivity.this);
-            call.enqueue(new Callback<UsuarioAcceso>() {
-                @Override
-                public void onResponse(Call<UsuarioAcceso> call, Response<UsuarioAcceso> response) {
-                    if (response.isSuccessful()) {
-                        UsuarioAcceso usuarioAcceso = response.body();
-                        if (usuarioAcceso.getEstadoUsuario().equals("1")) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilidades.obtenerURLWebService()).addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
+                .build();
 
-                            claseGlobalUsuario.setIdUsuario(String.valueOf(usuarioAcceso.getIdUsuario()));
-                            claseGlobalUsuario.setIdentificacionUsuario(usuarioAcceso.getIdentificacionUsuario());
-                            claseGlobalUsuario.setNombreUsuario(usuarioAcceso.getNombreUsuarioAcceso());
-                            claseGlobalUsuario.setClaveUsuario(usuarioAcceso.getClaveUsuarioAcceso());
-                            claseGlobalUsuario.setNombres(usuarioAcceso.getNombreUsuario());
-                            claseGlobalUsuario.setApellidos(usuarioAcceso.getApellidoUsuario());
-                            claseGlobalUsuario.setCorreoPrincipal(usuarioAcceso.getCorreoPrincipalUsuario());
-                            claseGlobalUsuario.setTipoUsuario(Utilidades.USUARIO_PERSONA);
-                            if (usuarioAcceso.getCorreoAdicionalUsuario() != null) {
-                                claseGlobalUsuario.setCorreoAdicional(usuarioAcceso.getCorreoAdicionalUsuario());
-                            } else {
-                                claseGlobalUsuario.setCorreoAdicional("");
-                            }
-                            claseGlobalUsuario.setTelefonoPrincipal(usuarioAcceso.getTelefonoPrincipalUsuario());
-                            if (usuarioAcceso.getTelefonoAdicionalUsuario() != null) {
-                                claseGlobalUsuario.setTelefonoAdicional(usuarioAcceso.getTelefonoAdicionalUsuario());
-                            } else {
-                                claseGlobalUsuario.setTelefonoAdicional("0");
-                            }
-                            claseGlobalUsuario.setIdPerfil(String.valueOf(usuarioAcceso.getPerfil().getIdPerfil()));
-                            claseGlobalUsuario.setTipoPerfil(usuarioAcceso.getPerfil().getNombrePerfil());
-
-                            progressDialog.dismiss();
-                            Intent intent = new Intent(getApplicationContext(), NavigationDrawer.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
-                            editTextNombreUsuario.requestFocus();
-                        }
-                    } else {
-                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El usuario no existe.");
-
-                        editTextNombreUsuario.requestFocus();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UsuarioAcceso> call, Throwable t) {
+        ClienteRestUsuarioAcceso.ServicioUsuarioAcceso servicioUsuarioAcceso = retrofit.create(ClienteRestUsuarioAcceso.ServicioUsuarioAcceso.class);
+        Call<UsuarioAcceso> usuarioAccesoCall = servicioUsuarioAcceso.validarUsuarioAcceso(nombreUsuario, contrasenia);
+        progressDialog = DialogProgreso.mostrarDialogProgreso(LoginUsuarioActivity.this);
+        usuarioAccesoCall.enqueue(new Callback<UsuarioAcceso>() {
+            @Override
+            public void onResponse(Call<UsuarioAcceso> call, Response<UsuarioAcceso> response) {
+                if (response.isSuccessful()) {
                     progressDialog.dismiss();
+                    UsuarioAcceso usuarioAcceso = response.body();
+                    if (usuarioAcceso.getEstadoUsuario().equals("1")) {
+
+                        claseGlobalUsuario.setIdUsuario(String.valueOf(usuarioAcceso.getIdUsuario()));
+                        claseGlobalUsuario.setIdentificacionUsuario(usuarioAcceso.getIdentificacionUsuario());
+                        claseGlobalUsuario.setNombreUsuario(usuarioAcceso.getNombreUsuarioAcceso());
+                        claseGlobalUsuario.setClaveUsuario(usuarioAcceso.getClaveUsuarioAcceso());
+                        claseGlobalUsuario.setNombres(usuarioAcceso.getNombreUsuario());
+                        claseGlobalUsuario.setApellidos(usuarioAcceso.getApellidoUsuario());
+                        claseGlobalUsuario.setCorreoPrincipal(usuarioAcceso.getCorreoPrincipalUsuario());
+                        claseGlobalUsuario.setTipoUsuario(Utilidades.USUARIO_RECEPTOR);
+                        if (usuarioAcceso.getCorreoAdicionalUsuario() != null) {
+                            claseGlobalUsuario.setCorreoAdicional(usuarioAcceso.getCorreoAdicionalUsuario());
+                        } else {
+                            claseGlobalUsuario.setCorreoAdicional("");
+                        }
+                        claseGlobalUsuario.setTelefonoPrincipal(usuarioAcceso.getTelefonoPrincipalUsuario());
+                        if (usuarioAcceso.getTelefonoAdicionalUsuario() != null) {
+                            claseGlobalUsuario.setTelefonoAdicional(usuarioAcceso.getTelefonoAdicionalUsuario());
+                        } else {
+                            claseGlobalUsuario.setTelefonoAdicional("");
+                        }
+                        claseGlobalUsuario.setIdPerfil(String.valueOf(usuarioAcceso.getPerfil().getIdPerfil()));
+                        claseGlobalUsuario.setTipoPerfil(usuarioAcceso.getPerfil().getNombrePerfil());
+                        Intent intent = new Intent(getApplicationContext(), NavigationDrawer.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
+                        editTextNombreUsuario.requestFocus();
+                    }
+                } else {
+                    MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "El usuario no existe.");
+
+                    editTextNombreUsuario.requestFocus();
+
                 }
-            });
+            }
 
-
-        } else if (nombre_usuario == null && password == null) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (nombre_usuario.equals("") && password.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (nombre_usuario.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (password.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
-
-            focusView = editTextClave;
-            cancel = true;
-        }
-        if (cancel) {
+            @Override
+            public void onFailure(Call<UsuarioAcceso> call, Throwable t) {
+                call.cancel();
+                progressDialog.dismiss();
+            }
+        });
+        /*if (cancel) {
             focusView.requestFocus();
-        }
+        }*/
 
     }
 
@@ -197,6 +187,26 @@ public class LoginUsuarioActivity extends AppCompatActivity {
     public void onBackPressed() {
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        validarUsuario();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getApplicationContext());
+
+            // Display error messages
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
+            }
+        }
     }
 }
 

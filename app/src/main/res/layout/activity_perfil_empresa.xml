@@ -29,7 +29,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -47,7 +47,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -65,7 +65,7 @@
                     android:maxLength="300"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -83,7 +83,7 @@
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -101,7 +101,7 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>
 
@@ -146,7 +146,7 @@
                     android:maxLength="13"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
 
@@ -184,7 +184,7 @@
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
@@ -202,11 +202,21 @@
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_actualizar_contrasenia"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/boton_actualizar_contrasenia_empresa"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </ScrollView>
+
+
 </RelativeLayout>

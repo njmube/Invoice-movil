@@ -9,7 +9,7 @@
     tools:context="ec.bigdata.facturaelectronicamovil.pantalla.CorreosAdicionalesCliente">
 
     <include
-        layout="@layout/toolbar_compuesta"
+        layout="@layout/toolbar_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -26,7 +26,8 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/edit_text_correo_adicional_cliente"
@@ -34,30 +35,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sugerencia_correo_cliente"
-            android:imeActionLabel="@string/etiqueta_siguiente_componente"
+            android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
             android:imeOptions="actionUnspecified"
             android:maxLength="100"
             android:maxLines="1"
             android:singleLine="true" />
-
-
     </android.support.design.widget.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radio_group_tipos_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_button_tipo_cliente1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_tipo_cliente1"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radio_button_tipo_cliente2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_tipo_cliente2" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/button_agregar_correo_adicional"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/etiqueta_agregar"
+        android:text="@string/etiqueta_boton_agregar"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_vista_vacia"
+        android:text="@string/etiqueta_no_existe_informacion"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:gravity="center"
+        android:visibility="invisible" />
     <ListView
         android:id="@+id/list_view_correos_adicionales"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:divider="@color/colorPrimary"
         android:dividerHeight="1dp"
         android:padding="@dimen/normal_padding"></ListView>
-
-
 </LinearLayout>

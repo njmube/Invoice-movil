@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_ride"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+
+            android:textAppearance="@android:style/TextAppearance.Holo.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/etiqueta_ver_pdf_ride" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_button_pdf_ride"
+            android:src="@drawable/ic_pdf"
+            android:contentDescription="@string/descripcion_imagen_pdf_ride" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_firma_autorizacion_sri"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center|bottom">
+
+        <Button
+            android:id="@+id/button_continuar_firmar_autorizar_sri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/etiqueta_boton_firmar_autorizar_sri" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -26,8 +26,6 @@ import retrofit2.Response;
 
 public class Producto extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
     private ClaseGlobalUsuario claseGlobalUsuario;
 
     private ClienteRestProducto.ServicioProducto servicioProducto;
@@ -50,7 +48,7 @@ public class Producto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producto);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_compuesta);
         setSupportActionBar(toolbar);
         //Get a support ActionBar corresponding to this toolbar_compuesta
 
@@ -66,15 +64,14 @@ public class Producto extends AppCompatActivity {
         textViewProductoSeleccionado = (TextView) findViewById(R.id.text_view_producto_seleccionado);
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         servicioProducto = ClienteRestProducto.getServicioProducto();
-        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call_producto = servicioProducto.obtenerProductosPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa());
-        call_producto.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>>() {
+        Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> callProducto = servicioProducto.obtenerProductosPorEmpresaAsociado(claseGlobalUsuario.getIdEmpresa(), 0, 100);
+        callProducto.enqueue(new Callback<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>>() {
             @Override
             public void onResponse(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Response<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> response) {
                 if (response.isSuccessful()) {
-                    List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productos = response.body();
-                    if (productos != null && !productos.isEmpty()) {
-                        //Se asigna el origen de datos
-                        arrayAdapterProducto = new ArrayAdapterProducto(getApplicationContext(), R.layout.activity_cliente, R.id.tv_cliente_filtrado, productos);
+                    List<ec.bigdata.facturaelectronicamovil.modelo.Producto> productosConsultados = response.body();
+                    if (productosConsultados != null && !productosConsultados.isEmpty()) {
+                        arrayAdapterProducto = new ArrayAdapterProducto(getApplicationContext(), R.layout.activity_producto, R.id.text_view_filtrado, productosConsultados);
                         //Se setea el adaptador
                         autoCompleteTextViewProductos.setAdapter(arrayAdapterProducto);
                     }
@@ -83,9 +80,11 @@ public class Producto extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ec.bigdata.facturaelectronicamovil.modelo.Producto>> call, Throwable t) {
-
+                call.cancel();
             }
         });
+
+
         autoCompleteTextViewProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,7 +104,7 @@ public class Producto extends AppCompatActivity {
         buttonNuevoProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentNuevoProducto = new Intent(getApplicationContext(), NuevoProducto.class);
+                Intent intentNuevoProducto = new Intent(getApplicationContext(), NuevoProductoCorregir.class);
                 startActivity(intentNuevoProducto);
                 finish();
             }
@@ -154,4 +153,6 @@ public class Producto extends AppCompatActivity {
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
+
+
 }

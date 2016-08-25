@@ -11,8 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.dialogs.DialogProgreso;
@@ -28,12 +33,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginEmpresaActivity extends AppCompatActivity {
+public class LoginEmpresaActivity extends AppCompatActivity implements Validator.ValidationListener {
 
-    private static final String TAG = LoginEmpresaActivity.class.getSimpleName();
-
+    @NotEmpty(message = "El nombre de usuario no puede estar vacío.")
     private EditText editTextNombreUsuario;
 
+    @NotEmpty(message = "La clave del usuario no puede estar vacía.")
     private EditText editTextClave;
 
     private ClaseGlobalUsuario claseGlobalUsuario;
@@ -43,17 +48,21 @@ public class LoginEmpresaActivity extends AppCompatActivity {
     PreferenciasUsuario preferenciasUsuario;
 
     private String nombreUsuario;
+
     private String claveUsuario;
 
+    private Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_empresa);
+
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+
         claseGlobalUsuario = (ClaseGlobalUsuario) getApplicationContext();
         preferenciasUsuario = new PreferenciasUsuario(getApplicationContext());
-
-
         editTextNombreUsuario = (EditText) findViewById(R.id.edit_text_nombre_usuario_empresa);
         editTextClave = (EditText) findViewById(R.id.edit_text_clave_usuario_empresa);
 
@@ -62,7 +71,9 @@ public class LoginEmpresaActivity extends AppCompatActivity {
         nombreUsuario = stringHashMap.get(PreferenciasUsuario.LLAVE_NOMBRE_USUARIO);
         claveUsuario = stringHashMap.get(PreferenciasUsuario.LLAVE_CONTRASENIA);
         if (nombreUsuario != null && claveUsuario != null) {
-            validarUsuario(nombreUsuario, claveUsuario);
+            editTextNombreUsuario.setText(nombreUsuario);
+            editTextClave.setText(claveUsuario);
+            validator.validate();
         }
         editTextClave.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -75,118 +86,82 @@ public class LoginEmpresaActivity extends AppCompatActivity {
         buttonValidarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nombreUsuario = editTextNombreUsuario.getText().toString();
-                claveUsuario = editTextClave.getText().toString();
-                validarUsuario(nombreUsuario, claveUsuario);
+                validator.validate();
             }
         });
     }
 
     /**
-     * Método que valida los campos de nombre de usuario y contraseña
+     * Método que valida los campos de nombre de usuario y contraseña.
      */
-    private void validarUsuario(final String nombreUsuario, final String claveUsuario) {
+    private void validarUsuario() {
+        nombreUsuario = editTextNombreUsuario.getText().toString();
+        claveUsuario = editTextClave.getText().toString();
+        ClienteRestEmpresa.ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
 
-        // Reset errores.
-        editTextNombreUsuario.setError(null);
+        progressDialog = DialogProgreso.mostrarDialogProgreso(LoginEmpresaActivity.this);
 
-        editTextClave.setError(null);
+        Call<ClienteEmpresa> clienteEmpresaCall = servicioEmpresa.validarEmpresa(nombreUsuario, claveUsuario);
 
+        clienteEmpresaCall.enqueue(new Callback<ClienteEmpresa>() {
+            @Override
+            public void onResponse(Call<ClienteEmpresa> call, Response<ClienteEmpresa> response) {
+                if (response.isSuccessful()) {
 
-        boolean cancel = false;
-        View focusView = null;
+                    ClienteEmpresa clienteEmpresa = response.body();
 
-        if (nombreUsuario != null && claveUsuario != null && !nombreUsuario.trim().equals("") && !claveUsuario.trim().equals("")) {
+                    preferenciasUsuario.createSesionUsuario(nombreUsuario, claveUsuario);
 
-            ClienteRestEmpresa.ServicioEmpresa servicioEmpresa = ClienteRestEmpresa.getServicioEmpresa();
+                    if (clienteEmpresa.getEstadoClienteEmpresa().equals(Boolean.TRUE)) {
 
-            progressDialog = DialogProgreso.mostrarDialogProgreso(LoginEmpresaActivity.this);
+                        //Ambiente de la aplicación
+                        claseGlobalUsuario.setAmbiente(getResources().getString(R.string.ambiente));
+                        //Tipo de emisión
+                        claseGlobalUsuario.setTipoEmision(getResources().getString(R.string.tipo_emision));
+                        //Tipos de comprobante
+                        claseGlobalUsuario.setTiposComprobantes(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.tipos_comprobante)));
+                        //Impuestos
+                        claseGlobalUsuario.setImpuestos(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.impuestos)));
 
-            Call<ClienteEmpresa> clienteEmpresaCall = servicioEmpresa.validarEmpresa(nombreUsuario, claveUsuario);
-
-            clienteEmpresaCall.enqueue(new Callback<ClienteEmpresa>() {
-                @Override
-                public void onResponse(Call<ClienteEmpresa> call, Response<ClienteEmpresa> response) {
-                    if (response.isSuccessful()) {
-
-                        ClienteEmpresa clienteEmpresa = response.body();
-//TODO Revisar forma de guardar sesión del usuario
-                        preferenciasUsuario.createSesionUsuario(nombreUsuario, claveUsuario);
-
-                        if (clienteEmpresa.getEstadoClienteEmpresa().equals(Boolean.TRUE)) {
-
-                            //Ambiente de la aplicación
-                            claseGlobalUsuario.setAmbiente(getResources().getString(R.string.ambiente));
-                            //Tipo de emisión
-                            claseGlobalUsuario.setTipoEmision(getResources().getString(R.string.tipo_emision));
-                            //Tipos de comprobante
-                            claseGlobalUsuario.setTiposComprobantes(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.tipos_comprobante)));
-                            //Impuestos
-                            claseGlobalUsuario.setImpuestos(new LinkedHashMap<String, String>(ResourceUtils.getHashMapResource(getApplicationContext(), R.xml.impuestos)));
-
-                            claseGlobalUsuario.setMoneda(getResources().getString(R.string.moneda));
-                            //Información de la empresa
-                            claseGlobalUsuario.setIdEmpresa(clienteEmpresa.getIdClienteEmpresa());
-                            claseGlobalUsuario.setNombreUsuario(clienteEmpresa.getNombreUsuarioClienteEmpresa());
-                            claseGlobalUsuario.setClaveUsuario(clienteEmpresa.getClaveUsuarioClienteEmpresa());
-                            claseGlobalUsuario.setRazonSocial(clienteEmpresa.getRazonSocialClienteEmpresa());
-                            claseGlobalUsuario.setNombreComercial(clienteEmpresa.getNombreComercialClienteEmpresa());
-                            claseGlobalUsuario.setDireccionMatriz(clienteEmpresa.getDireccionClienteEmpresa());
-                            claseGlobalUsuario.setCorreoPrincipal(clienteEmpresa.getCorreoPrincipalClienteEmpresa());
-                            claseGlobalUsuario.setTelefonoPrincipal(clienteEmpresa.getTelefonoPrincipalClienteEmpresa());
-                            claseGlobalUsuario.setIdPerfil(String.valueOf(clienteEmpresa.getPerfil().getIdPerfil()));
-                            claseGlobalUsuario.setTipoPerfil(clienteEmpresa.getPerfil().getNombrePerfil());
-                            claseGlobalUsuario.setObligadoLlevarContabilidad(clienteEmpresa.getObligadoContabilidadClienteEmpresa());
-                            if (clienteEmpresa.getNumeroResolucionClienteEmpresa() != null) {
-                                claseGlobalUsuario.setNumeroResolucion(clienteEmpresa.getNumeroResolucionClienteEmpresa());
-                            } else {
-                                claseGlobalUsuario.setNumeroResolucion("");
-                            }
-                            claseGlobalUsuario.setTipoUsuario(Utilidades.USUARIO_EMPRESA);
-                            progressDialog.dismiss();
-                            iniciarIntent();
-
+                        claseGlobalUsuario.setMoneda(getResources().getString(R.string.moneda));
+                        //Información de la empresa.
+                        claseGlobalUsuario.setIdEmpresa(clienteEmpresa.getIdClienteEmpresa());
+                        claseGlobalUsuario.setNombreUsuario(clienteEmpresa.getNombreUsuarioClienteEmpresa());
+                        claseGlobalUsuario.setClaveUsuario(clienteEmpresa.getClaveUsuarioClienteEmpresa());
+                        claseGlobalUsuario.setRazonSocial(clienteEmpresa.getRazonSocialClienteEmpresa());
+                        claseGlobalUsuario.setNombreComercial(clienteEmpresa.getNombreComercialClienteEmpresa());
+                        claseGlobalUsuario.setDireccionMatriz(clienteEmpresa.getDireccionClienteEmpresa());
+                        claseGlobalUsuario.setCorreoPrincipal(clienteEmpresa.getCorreoPrincipalClienteEmpresa());
+                        claseGlobalUsuario.setTelefonoPrincipal(clienteEmpresa.getTelefonoPrincipalClienteEmpresa());
+                        claseGlobalUsuario.setIdPerfil(String.valueOf(clienteEmpresa.getPerfil().getIdPerfil()));
+                        claseGlobalUsuario.setTipoPerfil(clienteEmpresa.getPerfil().getNombrePerfil());
+                        claseGlobalUsuario.setObligadoLlevarContabilidad(clienteEmpresa.getObligadoContabilidadClienteEmpresa());
+                        if (clienteEmpresa.getNumeroResolucionClienteEmpresa() != null) {
+                            claseGlobalUsuario.setNumeroResolucion(clienteEmpresa.getNumeroResolucionClienteEmpresa());
                         } else {
-                            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
-
-                            editTextNombreUsuario.requestFocus();
+                            claseGlobalUsuario.setNumeroResolucion("");
                         }
+                        claseGlobalUsuario.setTipoUsuario(Utilidades.USUARIO_EMPRESA);
+                        progressDialog.dismiss();
+                        iniciarIntent();
 
+                    } else {
+                        MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Su cuenta ha sido desactivada.");
+
+                        editTextNombreUsuario.requestFocus();
                     }
+
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ClienteEmpresa> call, Throwable t) {
-                    call.cancel();
-                    progressDialog.dismiss();
-                }
-            });
+            @Override
+            public void onFailure(Call<ClienteEmpresa> call, Throwable t) {
+                call.cancel();
+                progressDialog.dismiss();
+            }
+        });
 
 
-        } else if (nombreUsuario == null && claveUsuario == null) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ADVERTENCIA, "Por favor ingrese su nombre de usuario y clave para continuar.");
-
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (nombreUsuario.equals("") && claveUsuario.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario y clave para continuar.");
-
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (nombreUsuario.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su nombre de usuario para continuar.");
-
-            focusView = editTextNombreUsuario;
-            cancel = true;
-        } else if (claveUsuario.equals("")) {
-            MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, "Por favor ingrese su clave para continuar.");
-
-            focusView = editTextClave;
-            cancel = true;
-        }
-        if (cancel) {
-            focusView.requestFocus();
-        }
     }
 
     private void iniciarIntent() {
@@ -212,5 +187,25 @@ public class LoginEmpresaActivity extends AppCompatActivity {
     public void onBackPressed() {
         this.finish();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        validarUsuario();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getApplicationContext());
+
+            // Display error messages
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                MensajePersonalizado.mostrarToastPersonalizado(getApplicationContext(), getLayoutInflater(), MensajePersonalizado.TOAST_ERROR, message);
+            }
+        }
     }
 }

@@ -5,18 +5,23 @@ package ec.bigdata.facturaelectronicamovil.utilidad;
  */
 public class Codigos {
 
-    public static final int CODIGO_VALIDACION_INFORMACION_EMISOR = 0;
+    public static final int CODIGO_REQUEST_VALIDACION_INFORMACION_EMISOR = 0;
 
-    public static final int CODIGO_VALIDACION_TRIBUTARIA = 1;
+    public static final int CODIGO_REQUEST_VALIDACION_TRIBUTARIA = 1;
 
-    public static final int CODIGO_VALIDACION_INFORMACION_CLIENTE = 2;
+    public static final int CODIGO_REQUEST_VALIDACION_INFORMACION_CLIENTE = 2;
 
-    public static final int CODIGO_VALIDACION_INFORMACION_DETALLE = 3;
+    public static final int CODIGO_REQUEST_VALIDACION_INFORMACION_DETALLE = 3;
 
-    public static final int CODIGO_VALIDACION_INFORMACION_ADICIONAL = 4;
+    public static final int CODIGO_REQUEST_VALIDACION_FORMAS_PAGO = 4;
 
-    public static final int CODIGO_ESTABLECIMIENTO_ACTUAL = 9;
+    public static final int CODIGO_REQUEST_VALIDACION_INFORMACION_ADICIONAL = 5;
 
+    public static final int CODIGO_EXTRA_FACTURA_ELECTRONICA = 100;
+
+    public static final int CODIGO_REQUEST_FACTURA_ELECTRONICA = 101;
+
+    public static final int CODIGO_EXTRA_COMPROBANTE_ELECTRONICO = 102;
     /**
      * CLIENTES
      */
@@ -26,11 +31,70 @@ public class Codigos {
 
     public static final int CODIGO_CLIENTE_ACTUALIZADO = 102;
 
-    public static final int CODIGO_CORREOS_ADICIONALES_CLIENTE = 103;
+    public static final int CODIGO_CLIENTE_NUEVO = 103;
 
-    public static final int CODIGO_PRODUCTO_SELECCIONADO = 12;
+    public static final int CODIGO_CLIENTE_FACTURA_ELECTRONICA = 104;
 
-    public static final int CODIGO_PRODUCTO_SELECCIONADO_ACTUALIZADO = 13;
+    /**
+     * PRODUCTOS
+     */
+
+    public static final int CODIGO_PRODUCTO_SELECCIONADO = 200;
+
+    public static final int CODIGO_ADM_PRODUCTOS_SELECCIONADO = 201;
+
+    public static final int CODIGO_PRODUCTO_ACTUALIZADO = 202;
+
+    public static final int CODIGO_PRODUCTO_NUEVO = 203;
+
+    /**
+     * DETALLE
+     */
+
+    public static final int CODIGO_ID_DETALLE = 300;
+
+    /**
+     * DETALLES ADICIONALES
+     */
+
+    public static final int CODIGO_LISTA_DETALLES_ADICIONALES = 301;
+
+    public static final int CODIGO_REQUEST_LISTA_DETALLES_ADICIONALES = 302;
+
+    /**
+     * ESTABLECIMIENTO
+     */
+    public static final int CODIGO_REQUEST_NUEVO_ESTABLECIMIENTO = 400;
+
+    public static final int CODIGO_RESULT_NUEVO_ESTABLECIMIENTO = 401;
+
+    public static final int CODIGO_ESTABLECIMIENTO_ACTUAL = 402;
+
+    /**
+     * FORMAS DE PAGO
+     */
+    public static final int CODIGO_FORMAS_PAGO = 500;
+
+    public static final int CODIGO_LISTA_FORMAS_PAGO_SELECCIONADA = 501;
+
+    /**
+     * INFORMACIÓN ADICIONAL
+     */
+    public static final int CODIGO_LISTA_INFORMACION_ADICIONAL_SELECCIONADA = 600;
+
+
+    /**
+     * DESCARGA COMPROBANTE ELECTRÓNICO
+     */
+    public static final int CODIGO_COMPROBANTE_ELECTRONICO_DESCARGA = 700;
+
+    public static final int CODIGO_TIPO_ARCHIVO = 701;
+
+    public static final Integer CODIGO_TIPO_ARCHIVO_RESPUESTA = 1;
+
+    public static final Integer CODIGO_TIPO_ARCHIVO_FIRMADO_COMPROBANTE_ELECTRONICO = 2;
+
+    public static final int CODIGO_COMPARTIR_ZIP_COMPROBANTE_ELECTRONICO = 702;
 
     public static final int CODIGO_NUEVO_DETALLE_FACTURA = 14;
 
@@ -40,13 +104,7 @@ public class Codigos {
 
     public static final int CODIGO_LISTA_IMPUESTOS = 17;
 
-    public static final int CODIGO_ID_DETALLE = 18;
-
-    public static final int CODIGO_LISTA_DETALLES_ADICIONALES = 19;
-
     public static final int CODIGO_LISTA_DETALLES_FACTURA = 20;
-
-    public static final int CODIGO_FACTURA_ELECTRONICA = 100;
 
     public static final int CODIGO_FILTRO_BUSQUEDA = 200;
 

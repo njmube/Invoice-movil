@@ -28,8 +28,8 @@ import java.util.List;
 import ec.bigdata.comprobanteelectronico.esquema.comprobantebase.ImpuestoComprobanteElectronico;
 import ec.bigdata.facturaelectronicamovil.R;
 import ec.bigdata.facturaelectronicamovil.adaptador.ArrayAdapterTarifasImpuesto;
+import ec.bigdata.facturaelectronicamovil.facturacion.Calculos;
 import ec.bigdata.facturaelectronicamovil.modelo.TarifasImpuesto;
-import ec.bigdata.facturaelectronicamovil.utilidad.Calculos;
 import ec.bigdata.facturaelectronicamovil.utilidad.ClaseGlobalUsuario;
 
 /**
@@ -184,7 +184,6 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
                     @Override
                     public void onClick(View v) {
                         validator.validate();
-
                     }
                 }
         );
@@ -193,7 +192,6 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         dismiss();
                     }
                 }
@@ -204,7 +202,6 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
 
     @Override
     public void onValidationSucceeded() {
-
         if (tarifasImpuesto != null) {
             impuestoComprobanteElectronico.setCodigo(claseGlobalUsuario.getImpuestos().get("ICE"));
             impuestoComprobanteElectronico.setCodigoPorcentaje(tarifasImpuesto.getCodigoTarifaImpuesto());
@@ -214,8 +211,6 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
             dialogImpuestosICEComunicacion.cargarTarifaImpuesto(impuestoComprobanteElectronico);
         }
         dismiss();
-
-
     }
 
     @Override
@@ -223,7 +218,6 @@ public class DialogImpuestosICE extends DialogFragment implements Validator.Vali
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getContext());
-
             // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    />
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dialog_body">
+
+
+        <EditText
+            android:id="@+id/edit_text_correo_destino"
+            style="@style/Correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sugerencia_correo_electronico_recepcion"
+            android:paddingBottom="@dimen/padding_between"
+            android:paddingTop="@dimen/normal_padding"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+            android:imeOptions="actionUnspecified" />
+
+        <EditText
+            android:id="@+id/edit_text_asunto"
+            style="@style/Texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_correo_destino"
+            android:hint="@string/sugerencia_asunto_correo_electronico"
+            android:paddingBottom="@dimen/padding_between"
+            android:paddingTop="@dimen/normal_padding"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+            android:imeOptions="actionUnspecified" />
+
+        <EditText
+            android:id="@+id/edit_text_contenido"
+            style="@style/Texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_asunto"
+            android:hint="@string/sugerencia_contenido_correo_electronico"
+            android:paddingBottom="@dimen/padding_between"
+            android:paddingTop="@dimen/normal_padding"
+            android:maxLength="200"
+            android:maxLines="4"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
+            android:imeOptions="actionUnspecified" />
+
+        <Button
+            android:id="@+id/button_aceptar"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_contenido"
+            android:layout_alignParentEnd="true"
+            android:text="@string/etiqueta_boton_cancelar_aceptar"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_cancelar"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/edit_text_contenido"
+            android:text="@string/etiqueta_boton_cancelar_componente"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</ScrollView>

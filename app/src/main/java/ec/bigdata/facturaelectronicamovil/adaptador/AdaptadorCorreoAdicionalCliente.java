@@ -21,11 +21,11 @@ import ec.bigdata.facturaelectronicamovil.modelo.CorreoAdicional;
 public class AdaptadorCorreoAdicionalCliente<T> extends ArrayAdapter<CorreoAdicional> {
 
     private HashMap<Integer, Boolean> selecccionados;
-    private Context context;
+
 
     public AdaptadorCorreoAdicionalCliente(Context context, List<CorreoAdicional> correoAdicionalList) {
         super(context, 0, correoAdicionalList);
-        context = context;
+
         selecccionados = new HashMap<Integer, Boolean>();
     }
 
@@ -62,7 +62,7 @@ public class AdaptadorCorreoAdicionalCliente<T> extends ArrayAdapter<CorreoAdici
         //Salvando la referencia del View de la fila
         View listItemView = convertView;
 
-        //Comprobando si el View no existe
+        //Comprobando si el View no existe.
         if (null == convertView) {
             //Si no existe, entonces inflarlo
             listItemView = inflater.inflate(
@@ -72,10 +72,15 @@ public class AdaptadorCorreoAdicionalCliente<T> extends ArrayAdapter<CorreoAdici
         }
         //Obteniendo instancias de los TextView
         TextView correoAdicional = (TextView) listItemView.findViewById(R.id.text_view_correo_adicional_cliente);
-//Obteniendo instancia del CorreoAdicional en la posición actual
-        CorreoAdicional item = getItem(position);
-        correoAdicional.setText(item.getCorreo());
 
+        TextView tipoCliente = (TextView) listItemView.findViewById(R.id.text_view_tipo_cliente_correo_adicional);
+
+        //Obteniendo instancia del CorreoAdicional en la posición actual
+        CorreoAdicional item = getItem(position);
+        correoAdicional.setText(item.getCorreoElectronicoCorreoAdicional());
+        tipoCliente.setText(item.getTipoClienteCorreoAdicional().equals(Boolean.TRUE) ? "CLIENTE" : "PROVEEDOR");
+
+        //Color cuando se seleccione un item
         listItemView.setBackgroundColor(selecccionados.get(position) != null ? 0x9934B5E4
                 : Color.TRANSPARENT);
 

@@ -13,5 +13,7 @@
         android:paddingRight="8dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:id="@+id/tv_cliente_filtrado" />
+        android:id="@+id/text_view_filtrado" />
+
+
 </RelativeLayout>

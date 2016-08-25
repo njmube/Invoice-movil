@@ -29,6 +29,7 @@ public class Inicio extends AppCompatActivity {
     }
 
     public void irInicioSesionEmpresa(View view) {
+        //TODO Revisar que si existe datos de usuario en las preferencias iniciar sesión directamente.
         Intent intent = new Intent(this, LoginEmpresaActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.left_in, R.anim.left_out);

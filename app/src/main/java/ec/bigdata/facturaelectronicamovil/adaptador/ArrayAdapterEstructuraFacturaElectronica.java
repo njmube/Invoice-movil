@@ -35,7 +35,7 @@ public class ArrayAdapterEstructuraFacturaElectronica<T> extends ArrayAdapter<Me
         if (null == convertView) {
             //Si no existe, entonces inflarlo
             listItemView = inflater.inflate(
-                    R.layout.list_view_inicio_facturacion,
+                    R.layout.list_view_componentes_factura,
                     parent,
                     false);
         }
@@ -44,7 +44,7 @@ public class ArrayAdapterEstructuraFacturaElectronica<T> extends ArrayAdapter<Me
         TextView titulo = (TextView) listItemView.findViewById(R.id.text_view_titulo_componente_factura);
 
         //Obteniendo la imagen
-        ImageView imagen = (ImageView) listItemView.findViewById(R.id.image_view_imagen_inicio_facturacion);
+        ImageView imagen = (ImageView) listItemView.findViewById(R.id.image_view_imagen_componentes_factura);
 
         //Obteniendo instancia del MenuEstructuraFacturacionElectronica en la posición actual
         MenuEstructuraFacturaElectronica item = getItem(position);

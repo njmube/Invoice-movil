@@ -42,34 +42,32 @@ public class ClienteRestEmpresa {
 
     public interface ServicioEmpresa {
 
-        @GET("empresa/obtenerEmpresaPorIdNombreUsuario/{nombreUsuario}")
-        Call<ClienteEmpresa> obtenerEmpresaPorIdNombreUsuario(@Path("nombreUsuario") String _nombreUsuario);
+        @GET("empresa/empresaNombreUsuario/{nombreUsuario}")
+        Call<ClienteEmpresa> obtenerEmpresaPorNombreUsuario(@Path("nombreUsuario") String _nombreUsuario);
 
-        @GET("empresa/validarEmpresa/{nombreUsuario}/{claveUsuario}")
+        @GET("empresa/empresaValidacion/{nombreUsuario}/{claveUsuario}")
         Call<ClienteEmpresa> validarEmpresa(@Path("nombreUsuario") String _nombreUsuario, @Path("claveUsuario") String claveUsuario);
 
-        @GET("empresa/obtenerClienteEmpresaPorCorreo/{correoElectronico}")
+        @GET("empresa/empresaCorreoElectronico/{correoElectronico}")
         Call<ClienteEmpresa> obtenerClienteEmpresaPorCorreo(@Path("correoElectronico") String _correoElectronico);
 
-        @PUT("empresa/actualizarObligadoLlevarContabilidad/{id}/{llevaContabilidad}")
-        Call<ResponseBody> actualizarObligadoLlevarContabilidad(@Path("id") String id, @Path("llevaContabilidad") boolean llevaContabilidad);
+        @PUT("empresa/empresaLlevaContabilidad/{idEmpresa}/{llevaContabilidad}")
+        Call<ResponseBody> actualizarObligadoLlevarContabilidad(@Path("idEmpresa") String idEmpresa, @Path("llevaContabilidad") boolean llevaContabilidad);
 
-        @PUT("empresa/actualizarEmpresa/{id}/{nombreComercial}/{razonSocial}/{direccion}/{correoPrincipal}/{telefonoPrincipal}/{numeroResolucion}")
-        Call<ResponseBody> actualizarEmpresa(@Path("id") String id
-                , @Path("nombreComercial") String nombreComercial
-                , @Path("razonSocial") String razonSocial
-                , @Path("direccion") String direccion
-                , @Path("correoPrincipal") String correoPrincipal
-                , @Path("telefonoPrincipal") String telefonoPrincipal
-                , @Path("numeroResolucion") String numeroResolucion
-        );
 
-        @PUT("empresa/actualizarEmpresa/{id}/{nombreComercial}/{razonSocial}/{direccion}/{numeroResolucion}")
-        Call<ResponseBody> actualizarEmpresa(@Query(value = "id", encoded = true) String id
+        @PUT("empresa/empresaActualizacion/{idEmpresa}/{nombreComercial}/{razonSocial}/{direccion}/{correoElectronicoPrincipal}/{telefonoPrincipal}/{numeroResolucion}")
+        Call<ResponseBody> actualizarEmpresa(@Path("idEmpresa") String idEmpresa
                 , @Query(value = "nombreComercial", encoded = true) String nombreComercial
                 , @Query(value = "razonSocial", encoded = true) String razonSocial
                 , @Query(value = "direccion", encoded = true) String direccion
+                , @Query(value = "telefonoPrincipal", encoded = true) String telefonoPrincipal
+                , @Query(value = "correoElectronicoPrincipal", encoded = true) String correoElectronicoPrincipal
                 , @Query(value = "numeroResolucion", encoded = true) String numeroResolucion
+
         );
+
+        @PUT("empresa/cambioContrasenia/{idEmpresa}/{contraseniaActual}/{nuevaContrasenia}")
+        Call<ResponseBody> actualizarContrasenia(@Path("idEmpresa") String idEmpresa, @Query(value = "contraseniaActual", encoded = true) String contraseniaActual, @Query(value = "nuevaContrasenia", encoded = true) String nuevaContrasenia);
+
     }
 }

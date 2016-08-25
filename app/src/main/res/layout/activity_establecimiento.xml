@@ -10,22 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ScrollView
+        android:id="@+id/scroll_view_establecimiento"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linear_layout_establecimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
-            <TextView
-                android:id="@+id/text_view_titulo_establecimiento"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/titulo_establecimientos" />
-
+            android:padding="@dimen/normal_padding">
             <Spinner
                 android:id="@+id/spinner_establecimientos"
                 android:layout_width="match_parent"
@@ -34,7 +28,6 @@
                 android:padding="10dp"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dialog" />
-
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -50,7 +43,7 @@
                     android:maxLength="3"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>
 
@@ -67,7 +60,7 @@
                     android:maxLength="3"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>
 
@@ -83,10 +76,37 @@
                     android:hint="@string/sugerencia_direccion_establecimiento"
                     android:maxLength="300"
                     android:singleLine="false"
-                    android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                    android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                     android:imeOptions="actionUnspecified" />
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/linear_layout_botones_acciones_establecimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:padding="@dimen/normal_padding"
+                android:gravity="center|bottom">
+
+                <Button
+                    android:id="@+id/button_nuevo_establecimiento"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_boton_nuevo"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button_actualizar_establecimiento"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/etiqueta_boton_actualizar"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

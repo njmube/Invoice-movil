@@ -30,7 +30,7 @@
                 android:maxLength="300"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                 android:imeOptions="actionUnspecified" />
 
         </android.support.design.widget.TextInputLayout>
@@ -47,7 +47,7 @@
                 android:maxLength="300"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:imeActionLabel="@string/etiqueta_siguiente_componente"
+                android:imeActionLabel="@string/etiqueta_boton_siguiente_componente"
                 android:imeOptions="actionUnspecified" />
 
         </android.support.design.widget.TextInputLayout>
@@ -60,13 +60,22 @@
             android:text="@string/boton_agregar_detalle_adicional"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_vista_vacia"
+            android:text="@string/etiqueta_no_existe_informacion"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:gravity="center"
+            android:visibility="invisible" />
         <ListView
             android:id="@+id/list_view_detalles_adicionales"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:divider="@color/colorPrimary"
-            android:dividerHeight="2dp"></ListView>
+            android:padding="@dimen/normal_padding"
+            android:dividerHeight="1dp"></ListView>
 
     </LinearLayout>
 </LinearLayout>
